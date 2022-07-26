@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Android Projects/DayTradingTool/app/src/main/res/drawable/edit_text_bg.xml" value="0.25" />
+        <entry key="..\:/Android Projects/DayTradingTool/app/src/main/res/drawable/edit_text_green_bg.xml" value="0.1495" />
+        <entry key="..\:/Android Projects/DayTradingTool/app/src/main/res/drawable/edit_text_red_bg.xml" value="0.1495" />
+        <entry key="..\:/Android Projects/DayTradingTool/app/src/main/res/drawable/image_fill_gray_bg.xml" value="0.1525" />
+        <entry key="..\:/Android Projects/DayTradingTool/app/src/main/res/drawable/image_round_gray_bg.xml" value="0.1495" />
+        <entry key="..\:/Android Projects/DayTradingTool/app/src/main/res/drawable/round_corner_green_bg.xml" value="0.2165" />
+        <entry key="..\:/Android Projects/DayTradingTool/app/src/main/res/drawable/round_corner_white_bg.xml" value="0.2165" />
+        <entry key="..\:/Android Projects/DayTradingTool/app/src/main/res/drawable/round_corners.xml" value="0.2165" />
+        <entry key="..\:/Android Projects/DayTradingTool/app/src/main/res/drawable/swipe_button_bg.xml" value="0.2155" />
+        <entry key="..\:/Android Projects/DayTradingTool/app/src/main/res/drawable/swipe_button_blue_bg.xml" value="0.1525" />
+        <entry key="..\:/Android Projects/DayTradingTool/app/src/main/res/drawable/swipe_button_circle_bg.xml" value="0.2155" />
+        <entry key="..\:/Android Projects/DayTradingTool/app/src/main/res/drawable/swipe_button_green_bg.xml" value="0.1525" />
+        <entry key="..\:/Android Projects/DayTradingTool/app/src/main/res/drawable/swipe_button_red_bg.xml" value="0.1525" />
+        <entry key="..\:/Android Projects/DayTradingTool/app/src/main/res/drawable/text_view_gray_bg.xml" value="0.1525" />
+        <entry key="..\:/Android Projects/DayTradingTool/app/src/main/res/drawable/text_view_selected_bg.xml" value="0.1525" />
+        <entry key="..\:/Android Projects/DayTradingTool/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Android Projects/DayTradingTool/app/src/main/res/layout/activity_position_size.xml" value="0.20520833333333333" />
+        <entry key="..\:/Android Projects/DayTradingTool/app/src/main/res/layout/activity_trade_list.xml" value="0.209375" />
+        <entry key="..\:/Android Projects/DayTradingTool/app/src/main/res/layout/backup_file.xml" value="0.209375" />
+        <entry key="..\:/Android Projects/DayTradingTool/app/src/main/res/layout/bottom_sheet_price_type_layout.xml" value="0.21" />
+        <entry key="..\:/Android Projects/DayTradingTool/app/src/main/res/layout/trading_capital_dialog_layout.xml" value="0.209375" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

@@ -1,0 +1,502 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context=".MainActivity">
+
+    <!--    HEADER-->
+    <RelativeLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+
+        <TextView
+            android:id="@+id/heading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/background"
+            android:fontFamily="monospace"
+            android:text="Day Trading Tool"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"/>
+        <ImageView
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="?attr/actionBarSize"
+            android:src="@drawable/list_icon"
+            android:padding="15dp"
+            android:layout_alignParentRight="true"/>
+    </RelativeLayout>
+
+
+    <!--    BODY-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/header">
+
+        <RadioGroup
+            android:id="@+id/radio_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/background"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/buy_radio_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:fontFamily="monospace"
+                android:text="Buy"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+
+            <RadioButton
+                android:id="@+id/sell_radio_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="Sell"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+        </RadioGroup>
+
+        <!--        WHITE BACKGROUND LAYOUT-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/radio_group"
+            android:layout_marginTop="80dp"
+            android:background="@android:color/white" />
+
+        <!--        TRADING CAPITAL LAYOUT-->
+        <LinearLayout
+            android:id="@+id/trading_capital_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/radio_group"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/round_corner_white_bg"
+            android:elevation="5dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="20dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="monospace"
+                    android:text="Trading Capital"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/edit_text_bg"
+                    android:fontFamily="monospace"
+                    android:gravity="center_vertical"
+                    android:inputType="numberDecimal"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="monospace"
+                    android:text="Risk Per Trade"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/edit_text_bg"
+                    android:fontFamily="monospace"
+                    android:gravity="center_vertical"
+                    android:inputType="numberDecimal"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!--        SCROLLABLE LAYOUT-->
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/trading_capital_layout"
+            android:layout_marginBottom="120dp"
+            android:fillViewport="true">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="20dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="20dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/entry_price_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="15dp"
+                            android:fontFamily="monospace"
+                            android:text="Entry Price"
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                        <EditText
+                            android:id="@+id/entry_price_et"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_below="@id/entry_price_title"
+                            android:background="@drawable/edit_text_bg"
+                            android:fontFamily="monospace"
+                            android:gravity="center_vertical"
+                            android:inputType="numberDecimal"
+                            android:paddingLeft="10dp"
+                            android:paddingTop="10dp"
+                            android:paddingRight="10dp"
+                            android:paddingBottom="10dp"
+                            android:textColor="@color/black"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_below="@id/entry_price_et"
+                            android:layout_marginTop="25dp"
+                            android:background="@color/background" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="25dp"
+                        android:layout_marginRight="20dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/stoploss_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="15dp"
+                            android:fontFamily="monospace"
+                            android:text="Stoploss"
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                        <EditText
+                            android:id="@+id/stoploss_et"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_below="@+id/stoploss_title"
+                            android:background="@drawable/edit_text_bg"
+                            android:fontFamily="monospace"
+                            android:gravity="center_vertical"
+                            android:inputType="numberDecimal"
+                            android:paddingLeft="10dp"
+                            android:paddingTop="10dp"
+                            android:paddingRight="10dp"
+                            android:paddingBottom="10dp"
+                            android:textColor="@color/black"
+                            android:textSize="18sp" />
+
+                        <ImageView
+                            android:id="@+id/stoploss_img_btn"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_below="@id/stoploss_title"
+                            android:layout_alignParentRight="true"
+                            android:background="@drawable/image_fill_gray_bg"
+                            android:padding="10dp"
+                            android:src="@drawable/ic_baseline_keyboard_arrow_up_24" />
+
+                        <LinearLayout
+                            android:id="@+id/change_stoploss_et_type_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/stoploss_et"
+                            android:layout_marginTop="10dp"
+                            android:gravity="right"
+                            android:orientation="horizontal"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:id="@+id/stoploss_shareprice_type"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="15dp"
+                                android:background="@drawable/text_view_gray_bg"
+                                android:fontFamily="monospace"
+                                android:padding="10dp"
+                                android:text="Share price"
+                                android:textColor="@color/gray"
+                                android:textSize="10sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/stoploss_percentage_type"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="15dp"
+                                android:background="@drawable/text_view_gray_bg"
+                                android:fontFamily="monospace"
+                                android:padding="10dp"
+                                android:text="Percentage"
+                                android:textColor="@color/gray"
+                                android:textSize="10sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/stoploss_slpoint_type"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/text_view_gray_bg"
+                                android:fontFamily="monospace"
+                                android:padding="10dp"
+                                android:text="SL points"
+                                android:textColor="@color/gray"
+                                android:textSize="10sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_below="@id/change_stoploss_et_type_layout"
+                            android:layout_marginTop="25dp"
+                            android:background="@color/background" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="25dp"
+                        android:layout_marginRight="20dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/exit_price_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="15dp"
+                            android:fontFamily="monospace"
+                            android:text="Exit Price"
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                        <EditText
+                            android:id="@+id/exit_price_et"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_below="@id/exit_price_title"
+                            android:background="@drawable/edit_text_bg"
+                            android:fontFamily="monospace"
+                            android:gravity="center_vertical"
+                            android:inputType="numberDecimal"
+                            android:paddingLeft="10dp"
+                            android:paddingTop="10dp"
+                            android:paddingRight="10dp"
+                            android:paddingBottom="10dp"
+                            android:textColor="@color/black"
+                            android:textSize="18sp" />
+
+                        <ImageView
+                            android:id="@+id/exit_price_img_btn"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_below="@id/exit_price_title"
+                            android:layout_alignParentRight="true"
+                            android:background="@drawable/image_fill_gray_bg"
+                            android:padding="10dp"
+                            android:src="@drawable/ic_baseline_keyboard_arrow_up_24" />
+
+                        <LinearLayout
+                            android:id="@+id/change_exit_price_et_type_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/exit_price_et"
+                            android:layout_marginTop="10dp"
+                            android:gravity="right"
+                            android:orientation="horizontal"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:id="@+id/exit_price_shareprice_type"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="15dp"
+                                android:background="@drawable/text_view_gray_bg"
+                                android:fontFamily="monospace"
+                                android:padding="10dp"
+                                android:text="Share price"
+                                android:textColor="@color/gray"
+                                android:textSize="10sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/exit_price_percentage_type"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="15dp"
+                                android:background="@drawable/text_view_gray_bg"
+                                android:fontFamily="monospace"
+                                android:padding="10dp"
+                                android:text="Percentage"
+                                android:textColor="@color/gray"
+                                android:textSize="10sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/exit_price_slpoint_type"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/text_view_gray_bg"
+                                android:fontFamily="monospace"
+                                android:padding="10dp"
+                                android:text="Target points"
+                                android:textColor="@color/gray"
+                                android:textSize="10sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </RelativeLayout>
+                </LinearLayout>
+            </RelativeLayout>
+        </androidx.core.widget.NestedScrollView>
+    </RelativeLayout>
+
+
+    <!--    FOOTER-->
+    <RelativeLayout
+        android:id="@+id/footer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/background">
+
+        <LinearLayout
+            android:id="@+id/margin_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="Margin Available >> "
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/margin_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="20% "
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/margin_et"
+                android:layout_width="100dp"
+                android:layout_height="20dp"
+                android:background="@drawable/round_corner_white_bg"
+                android:fontFamily="monospace"
+                android:gravity="center_vertical"
+                android:inputType="numberDecimal"
+                android:padding="5dp"
+                android:textColor="@color/gray"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/margin_img_btn"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="5dp"
+                android:padding="2dp"
+                android:src="@drawable/ic_baseline_edit_24" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/margin_layout"
+            android:background="@android:color/white"
+            android:elevation="5dp"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/get_position_size_btn"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:background="@drawable/swipe_button_green_bg"
+                android:fontFamily="monospace"
+                android:text="Get Position Size"
+                android:textColor="@android:color/white"
+                android:textSize="10sp" />
+
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+</RelativeLayout>

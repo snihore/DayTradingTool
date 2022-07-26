@@ -1,0 +1,489 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background">
+
+    <RelativeLayout
+        android:id="@+id/position_size_header"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+
+        <ImageView
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="?attr/actionBarSize"
+            android:src="@drawable/ic_baseline_arrow_back_ios_new_24"
+            android:padding="18dp"/>
+
+        <ImageView
+            android:id="@+id/trade_list_btn"
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="?attr/actionBarSize"
+            android:src="@drawable/list_icon"
+            android:padding="15dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".PositionSizeActivity"
+        android:padding="20dp"
+        android:layout_below="@+id/position_size_header">
+
+        <RelativeLayout
+            android:id="@+id/position_size_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_corner_white_bg">
+
+            <TextView
+                android:id="@+id/position_size_heading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:fontFamily="monospace"
+                android:padding="2dp"
+                android:text="Position Size"
+                android:textColor="@color/gray"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/add_icon_green"
+                android:layout_alignParentRight="true"
+                android:padding="7dp"
+                android:layout_marginRight="7dp"
+                android:layout_marginTop="7dp"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/position_size_heading"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="monospace"
+                    android:padding="2dp"
+                    android:text="Number of shares"
+                    android:textColor="@color/green"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="monospace"
+                    android:padding="2dp"
+                    android:text="169"
+                    android:textColor="@color/black"
+                    android:textSize="30sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="monospace"
+                    android:padding="2dp"
+                    android:text="Risk to Reward 1:2"
+                    android:textColor="@color/gray"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/position_size_profit_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/position_size_layout"
+            android:layout_marginTop="20dp">
+            <TextView
+                android:id="@+id/position_size_profit_heading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Profit"
+                android:fontFamily="monospace"
+                android:textSize="15sp"
+                android:textColor="@color/black"
+                android:padding="2dp"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/position_size_profit_heading"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/round_corner_white_bg"
+                android:paddingLeft="15dp"
+                android:paddingTop="15dp"
+                android:paddingRight="15dp"
+                android:paddingBottom="15dp">
+
+                <ImageView
+                    android:id="@+id/position_size_profit_img"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/image_round_gray_bg"
+                    android:padding="7dp"
+                    android:src="@drawable/profit_icon" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/position_size_profit_img"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="monospace"
+                            android:padding="2dp"
+                            android:text="Total Profit"
+                            android:textColor="@color/green"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:fontFamily="monospace"
+                            android:padding="2dp"
+                            android:text="+2000(5%)"
+                            android:textColor="@color/green"
+                            android:textSize="12sp" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="monospace"
+                            android:padding="2dp"
+                            android:text="Profit per share"
+                            android:textColor="@color/gray"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:fontFamily="monospace"
+                            android:padding="2dp"
+                            android:text="+20(0.5%)"
+                            android:textColor="@color/gray"
+                            android:textSize="12sp" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+            </RelativeLayout>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/position_size_loss_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/position_size_profit_layout"
+            android:layout_marginTop="20dp">
+            <TextView
+                android:id="@+id/position_size_loss_heading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Loss"
+                android:fontFamily="monospace"
+                android:textSize="15sp"
+                android:textColor="@color/black"
+                android:padding="2dp"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/position_size_loss_heading"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/round_corner_white_bg"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp">
+                <ImageView
+                    android:id="@+id/position_size_loss_img"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/loss_icon"
+                    android:padding="7dp"
+                    android:background="@drawable/image_round_gray_bg"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_toRightOf="@+id/position_size_loss_img"
+                    android:layout_marginLeft="10dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Total Loss"
+                            android:fontFamily="monospace"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/red"
+                            android:padding="2dp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="-1000(2.5%)"
+                            android:fontFamily="monospace"
+                            android:textSize="12sp"
+                            android:textColor="@color/red"
+                            android:padding="2dp"
+                            android:layout_alignParentRight="true"/>
+
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Loss per share"
+                            android:fontFamily="monospace"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/gray"
+                            android:padding="2dp"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="-10(0.2%)"
+                            android:fontFamily="monospace"
+                            android:textSize="12sp"
+                            android:textColor="@color/gray"
+                            android:padding="2dp"
+                            android:layout_alignParentRight="true"/>
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/position_size_margin_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/position_size_loss_layout"
+            android:layout_marginTop="20dp">
+            <TextView
+                android:id="@+id/position_size_margin_heading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Margin"
+                android:fontFamily="monospace"
+                android:textSize="15sp"
+                android:textColor="@color/black"
+                android:padding="2dp"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/position_size_margin_heading"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/round_corner_white_bg"
+                android:paddingLeft="15dp"
+                android:paddingTop="15dp"
+                android:paddingRight="15dp"
+                android:paddingBottom="15dp">
+
+                <ImageView
+                    android:id="@+id/position_size_margin_img"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/image_round_gray_bg"
+                    android:padding="7dp"
+                    android:src="@drawable/margin_icon" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/position_size_margin_img"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="monospace"
+                            android:padding="2dp"
+                            android:text="Margin Required"
+                            android:textColor="@color/gray"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:fontFamily="monospace"
+                            android:padding="2dp"
+                            android:text="\u20B9 20,000"
+                            android:textColor="@color/gray"
+                            android:textSize="12sp" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="monospace"
+                            android:padding="2dp"
+                            android:text="Actual Capital Required"
+                            android:textColor="@color/gray"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:fontFamily="monospace"
+                            android:padding="2dp"
+                            android:text="\u20B9 100,000"
+                            android:textColor="@color/gray"
+                            android:textSize="12sp" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/position_size_charges_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/position_size_margin_layout"
+            android:layout_marginTop="20dp">
+            <TextView
+                android:id="@+id/position_size_charges_heading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Charges"
+                android:fontFamily="monospace"
+                android:textSize="15sp"
+                android:textColor="@color/black"
+                android:padding="2dp"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/position_size_charges_heading"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/round_corner_white_bg"
+                android:paddingLeft="15dp"
+                android:paddingTop="15dp"
+                android:paddingRight="15dp"
+                android:paddingBottom="15dp">
+
+                <ImageView
+                    android:id="@+id/position_size_charges_img"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/image_round_gray_bg"
+                    android:padding="5dp"
+                    android:src="@drawable/charges_icon" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/position_size_charges_img"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="monospace"
+                            android:padding="2dp"
+                            android:text="Profit Charge"
+                            android:textColor="@color/gray"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:fontFamily="monospace"
+                            android:padding="2dp"
+                            android:text="\u20B9 245.86"
+                            android:textColor="@color/gray"
+                            android:textSize="12sp" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="monospace"
+                            android:padding="2dp"
+                            android:text="Loss Charge"
+                            android:textColor="@color/gray"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:fontFamily="monospace"
+                            android:padding="2dp"
+                            android:text="\u20B9 244.43"
+                            android:textColor="@color/gray"
+                            android:textSize="12sp" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+            </RelativeLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+
+</RelativeLayout>
