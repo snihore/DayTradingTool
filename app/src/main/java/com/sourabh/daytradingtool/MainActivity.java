@@ -4,48 +4,27 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-import android.annotation.SuppressLint;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Switch;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.sourabh.daytradingtool.Data.TradeDetail;
 import com.sourabh.daytradingtool.Data.TradingCapitalData;
 import com.sourabh.daytradingtool.UserInterface.BottomSheetPriceType;
-import com.sourabh.daytradingtool.UserInterface.KeyboardHandler;
-import com.sourabh.daytradingtool.UserInterface.PriceTypeHandler;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 
 public class MainActivity extends AppCompatActivity{
 
     //Views
     private Switch switchBtn;
-    private EditText entryPrice, stoploss, exitPrice;
+    private EditText entryPriceEt, stoplossEt, exitPriceEt;
     private Button getPositionSizeBtn;
     private ImageView stoplossOptionsbtn, exitPriceOptionsBtn, tradingCapitalEditBtn, tradeListBtn;
     //Custom Classes
@@ -81,9 +60,9 @@ public class MainActivity extends AppCompatActivity{
     private void initViews() {
 
         switchBtn = (Switch) findViewById(R.id.enter_trade_details_layout_switch_btn);
-        entryPrice = (EditText)findViewById(R.id.entry_price_et);
-        stoploss = (EditText)findViewById(R.id.stoploss_et);
-        exitPrice = (EditText)findViewById(R.id.exit_price_et);
+        entryPriceEt = (EditText)findViewById(R.id.entry_price_et);
+        stoplossEt = (EditText)findViewById(R.id.stoploss_et);
+        exitPriceEt = (EditText)findViewById(R.id.exit_price_et);
         getPositionSizeBtn = (Button)findViewById(R.id.get_position_size_btn);
         stoplossOptionsbtn = (ImageView)findViewById(R.id.stoploss_options_btn);
         exitPriceOptionsBtn = (ImageView)findViewById(R.id.exit_price_options_btn);
@@ -97,30 +76,30 @@ public class MainActivity extends AppCompatActivity{
                 if(switchBtn.isChecked()){
                     Log.i("SWITCH BUTTON", "Sell");
                     isSwitchBtnChecked = true;
-                    entryPrice.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.edit_text_red_bg));
-                    stoploss.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.edit_text_red_bg));
-                    exitPrice.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.edit_text_red_bg));
+                    entryPriceEt.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.edit_text_red_bg));
+                    stoplossEt.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.edit_text_red_bg));
+                    exitPriceEt.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.edit_text_red_bg));
 
                     float density = getApplicationContext().getResources().getDisplayMetrics().density;
                     int paddingPixel10 = (int)(10 * density);
                     int paddingPixel15 = (int)(15 * density);
-                    entryPrice.setPadding(paddingPixel10, paddingPixel15, paddingPixel10, paddingPixel15);
-                    stoploss.setPadding(paddingPixel10, paddingPixel15, paddingPixel10, paddingPixel15);
-                    exitPrice.setPadding(paddingPixel10, paddingPixel15, paddingPixel10, paddingPixel15);
+                    entryPriceEt.setPadding(paddingPixel10, paddingPixel15, paddingPixel10, paddingPixel15);
+                    stoplossEt.setPadding(paddingPixel10, paddingPixel15, paddingPixel10, paddingPixel15);
+                    exitPriceEt.setPadding(paddingPixel10, paddingPixel15, paddingPixel10, paddingPixel15);
 
                 }else{
                     Log.i("SWITCH BUTTON", "Buy");
                     isSwitchBtnChecked = false;
-                    entryPrice.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.edit_text_green_bg));
-                    stoploss.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.edit_text_green_bg));
-                    exitPrice.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.edit_text_green_bg));
+                    entryPriceEt.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.edit_text_green_bg));
+                    stoplossEt.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.edit_text_green_bg));
+                    exitPriceEt.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.edit_text_green_bg));
 
                     float density = getApplicationContext().getResources().getDisplayMetrics().density;
                     int paddingPixel10 = (int)(10 * density);
                     int paddingPixel15 = (int)(15 * density);
-                    entryPrice.setPadding(paddingPixel10, paddingPixel15, paddingPixel10, paddingPixel15);
-                    stoploss.setPadding(paddingPixel10, paddingPixel15, paddingPixel10, paddingPixel15);
-                    exitPrice.setPadding(paddingPixel10, paddingPixel15, paddingPixel10, paddingPixel15);
+                    entryPriceEt.setPadding(paddingPixel10, paddingPixel15, paddingPixel10, paddingPixel15);
+                    stoplossEt.setPadding(paddingPixel10, paddingPixel15, paddingPixel10, paddingPixel15);
+                    exitPriceEt.setPadding(paddingPixel10, paddingPixel15, paddingPixel10, paddingPixel15);
                 }
             }
         });
@@ -128,8 +107,13 @@ public class MainActivity extends AppCompatActivity{
         getPositionSizeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), PositionSizeActivity.class);
-                startActivity(intent);
+
+                try {
+                    positionSizeHandle();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -172,6 +156,48 @@ public class MainActivity extends AppCompatActivity{
                 startActivity(intent);
             }
         });
+    }
+
+    private void positionSizeHandle() throws Exception{
+
+        String tempStr = entryPriceEt.getText().toString();
+        double entryPrice, stoploss, exitPrice;
+
+        if(tempStr != null && !tempStr.matches("")){
+            entryPrice = Double.parseDouble(tempStr);
+        }else {
+            throw new Exception("Please enter valid inputs");
+        }
+
+        tempStr = stoplossEt.getText().toString();
+
+        if(tempStr != null && !tempStr.matches("")){
+            stoploss = Double.parseDouble(tempStr);
+        }else {
+            throw new Exception("Please enter valid inputs");
+        }
+
+        tempStr = exitPriceEt.getText().toString();
+
+        if(tempStr != null && !tempStr.matches("")){
+            exitPrice = Double.parseDouble(tempStr);
+        }else {
+            throw new Exception("Please enter valid inputs");
+        }
+
+        TradeDetail tradeDetail = new TradeDetail(
+                entryPrice,
+                !isSwitchBtnChecked,
+                stoploss,
+                stoplossPriceType.get(TYPE[0]),
+                exitPrice,
+                exitPricePriceType.get(TYPE[1]),
+                tradingCapitalData
+        );
+
+        Intent intent = new Intent(getApplicationContext(), PositionSizeActivity.class);
+        intent.putExtra("TRADE_DETAIL", tradeDetail.getPositionSizeDetail());
+        startActivity(intent);
     }
 
 

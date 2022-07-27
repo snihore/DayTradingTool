@@ -3,9 +3,9 @@ package com.sourabh.daytradingtool.Data;
 public class TradingCapitalData {
     private double tradingCapital;
     private double riskPerTrade;
-    private double margin;
+    private float margin;
 
-    public TradingCapitalData(double tradingCapital, double riskPerTrade, double margin) {
+    public TradingCapitalData(double tradingCapital, double riskPerTrade, float margin) {
         this.tradingCapital = tradingCapital;
         this.riskPerTrade = riskPerTrade;
         this.margin = margin;
@@ -27,11 +27,11 @@ public class TradingCapitalData {
         this.riskPerTrade = riskPerTrade;
     }
 
-    public double getMargin() {
+    public float getMargin() {
         return margin;
     }
 
-    public void setMargin(double margin) {
+    public void setMargin(float margin) {
         this.margin = margin;
     }
 }

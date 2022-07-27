@@ -21,10 +21,10 @@
             android:id="@+id/trade_list_btn"
             android:layout_width="?attr/actionBarSize"
             android:layout_height="?attr/actionBarSize"
-            android:src="@drawable/list_icon"
-            android:padding="15dp"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"/>
+            android:layout_marginRight="10dp"
+            android:padding="15dp"
+            android:src="@drawable/list_icon" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -81,15 +81,17 @@
                     android:textSize="18sp" />
 
                 <TextView
+                    android:id="@+id/quantity_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="monospace"
                     android:padding="2dp"
-                    android:text="169"
+                    android:text="--"
                     android:textColor="@color/black"
                     android:textSize="30sp" />
 
                 <TextView
+                    android:id="@+id/risk_to_reward_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="monospace"
@@ -158,12 +160,13 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/profit_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
                             android:fontFamily="monospace"
                             android:padding="2dp"
-                            android:text="+2000(5%)"
+                            android:text="--(--%)"
                             android:textColor="@color/green"
                             android:textSize="12sp" />
 
@@ -184,12 +187,13 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/profit_per_share_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
                             android:fontFamily="monospace"
                             android:padding="2dp"
-                            android:text="+20(0.5%)"
+                            android:text="--(--%)"
                             android:textColor="@color/gray"
                             android:textSize="12sp" />
 
@@ -251,14 +255,15 @@
                             android:padding="2dp"/>
 
                         <TextView
+                            android:id="@+id/loss_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="-1000(2.5%)"
+                            android:layout_alignParentRight="true"
                             android:fontFamily="monospace"
-                            android:textSize="12sp"
-                            android:textColor="@color/red"
                             android:padding="2dp"
-                            android:layout_alignParentRight="true"/>
+                            android:text="--(--%)"
+                            android:textColor="@color/red"
+                            android:textSize="12sp" />
 
                     </RelativeLayout>
                     <RelativeLayout
@@ -273,15 +278,17 @@
                             android:textStyle="bold"
                             android:textColor="@color/gray"
                             android:padding="2dp"/>
+
                         <TextView
+                            android:id="@+id/loss_per_share_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="-10(0.2%)"
+                            android:layout_alignParentRight="true"
                             android:fontFamily="monospace"
-                            android:textSize="12sp"
-                            android:textColor="@color/gray"
                             android:padding="2dp"
-                            android:layout_alignParentRight="true"/>
+                            android:text="--(--%)"
+                            android:textColor="@color/gray"
+                            android:textSize="12sp" />
 
                     </RelativeLayout>
 
@@ -346,12 +353,13 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/margin_required_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
                             android:fontFamily="monospace"
                             android:padding="2dp"
-                            android:text="\u20B9 20,000"
+                            android:text="\u20B9 ---"
                             android:textColor="@color/gray"
                             android:textSize="12sp" />
 
@@ -372,12 +380,13 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/actual_capital_required_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
                             android:fontFamily="monospace"
                             android:padding="2dp"
-                            android:text="\u20B9 100,000"
+                            android:text="\u20B9 ---"
                             android:textColor="@color/gray"
                             android:textSize="12sp" />
 
