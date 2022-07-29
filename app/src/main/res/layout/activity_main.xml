@@ -238,12 +238,12 @@
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:background="@drawable/edit_text_red_bg"
+                android:background="@drawable/button_round_black_bg"
                 android:fontFamily="monospace"
                 android:gravity="center"
                 android:padding="5dp"
                 android:text=""
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="10sp"
                 android:visibility="gone"/>
 
@@ -302,12 +302,12 @@
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:background="@drawable/edit_text_green_bg"
+                android:background="@drawable/button_round_black_bg"
                 android:fontFamily="monospace"
                 android:gravity="center"
                 android:padding="5dp"
                 android:text=""
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="10sp"
                 android:visibility="gone"/>
 

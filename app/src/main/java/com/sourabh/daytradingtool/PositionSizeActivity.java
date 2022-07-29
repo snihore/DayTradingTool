@@ -4,16 +4,20 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.sourabh.daytradingtool.Data.PositionSizeDetail;
 import com.sourabh.daytradingtool.Data.TradeDetail;
 
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Timer;
 
 public class PositionSizeActivity extends AppCompatActivity {
 
@@ -40,7 +44,7 @@ public class PositionSizeActivity extends AppCompatActivity {
 
     private void setView(PositionSizeDetail positionSizeDetail) {
 
-        Log.i("POSITION SIZE DETAIL", positionSizeDetail.toString());
+//        Log.i("POSITION SIZE DETAIL", positionSizeDetail.toString());
 
         quantityTv.setText(String.valueOf(positionSizeDetail.getQuantity()));
         riskToRewardTv.setText("Risk to Reward 1:"+positionSizeDetail.getRiskToReward());
@@ -86,4 +90,5 @@ public class PositionSizeActivity extends AppCompatActivity {
 
         return String.valueOf(num);
     }
+
 }
