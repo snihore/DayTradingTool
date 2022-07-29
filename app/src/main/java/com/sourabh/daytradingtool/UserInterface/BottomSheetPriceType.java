@@ -17,15 +17,17 @@ import java.util.HashMap;
 
 public class BottomSheetPriceType extends BottomSheetDialogFragment implements View.OnClickListener {
 
-    private TextView priceTv, percentageTv, pointsTv;
+    private TextView priceTv, percentageTv, pointsTv, optionsTv;
+    private boolean isBuy;
 
     private String stoplossValue, exitPriceValue;
     private HashMap<String, String> priceType;
     private final String[] PRICE_TYPES = {"PRICE", "PERCENTAGE", "POINTS"};
     private final String[] TYPE = {"STOPLOSS_PRICETYPE", "EXITPRICE_PRICETYPE"};
 
-    public BottomSheetPriceType(HashMap<String, String> priceType){
+    public BottomSheetPriceType(HashMap<String, String> priceType, TextView optionsTv){
         this.priceType = priceType;
+        this.optionsTv = optionsTv;
     }
 
     @Override
@@ -94,6 +96,7 @@ public class BottomSheetPriceType extends BottomSheetDialogFragment implements V
                 if(exitPriceValue != null && !exitPriceValue.matches("")){
                     priceType.put(TYPE[1], PRICE_TYPES[0]);
                 }
+                optionsTv.setText("price ");
                 dismiss();
                 break;
             case R.id.bottom_sheet_price_type_percentage_tv:
@@ -103,6 +106,8 @@ public class BottomSheetPriceType extends BottomSheetDialogFragment implements V
                 if(exitPriceValue != null && !exitPriceValue.matches("")){
                     priceType.put(TYPE[1], PRICE_TYPES[1]);
                 }
+                optionsTv.setText("percentage ");
+                getPriceByPercentage();
                 dismiss();
                 break;
             case R.id.bottom_sheet_price_type_points_tv:
@@ -112,8 +117,16 @@ public class BottomSheetPriceType extends BottomSheetDialogFragment implements V
                 if(exitPriceValue != null && !exitPriceValue.matches("")){
                     priceType.put(TYPE[1], PRICE_TYPES[2]);
                 }
+                optionsTv.setText("points ");
+                getPriceByPoints();
                 dismiss();
                 break;
         }
+    }
+
+    private void getPriceByPoints() {
+    }
+
+    private void getPriceByPercentage() {
     }
 }

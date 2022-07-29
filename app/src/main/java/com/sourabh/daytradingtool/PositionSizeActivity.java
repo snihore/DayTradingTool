@@ -13,6 +13,8 @@ import android.widget.Toast;
 import com.sourabh.daytradingtool.Data.PositionSizeDetail;
 import com.sourabh.daytradingtool.Data.TradeDetail;
 
+import java.text.DecimalFormat;
+
 public class PositionSizeActivity extends AppCompatActivity {
 
     private ImageView tradeListBtn;
@@ -38,16 +40,18 @@ public class PositionSizeActivity extends AppCompatActivity {
 
     private void setView(PositionSizeDetail positionSizeDetail) {
 
-//        Log.i("POSITION SIZE DETAIL", String.valueOf(positionSizeDetail.getQuantity()));
+        Log.i("POSITION SIZE DETAIL", positionSizeDetail.toString());
 
         quantityTv.setText(String.valueOf(positionSizeDetail.getQuantity()));
         riskToRewardTv.setText("Risk to Reward 1:"+positionSizeDetail.getRiskToReward());
-        profitTv.setText("+"+positionSizeDetail.getProfit()+"("+positionSizeDetail.getProfitByPercentage()+"%)");
+
+        profitTv.setText("+"+addCommasInNumber(positionSizeDetail.getProfit())+"("+positionSizeDetail.getProfitByPercentage()+"%)");
+
         profitPerShareTv.setText("+"+positionSizeDetail.getProfitPerShare()+"("+positionSizeDetail.getProfitPerShareByPercentage()+"%)");
-        lossTv.setText("-"+positionSizeDetail.getLoss()+"("+positionSizeDetail.getLossByPercentage()+"%)");
+        lossTv.setText("-"+addCommasInNumber(positionSizeDetail.getLoss())+"("+positionSizeDetail.getLossByPercentage()+"%)");
         lossPerShareTv.setText("-"+positionSizeDetail.getLossPerShare()+"("+positionSizeDetail.getLossPerShareByPercentage()+"%)");
-        marginRequiredTv.setText("\u20B9 "+positionSizeDetail.getMarginRequired());
-        actualCapitalRequiredTv.setText("\u20B9 "+positionSizeDetail.getActualCapitalRequired());
+        marginRequiredTv.setText("\u20B9 "+addCommasInNumber(positionSizeDetail.getMarginRequired()));
+        actualCapitalRequiredTv.setText("\u20B9 "+addCommasInNumber(positionSizeDetail.getActualCapitalRequired()));
     }
 
     private void initViews() {
@@ -69,5 +73,17 @@ public class PositionSizeActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    private static String addCommasInNumber(double num){
+        try{
+            DecimalFormat df = new DecimalFormat("#,###.00");
+
+            return df.format(num);
+        }catch (Exception e){
+
+        }
+
+        return String.valueOf(num);
     }
 }
