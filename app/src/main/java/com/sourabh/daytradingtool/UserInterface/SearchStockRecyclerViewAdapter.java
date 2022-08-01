@@ -22,9 +22,12 @@ public class SearchStockRecyclerViewAdapter extends RecyclerView.Adapter<SearchS
     private ArrayList<SearchStockItemDetail> searchStockItemDetails;
     private ArrayList<SearchStockItemDetail> searchStockItemDetailsBackup;
 
-    public SearchStockRecyclerViewAdapter(ArrayList<SearchStockItemDetail> searchStockItemDetails) {
+    private SearchStockRecyclerViewClickListener clickListener;
+
+    public SearchStockRecyclerViewAdapter(ArrayList<SearchStockItemDetail> searchStockItemDetails, SearchStockRecyclerViewClickListener clickListener) {
         this.searchStockItemDetails = searchStockItemDetails;
         this.searchStockItemDetailsBackup = new ArrayList<>(searchStockItemDetails);
+        this.clickListener = clickListener;
     }
 
     @NonNull
@@ -33,7 +36,7 @@ public class SearchStockRecyclerViewAdapter extends RecyclerView.Adapter<SearchS
 
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.search_stock_list_layout_item, parent, false);
-        return new SearchStockViewHolder(view);
+        return new SearchStockViewHolder(view, clickListener);
     }
 
     @Override
@@ -41,6 +44,8 @@ public class SearchStockRecyclerViewAdapter extends RecyclerView.Adapter<SearchS
 
         holder.stockTitle.setText(searchStockItemDetails.get(position).getTitle());
         holder.stockFullName.setText(searchStockItemDetails.get(position).getFullName());
+
+
     }
 
     @Override
@@ -48,15 +53,27 @@ public class SearchStockRecyclerViewAdapter extends RecyclerView.Adapter<SearchS
         return searchStockItemDetails.size();
     }
 
-    public class SearchStockViewHolder extends RecyclerView.ViewHolder{
+    public class SearchStockViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView stockTitle, stockFullName;
 
-        public SearchStockViewHolder(@NonNull View itemView) {
+        private SearchStockRecyclerViewClickListener clickListener;
+
+        public SearchStockViewHolder(@NonNull View itemView, SearchStockRecyclerViewClickListener clickListener) {
             super(itemView);
 
             stockTitle = (TextView) itemView.findViewById(R.id.search_stock_layout_item_title);
             stockFullName = (TextView) itemView.findViewById(R.id.search_stock_layout_item_full_name);
+
+            this.clickListener = clickListener;
+
+            //Click Event
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            clickListener.onClick(view, getAdapterPosition());
         }
     }
 

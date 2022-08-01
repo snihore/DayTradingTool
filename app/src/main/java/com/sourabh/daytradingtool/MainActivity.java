@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sourabh.daytradingtool.Data.TradeDetail;
+import com.sourabh.daytradingtool.Data.TradeDetailPOJO;
 import com.sourabh.daytradingtool.Data.TradingCapitalData;
 import com.sourabh.daytradingtool.UserInterface.BottomSheetPriceType;
 
@@ -354,7 +355,13 @@ public class MainActivity extends AppCompatActivity{
         );
 
         Intent intent = new Intent(getApplicationContext(), PositionSizeActivity.class);
-        intent.putExtra("TRADE_DETAIL", tradeDetail.getPositionSizeDetail());
+        intent.putExtra("GET_POSITION_SIZE_DETAIL", tradeDetail.getPositionSizeDetail());
+        intent.putExtra("TRADE_DETAIL_POJO", new TradeDetailPOJO(
+                tradeDetail.getEntryPrice(),
+                tradeDetail.isBuy(),
+                tradeDetail.getStoploss(),
+                tradeDetail.getExitPrice()
+        ));
         startActivity(intent);
     }
 
