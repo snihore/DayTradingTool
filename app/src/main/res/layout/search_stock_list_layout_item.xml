@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp">
+
+    <TextView
+        android:id="@+id/search_stock_layout_item_flag1"
+        android:layout_width="match_parent"
+        android:layout_height="0.3dp"
+        android:layout_marginBottom="20dp"
+        android:background="@color/gray_list"/>
+    <TextView
+        android:id="@+id/search_stock_layout_item_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TCS"
+        android:textColor="@color/black"
+        android:fontFamily="monospace"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:layout_below="@+id/search_stock_layout_item_flag1"/>
+    <TextView
+        android:id="@+id/search_stock_layout_item_full_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tata Consultancy Services Limited"
+        android:textColor="@color/gray"
+        android:fontFamily="monospace"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:layout_below="@+id/search_stock_layout_item_title"/>
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/add_icon"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:padding="7dp"/>
+    <TextView
+        android:id="@+id/search_stock_layout_item_flag2"
+        android:layout_width="match_parent"
+        android:layout_height="0.3dp"
+        android:layout_below="@id/search_stock_layout_item_full_name"
+        android:layout_marginTop="20dp"
+        android:background="@color/gray_list"/>
+</RelativeLayout>

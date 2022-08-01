@@ -149,11 +149,15 @@ public class MainActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.full_screen_alert);
-                View view1 = getLayoutInflater().inflate(R.layout.trading_capital_dialog_layout, null);
-                builder.setView(view1);
-                AlertDialog dialog = builder.create();
-                dialog.show();
+                try {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.full_screen_alert);
+                    View view1 = getLayoutInflater().inflate(R.layout.trading_capital_dialog_layout, null);
+                    builder.setView(view1);
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
             }
         });
 

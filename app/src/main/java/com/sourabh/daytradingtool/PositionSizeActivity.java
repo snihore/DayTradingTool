@@ -1,27 +1,37 @@
 package com.sourabh.daytradingtool;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.sourabh.daytradingtool.Data.PositionSizeDetail;
+import com.sourabh.daytradingtool.Data.SearchStockItemDetail;
 import com.sourabh.daytradingtool.Data.TradeDetail;
+import com.sourabh.daytradingtool.UserInterface.SearchStockRecyclerViewAdapter;
+import com.sourabh.daytradingtool.Utils.GetStockList;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.Timer;
 
 public class PositionSizeActivity extends AppCompatActivity {
 
-    private ImageView tradeListBtn;
+    private ImageView tradeListBtn, tradeSaveBtn;
     private TextView quantityTv, riskToRewardTv, profitTv, profitPerShareTv, lossTv, lossPerShareTv, marginRequiredTv, actualCapitalRequiredTv;
 
     @Override
@@ -68,6 +78,7 @@ public class PositionSizeActivity extends AppCompatActivity {
         lossPerShareTv = (TextView)findViewById(R.id.loss_per_share_tv);
         marginRequiredTv = (TextView)findViewById(R.id.margin_required_tv);
         actualCapitalRequiredTv = (TextView)findViewById(R.id.actual_capital_required_tv);
+        tradeSaveBtn = (ImageView)findViewById(R.id.trade_save_btn);
 
 
         tradeListBtn.setOnClickListener(new View.OnClickListener() {
@@ -77,6 +88,65 @@ public class PositionSizeActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        tradeSaveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openSelectStockDialog();
+            }
+        });
+    }
+
+    private void openSelectStockDialog() {
+
+        try {
+            AlertDialog.Builder builder = new AlertDialog.Builder(PositionSizeActivity.this, R.style.full_screen_alert);
+            View view = getLayoutInflater().inflate(R.layout.search_stock_list_dialog_layout, null);
+            builder.setView(view);
+            AlertDialog dialog = builder.create();
+            openSelectStockDialogView(view);
+            dialog.show();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private void openSelectStockDialogView(View view) {
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.search_stock_list_recycler_view);
+        EditText searchStockEt = (EditText) view.findViewById(R.id.search_stock_list_et);
+
+        ArrayList<SearchStockItemDetail> searchStockItemDetails = GetStockList.readData(this);
+        if(searchStockItemDetails != null && searchStockItemDetails.size()>0){
+
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            SearchStockRecyclerViewAdapter searchStockRecyclerViewAdapter = new SearchStockRecyclerViewAdapter(searchStockItemDetails);
+            recyclerView.setAdapter(searchStockRecyclerViewAdapter);
+
+            //SEARCH
+            searchStockEt.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    //Search
+                    if(searchStockRecyclerViewAdapter != null && charSequence != null){
+                        searchStockRecyclerViewAdapter.getFilter().filter(charSequence);
+                    }
+                }
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+
+                }
+            });
+
+        }else {
+
+        }
     }
 
     private static String addCommasInNumber(double num){
