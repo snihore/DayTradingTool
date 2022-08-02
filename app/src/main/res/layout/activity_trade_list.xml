@@ -4,15 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TradeListActivity">
+    tools:context=".TradeListActivity"
+    android:background="@color/background">
 
     <RelativeLayout
-        android:id="@+id/trading_capital_dialog_layout_header"
+        android:id="@+id/trade_list_layout_header"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize">
 
         <ImageView
-            android:id="@+id/trading_capital_dialog_layout_back_btn"
+            android:id="@+id/trade_list_layout_back_btn"
             android:layout_width="?attr/actionBarSize"
             android:layout_height="?attr/actionBarSize"
             android:src="@drawable/ic_baseline_arrow_back_ios_new_24"
@@ -26,7 +27,15 @@
             android:textColor="@color/black"
             android:textSize="20sp"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/trading_capital_dialog_layout_back_btn"/>
+            android:layout_toRightOf="@id/trade_list_layout_back_btn"/>
     </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/trade_list_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/trade_list_layout_header">
+
+    </androidx.recyclerview.widget.RecyclerView>
 
 </RelativeLayout>

@@ -39,6 +39,9 @@ public class PositionSizeActivity extends AppCompatActivity {
     private ImageView tradeListBtn, tradeSaveBtn;
     private TextView quantityTv, riskToRewardTv, profitTv, profitPerShareTv, lossTv, lossPerShareTv, marginRequiredTv, actualCapitalRequiredTv;
 
+    private TradeDetailPOJO tradeDetailPOJO;
+    private PositionSizeDetail positionSizeDetail;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,8 +50,8 @@ public class PositionSizeActivity extends AppCompatActivity {
         initViews();
 
         try {
-            PositionSizeDetail positionSizeDetail = (PositionSizeDetail) getIntent().getSerializableExtra("GET_POSITION_SIZE_DETAIL");
-            TradeDetailPOJO trade_detail_pojo = (TradeDetailPOJO) getIntent().getSerializableExtra("TRADE_DETAIL_POJO");
+            positionSizeDetail = (PositionSizeDetail) getIntent().getSerializableExtra("GET_POSITION_SIZE_DETAIL");
+            tradeDetailPOJO = (TradeDetailPOJO) getIntent().getSerializableExtra("TRADE_DETAIL_POJO");
 
             setView(positionSizeDetail);
 
@@ -171,7 +174,30 @@ public class PositionSizeActivity extends AppCompatActivity {
 
         PositionSizeDetailDB positionSizeDetailDB = new PositionSizeDetailDB(this);
 
-        boolean result = positionSizeDetailDB.insertData(new Date().getTime(), searchStockItemDetails.get(position).getTitle());
+        if(tradeDetailPOJO == null || positionSizeDetail == null){
+            Toast.makeText(this, "Unable to save your trade, please try again", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        int isBuyInt = -1;
+
+        if(tradeDetailPOJO.isBuy()){
+            isBuyInt = 1;
+        }else{
+            isBuyInt = 0;
+        }
+
+
+        boolean result = positionSizeDetailDB.insertData(
+                new Date().getTime(),
+                searchStockItemDetails.get(position).getTitle(),
+                tradeDetailPOJO.getEntryPrice(),
+                isBuyInt,
+                tradeDetailPOJO.getStoploss(),
+                tradeDetailPOJO.getExitPrice(),
+                positionSizeDetail.getQuantity()
+
+        );
 
         if(result){
             dialog.dismiss();

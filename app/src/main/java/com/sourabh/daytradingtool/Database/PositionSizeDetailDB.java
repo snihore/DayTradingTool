@@ -22,7 +22,12 @@ public class PositionSizeDetailDB extends SQLiteOpenHelper {
 
         String query = "CREATE TABLE IF NOT EXISTS "+DatabaseUtils.TABLE_NAME_POSITION_SIZE_DETAIL+" (" +
                 "timestamp number PRIMARY KEY, " +
-                "stocktitle text)";
+                "stocktitle text, " +
+                "entryprice real, " +
+                "isbuy number, " +
+                "stoploss real, " +
+                "exitprice real," +
+                "quantity number)";
 
         sqLiteDatabase.execSQL(query);
     }
@@ -31,13 +36,29 @@ public class PositionSizeDetailDB extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
     }
 
-    public boolean insertData(long timestamp, String stockTitle){
+    public boolean insertData(long timestamp, String stockTitle, double entryPrice, int isBuy, double stoploss, double exitPrice, int quantity){
 
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
+        if(
+                stockTitle == null ||
+                        entryPrice == 0 ||
+                        isBuy == -1 ||
+                        stoploss == 0 ||
+                        exitPrice == 0 ||
+                        quantity == 0
+        ){
+            return false;
+        }
+
         contentValues.put("timestamp", timestamp);
         contentValues.put("stocktitle", stockTitle);
+        contentValues.put("entryprice", entryPrice);
+        contentValues.put("isbuy", isBuy);
+        contentValues.put("stoploss", stoploss);
+        contentValues.put("exitprice", exitPrice);
+        contentValues.put("quantity", quantity);
 
         long result = sqLiteDatabase.insert(DatabaseUtils.TABLE_NAME_POSITION_SIZE_DETAIL, null, contentValues);
 
