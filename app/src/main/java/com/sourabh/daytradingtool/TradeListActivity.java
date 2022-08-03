@@ -7,11 +7,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.sourabh.daytradingtool.Data.TradeDetailPOJO;
 import com.sourabh.daytradingtool.Database.PositionSizeDetailDB;
+import com.sourabh.daytradingtool.UserInterface.TradeListItemClickListener;
 import com.sourabh.daytradingtool.UserInterface.TradeListRecyclerViewAdapter;
+import com.sourabh.daytradingtool.UserInterface.ViewPositionSizeLayoutDialog;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -94,13 +97,25 @@ public class TradeListActivity extends AppCompatActivity {
         //Sort Timestamp ArrayList
         Collections.sort(timestamps, Collections.reverseOrder());
 
+        TradeListItemClickListener tradeListItemClickListener = new TradeListItemClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+
+                //View Position Size Layout
+                ViewPositionSizeLayoutDialog viewPositionSizeLayoutDialog = new ViewPositionSizeLayoutDialog(TradeListActivity.this);
+
+                viewPositionSizeLayoutDialog.view();
+            }
+        };
+
         if(timestamps != null && timestamps.size()>0 && quantities != null && tradingDetails != null){
             TradeListRecyclerViewAdapter tradeListRecyclerViewAdapter = new TradeListRecyclerViewAdapter(
                     this,
                     timestamps,
                     quantities,
                     stockTitles,
-                    tradingDetails
+                    tradingDetails,
+                    tradeListItemClickListener
             );
 
             recyclerView.setAdapter(tradeListRecyclerViewAdapter);

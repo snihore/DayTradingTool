@@ -5,6 +5,9 @@ public class TradingCapitalData {
     private double riskPerTrade;
     private float margin;
 
+    public TradingCapitalData() {
+    }
+
     public TradingCapitalData(double tradingCapital, double riskPerTrade, float margin) {
         this.tradingCapital = tradingCapital;
         this.riskPerTrade = riskPerTrade;

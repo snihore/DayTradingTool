@@ -20,8 +20,10 @@ import android.widget.Toast;
 import com.sourabh.daytradingtool.Data.TradeDetail;
 import com.sourabh.daytradingtool.Data.TradeDetailPOJO;
 import com.sourabh.daytradingtool.Data.TradingCapitalData;
+import com.sourabh.daytradingtool.Database.TradingCapitalDetailDB;
 import com.sourabh.daytradingtool.UserInterface.BottomSheetPriceType;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity{
@@ -31,7 +33,7 @@ public class MainActivity extends AppCompatActivity{
     private EditText entryPriceEt, stoplossEt, exitPriceEt;
     private Button getPositionSizeBtn;
     private ImageView stoplossOptionsbtn, exitPriceOptionsBtn, tradingCapitalEditBtn, tradeListBtn;
-    private TextView stoplossOptionsTv, exitPriceOptionsTv, stoplossPriceShowTv, exitPricePriceShowTv;
+    private TextView stoplossOptionsTv, exitPriceOptionsTv, stoplossPriceShowTv, exitPricePriceShowTv, tradingCapitalTv, riskPerTradeTv, marginTv;
     //Custom Classes
 
     //Variables
@@ -50,17 +52,36 @@ public class MainActivity extends AppCompatActivity{
 
         initViews();
 
-        testTradingCapitalData();
 
     }
 
-    private void testTradingCapitalData() {
-        tradingCapitalData = new TradingCapitalData(
-                100000,
-                2000,
-                20
-        );
+    private void setTradingCapitalDetail() {
+
+        try{
+
+            TradingCapitalDetailDB tradingCapitalDetailDB = new TradingCapitalDetailDB(this);
+
+            if(tradingCapitalDetailDB == null){
+                return;
+            }
+
+            tradingCapitalData = tradingCapitalDetailDB.getTradingCapitalDetail();
+
+            if(tradingCapitalData == null){
+                return;
+            }
+
+            tradingCapitalTv.setText("\u20B9 "+addCommasInNumber(tradingCapitalData.getTradingCapital())+" ");
+            riskPerTradeTv.setText("\u20B9 "+addCommasInNumber(tradingCapitalData.getRiskPerTrade())+" ");
+            marginTv.setText(tradingCapitalData.getMargin()+"% ");
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+
     }
+
 
     private void initViews() {
 
@@ -77,6 +98,9 @@ public class MainActivity extends AppCompatActivity{
         exitPriceOptionsTv = (TextView)findViewById(R.id.exit_price_options_tv);
         stoplossPriceShowTv = (TextView)findViewById(R.id.stoploss_price_show_tv);
         exitPricePriceShowTv = (TextView)findViewById(R.id.exit_price_price_show_tv);
+        tradingCapitalTv = (TextView)findViewById(R.id.trading_capital_tv);
+        riskPerTradeTv = (TextView)findViewById(R.id.risk_per_trade_tv);
+        marginTv = (TextView)findViewById(R.id.margin_tv);
 
 
         switchBtn.setOnClickListener(new View.OnClickListener() {
@@ -155,6 +179,7 @@ public class MainActivity extends AppCompatActivity{
                     View view1 = getLayoutInflater().inflate(R.layout.trading_capital_dialog_layout, null);
                     builder.setView(view1);
                     AlertDialog dialog = builder.create();
+                    handleTradingCapitalEdit(dialog, view1);
                     dialog.show();
                 }catch (Exception e){
                     e.printStackTrace();
@@ -317,6 +342,53 @@ public class MainActivity extends AppCompatActivity{
         }
     }
 
+    private void handleTradingCapitalEdit(AlertDialog dialog, View view) {
+
+        EditText tradingCapitalEt = (EditText) view.findViewById(R.id.trading_capital_dialog_layout_trading_capital_et);
+        EditText riskPerTradeEt = (EditText) view.findViewById(R.id.trading_capital_dialog_layout_risk_per_trade_et);
+        EditText marginlEt = (EditText) view.findViewById(R.id.trading_capital_dialog_layout_margin_et);
+        Button saveBtn = (Button) view.findViewById(R.id.trading_capital_dialog_layout_save_btn);
+
+        saveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                try{
+
+                    TradingCapitalDetailDB tradingCapitalDetailDB = new TradingCapitalDetailDB(getApplicationContext());
+
+                    if(tradingCapitalDetailDB == null){
+                        Toast.makeText(MainActivity.this, "Not saved, please try again", Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+                        return;
+                    }
+
+                    boolean result = tradingCapitalDetailDB.saveTradingCapitalDetail(new TradingCapitalData(
+                            Double.parseDouble(tradingCapitalEt.getText().toString().trim()),
+                            Double.parseDouble(riskPerTradeEt.getText().toString().trim()),
+                            Float.parseFloat(marginlEt.getText().toString().trim())
+                    ));
+
+                    if(result){
+                        Toast.makeText(MainActivity.this, "Saved", Toast.LENGTH_SHORT).show();
+                        setTradingCapitalDetail();
+                    }else{
+                        Toast.makeText(MainActivity.this, "Not saved, please try again", Toast.LENGTH_SHORT).show();
+                    }
+
+                    dialog.dismiss();
+
+                }catch (Exception e){
+                    e.printStackTrace();
+                    Toast.makeText(MainActivity.this, "Not saved, please try again", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                }
+
+            }
+        });
+
+    }
+
     private void positionSizeHandle() throws Exception{
 
         String tempStr = entryPriceEt.getText().toString();
@@ -342,6 +414,11 @@ public class MainActivity extends AppCompatActivity{
             exitPrice = Double.parseDouble(tempStr);
         }else {
             throw new Exception("Please enter valid inputs");
+        }
+
+        if(tradingCapitalData.getTradingCapital() == 0){
+            Toast.makeText(this, "Please add your trading capital", Toast.LENGTH_SHORT).show();
+            return;
         }
 
         TradeDetail tradeDetail = new TradeDetail(
@@ -374,5 +451,22 @@ public class MainActivity extends AppCompatActivity{
         return (double) tmp / factor;
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
 
+        setTradingCapitalDetail();
+    }
+
+    private static String addCommasInNumber(double num){
+        try{
+            DecimalFormat df = new DecimalFormat("#,###.00");
+
+            return df.format(num);
+        }catch (Exception e){
+
+        }
+
+        return String.valueOf(num);
+    }
 }

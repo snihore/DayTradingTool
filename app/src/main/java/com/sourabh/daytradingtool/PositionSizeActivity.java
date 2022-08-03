@@ -23,7 +23,9 @@ import com.sourabh.daytradingtool.Data.PositionSizeDetail;
 import com.sourabh.daytradingtool.Data.SearchStockItemDetail;
 import com.sourabh.daytradingtool.Data.TradeDetail;
 import com.sourabh.daytradingtool.Data.TradeDetailPOJO;
+import com.sourabh.daytradingtool.Data.TradingCapitalData;
 import com.sourabh.daytradingtool.Database.PositionSizeDetailDB;
+import com.sourabh.daytradingtool.Database.TradingCapitalDetailDB;
 import com.sourabh.daytradingtool.UserInterface.SearchStockRecyclerViewAdapter;
 import com.sourabh.daytradingtool.UserInterface.SearchStockRecyclerViewClickListener;
 import com.sourabh.daytradingtool.Utils.GetStockList;
@@ -41,6 +43,7 @@ public class PositionSizeActivity extends AppCompatActivity {
 
     private TradeDetailPOJO tradeDetailPOJO;
     private PositionSizeDetail positionSizeDetail;
+    private TradingCapitalData tradingCapitalData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +55,12 @@ public class PositionSizeActivity extends AppCompatActivity {
         try {
             positionSizeDetail = (PositionSizeDetail) getIntent().getSerializableExtra("GET_POSITION_SIZE_DETAIL");
             tradeDetailPOJO = (TradeDetailPOJO) getIntent().getSerializableExtra("TRADE_DETAIL_POJO");
+
+            tradingCapitalData = new TradingCapitalDetailDB(this).getTradingCapitalDetail();
+
+            if(tradingCapitalData == null){
+                tradingCapitalData = new TradingCapitalData();
+            }
 
             setView(positionSizeDetail);
 
@@ -73,7 +82,7 @@ public class PositionSizeActivity extends AppCompatActivity {
         profitPerShareTv.setText("+"+positionSizeDetail.getProfitPerShare()+"("+positionSizeDetail.getProfitPerShareByPercentage()+"%)");
         lossTv.setText("-"+addCommasInNumber(positionSizeDetail.getLoss())+"("+positionSizeDetail.getLossByPercentage()+"%)");
         lossPerShareTv.setText("-"+positionSizeDetail.getLossPerShare()+"("+positionSizeDetail.getLossPerShareByPercentage()+"%)");
-        marginRequiredTv.setText("\u20B9 "+addCommasInNumber(positionSizeDetail.getMarginRequired()));
+        marginRequiredTv.setText("\u20B9 "+addCommasInNumber(positionSizeDetail.getMarginRequired())+"("+tradingCapitalData.getMargin()+"%)");
         actualCapitalRequiredTv.setText("\u20B9 "+addCommasInNumber(positionSizeDetail.getActualCapitalRequired()));
     }
 

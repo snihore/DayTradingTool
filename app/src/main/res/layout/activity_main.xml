@@ -63,10 +63,11 @@
                 android:textSize="15sp" />
 
             <TextView
+                android:id="@+id/trading_capital_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="monospace"
-                android:text="\u20B9 100,000 "
+                android:text=""
                 android:textColor="@color/gray"
                 android:textSize="15sp" />
         </LinearLayout>
@@ -88,10 +89,11 @@
                 android:textSize="15sp" />
 
             <TextView
+                android:id="@+id/risk_per_trade_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="monospace"
-                android:text="\u20B9 2000 "
+                android:text=""
                 android:textColor="@color/gray"
                 android:textSize="15sp" />
         </LinearLayout>
@@ -112,10 +114,11 @@
                 android:textSize="15sp" />
 
             <TextView
+                android:id="@+id/margin_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="monospace"
-                android:text="20% "
+                android:text=""
                 android:textColor="@color/gray"
                 android:textSize="15sp" />
         </LinearLayout>

@@ -2,7 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="20dp"
+    android:paddingTop="20dp"
+    android:paddingBottom="20dp"
+    android:paddingLeft="20dp"
     android:background="@drawable/round_corner_white_bg"
     android:layout_marginBottom="5dp"
     android:layout_marginLeft="10dp"
@@ -35,7 +37,7 @@
             android:id="@+id/trade_list_item_entry_price_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1234.67"
+            android:text="0.0"
             android:fontFamily="monospace"
             android:textColor="@color/gray"
             android:textSize="12sp"/>
@@ -58,7 +60,23 @@
             android:id="@+id/trade_list_item_stoploss_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1211.76"
+            android:text="0.0"
+            android:fontFamily="monospace"
+            android:textColor="@color/gray"
+            android:textSize="12sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" | "
+            android:textStyle="bold"
+            android:fontFamily="monospace"
+            android:textColor="@color/gray"
+            android:textSize="12sp"/>
+        <TextView
+            android:id="@+id/trade_list_item_risk_to_reward_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
             android:fontFamily="monospace"
             android:textColor="@color/gray"
             android:textSize="12sp"/>
@@ -76,21 +94,33 @@
         android:textColor="@color/gray"
         android:textSize="10sp" />
 
-    <TextView
-        android:id="@+id/trade_list_item_quantity_tv"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="110"
-        android:textStyle="bold"
-        android:fontFamily="monospace"
-        android:textColor="@color/green"
-        android:textSize="15sp"
-        android:background="@drawable/edit_text_green_bg"
+        android:orientation="horizontal"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:gravity="center"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"/>
+        android:gravity="center_vertical">
+        <TextView
+            android:id="@+id/trade_list_item_quantity_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_green_bg"
+            android:fontFamily="monospace"
+            android:gravity="center"
+            android:paddingLeft="20dp"
+            android:paddingTop="5dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="5dp"
+            android:text="0"
+            android:textColor="@color/green"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+        <ImageView
+            android:id="@+id/trade_list_item_more_option"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/ic_baseline_more_vert_24"
+            android:layout_marginLeft="10dp"/>
+    </LinearLayout>
 </RelativeLayout>

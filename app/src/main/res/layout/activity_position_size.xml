@@ -88,7 +88,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="monospace"
                     android:padding="2dp"
-                    android:text="--"
+                    android:text="0"
                     android:textColor="@color/black"
                     android:textSize="30sp" />
 
@@ -98,7 +98,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="monospace"
                     android:padding="2dp"
-                    android:text="Risk to Reward 1:2"
+                    android:text="Risk to Reward "
                     android:textColor="@color/gray"
                     android:textSize="15sp" />
             </LinearLayout>
@@ -168,7 +168,7 @@
                             android:layout_alignParentRight="true"
                             android:fontFamily="monospace"
                             android:padding="2dp"
-                            android:text="--(--%)"
+                            android:text="0.0(0.0%)"
                             android:textColor="@color/green"
                             android:textSize="15sp" />
 
@@ -195,7 +195,7 @@
                             android:layout_alignParentRight="true"
                             android:fontFamily="monospace"
                             android:padding="2dp"
-                            android:text="--(--%)"
+                            android:text="0.0(0.0%)"
                             android:textColor="@color/gray"
                             android:textSize="12sp" />
 
@@ -264,7 +264,7 @@
                             android:layout_alignParentRight="true"
                             android:fontFamily="monospace"
                             android:padding="2dp"
-                            android:text="--(--%)"
+                            android:text="0.0(0.0%)"
                             android:textColor="@color/red"
                             android:textSize="15sp" />
 
@@ -289,7 +289,7 @@
                             android:layout_alignParentRight="true"
                             android:fontFamily="monospace"
                             android:padding="2dp"
-                            android:text="--(--%)"
+                            android:text="0.0(0.0%)"
                             android:textColor="@color/gray"
                             android:textSize="12sp" />
 
@@ -362,7 +362,7 @@
                             android:layout_alignParentRight="true"
                             android:fontFamily="monospace"
                             android:padding="2dp"
-                            android:text="\u20B9 ---"
+                            android:text="\u20B9 0"
                             android:textColor="@color/black"
                             android:textSize="15sp" />
 
@@ -389,7 +389,7 @@
                             android:layout_alignParentRight="true"
                             android:fontFamily="monospace"
                             android:padding="2dp"
-                            android:text="\u20B9 ---"
+                            android:text="\u20B9 0"
                             android:textColor="@color/gray"
                             android:textSize="12sp" />
 

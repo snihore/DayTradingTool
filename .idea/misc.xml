@@ -27,6 +27,9 @@
         <entry key="..\:/Android Projects/DayTradingTool/app/src/main/res/layout/search_stock_list_layout_item.xml" value="0.209375" />
         <entry key="..\:/Android Projects/DayTradingTool/app/src/main/res/layout/trade_list_item_layout.xml" value="0.209375" />
         <entry key="..\:/Android Projects/DayTradingTool/app/src/main/res/layout/trading_capital_dialog_layout.xml" value="0.209375" />
+        <entry key="..\:/Android Projects/DayTradingTool/app/src/main/res/layout/view_position_size_layout.xml" value="0.209375" />
+        <entry key="..\:/Android Projects/DayTradingTool/app/src/main/res/layout/view_position_size_layout_dialog.xml" value="0.209375" />
+        <entry key="..\:/Android Projects/DayTradingTool/app/src/main/res/menu/trade_list_item_popup_menu.xml" value="0.20833333333333334" />
       </map>
     </option>
   </component>
