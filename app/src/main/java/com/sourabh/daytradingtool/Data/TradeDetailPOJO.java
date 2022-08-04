@@ -47,4 +47,14 @@ public class TradeDetailPOJO implements Serializable {
     public void setExitPrice(double exitPrice) {
         this.exitPrice = exitPrice;
     }
+
+    @Override
+    public String toString() {
+        return "TradeDetailPOJO{" +
+                "entryPrice=" + entryPrice +
+                ", isBuy=" + isBuy +
+                ", stoploss=" + stoploss +
+                ", exitPrice=" + exitPrice +
+                '}';
+    }
 }

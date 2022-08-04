@@ -18,14 +18,15 @@
             android:padding="18dp"/>
 
         <TextView
+            android:id="@+id/stock_title_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Stock Title"
-            android:textSize="18sp"
-            android:textStyle="bold"
+            android:layout_centerInParent="true"
             android:fontFamily="monospace"
+            android:text="Stock Title"
             android:textColor="@color/black"
-            android:layout_centerInParent="true"/>
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
     </RelativeLayout>
 
@@ -137,7 +138,7 @@
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:background="@drawable/image_round_gray_bg"
-                            android:padding="7dp"/>
+                            android:padding="7dp" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -199,6 +200,7 @@
                                     android:textSize="12sp" />
 
                             </RelativeLayout>
+
                             <RelativeLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content">

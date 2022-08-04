@@ -1,5 +1,6 @@
 package com.sourabh.daytradingtool.UserInterface;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -38,6 +39,8 @@ public class TradeListRecyclerViewAdapter extends RecyclerView.Adapter<TradeList
 
     private TradeListItemClickListener tradeListItemClickListener;
 
+
+
     public TradeListRecyclerViewAdapter(Context context, ArrayList<Long> timestamps, HashMap<Long, Integer> quantities, HashMap<Long, String> stockTitles, HashMap<Long, TradeDetailPOJO> tradingDetails, TradeListItemClickListener tradeListItemClickListener) {
         this.context = context;
         this.timestamps = timestamps;
@@ -45,6 +48,8 @@ public class TradeListRecyclerViewAdapter extends RecyclerView.Adapter<TradeList
         this.stockTitles = stockTitles;
         this.tradingDetails = tradingDetails;
         this.tradeListItemClickListener = tradeListItemClickListener;
+
+        Log.i("Timestamps", timestamps.toString());
     }
 
     @NonNull
@@ -56,7 +61,10 @@ public class TradeListRecyclerViewAdapter extends RecyclerView.Adapter<TradeList
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TradeListRecyclerViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull TradeListRecyclerViewHolder holder, @SuppressLint("RecyclerView") int position) {
+
+        Log.i("POSITION", String.valueOf(position));
+        TradeDetailPOJO tradeDetailPOJO = tradingDetails.get(timestamps.get(position));
 
         holder.stockTitle.setText(String.valueOf(stockTitles.get(timestamps.get(position))));
         holder.entryPrice.setText(String.valueOf(tradingDetails.get(timestamps.get(position)).getEntryPrice()));
@@ -74,9 +82,11 @@ public class TradeListRecyclerViewAdapter extends RecyclerView.Adapter<TradeList
             holder.quantity.setTextColor(ContextCompat.getColor(context, R.color.red));
         }
 
+        Log.i("ChildRV tradingdetails1", tradeDetailPOJO.toString());
+
         setPadding(holder.quantity);
 
-        setRiskToReward(holder, position);
+        setRiskToReward(holder, tradeDetailPOJO, position);
 
         holder.moreOptions.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,8 +105,11 @@ public class TradeListRecyclerViewAdapter extends RecyclerView.Adapter<TradeList
                         switch (menuItem.getItemId()){
                             case R.id.view:
                                 try{
-                                    ViewPositionSizeLayoutDialog dialog = new ViewPositionSizeLayoutDialog((TradeListActivity) context);
-                                    dialog.view();
+                                    if (tradeDetailPOJO != null){
+                                        Log.i("ChildRV tradingdetails2", tradeDetailPOJO.toString());
+                                        ViewPositionSizeLayoutDialog dialog = new ViewPositionSizeLayoutDialog((TradeListActivity) context, tradeDetailPOJO, stockTitles.get(timestamps.get(position)));
+                                        dialog.view();
+                                    }
                                 }catch (Exception e){
                                     e.printStackTrace();
                                 }
@@ -121,10 +134,12 @@ public class TradeListRecyclerViewAdapter extends RecyclerView.Adapter<TradeList
 
     }
 
-    private void setRiskToReward(TradeListRecyclerViewHolder holder, int position) {
+    private void setRiskToReward(TradeListRecyclerViewHolder holder, TradeDetailPOJO tradeDetailPOJO, int position) {
 
         try{
-            TradeDetailPOJO tradeDetailPOJO = tradingDetails.get(timestamps.get(position));
+            if(tradeDetailPOJO == null){
+                return;
+            }
             TradingCapitalDetailDB tradingCapitalDetailDB = new TradingCapitalDetailDB(context);
 
             TradeDetail tradeDetail = new TradeDetail(

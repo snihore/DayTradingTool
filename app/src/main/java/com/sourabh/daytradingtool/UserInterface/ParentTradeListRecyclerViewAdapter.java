@@ -100,12 +100,26 @@ public class ParentTradeListRecyclerViewAdapter extends RecyclerView.Adapter<Par
 
         TradeListItemClickListener tradeListItemClickListener = new TradeListItemClickListener() {
             @Override
-            public void onClick(View view, int position) {
+            public void onClick(View view, int position2) {
 
-                //View Position Size Layout
-                ViewPositionSizeLayoutDialog viewPositionSizeLayoutDialog = new ViewPositionSizeLayoutDialog((TradeListActivity) context);
+                //When click on Trade Item (Child recycler view)
 
-                viewPositionSizeLayoutDialog.view();
+                Log.i("Child RV Position", String.valueOf(position2));
+
+
+                try{
+
+                    Log.i("StockTitle", stockTitles.get(timestamps.get(position2)));
+
+                    TradeDetailPOJO tradeDetailPOJO = tradingDetails.get(timestamps.get(position2));
+
+                    ViewPositionSizeLayoutDialog viewPositionSizeLayoutDialog = new ViewPositionSizeLayoutDialog((TradeListActivity) context, tradeDetailPOJO, stockTitles.get(timestamps.get(position2)));
+
+                    viewPositionSizeLayoutDialog.view();
+
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
             }
         };
 

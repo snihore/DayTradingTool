@@ -105,7 +105,7 @@ public class TradeListActivity extends AppCompatActivity {
     private void handleParentRecyclerView() {
         //Sort Timestamp ArrayList
 
-        if(timestamps != null && timestamps.size()>0 && quantities != null && tradingDetails != null){
+        if(timestamps != null && timestamps.size()>0 && quantities != null && tradingDetails != null && stockTitles != null){
 
             HashMap<String, ArrayList<Long>> timestampHashMap = separate();
 
