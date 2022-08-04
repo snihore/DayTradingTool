@@ -60,9 +60,7 @@ public class TradeListRecyclerViewAdapter extends RecyclerView.Adapter<TradeList
 
         holder.stockTitle.setText(String.valueOf(stockTitles.get(timestamps.get(position))));
         holder.entryPrice.setText(String.valueOf(tradingDetails.get(timestamps.get(position)).getEntryPrice()));
-        holder.stoploss.setText(String.valueOf(tradingDetails.get(timestamps.get(position)).getStoploss()));
         holder.quantity.setText(String.valueOf(quantities.get(timestamps.get(position))));
-        holder.time.setText(convertTime(timestamps.get(position)));
 
         boolean isBuy = tradingDetails.get(timestamps.get(position)).isBuy();
 
@@ -78,7 +76,7 @@ public class TradeListRecyclerViewAdapter extends RecyclerView.Adapter<TradeList
 
         setPadding(holder.quantity);
 
-        setRiskToReward(holder.riskToRewardTv, position);
+        setRiskToReward(holder, position);
 
         holder.moreOptions.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,7 +121,7 @@ public class TradeListRecyclerViewAdapter extends RecyclerView.Adapter<TradeList
 
     }
 
-    private void setRiskToReward(TextView riskToRewardTv, int position) {
+    private void setRiskToReward(TradeListRecyclerViewHolder holder, int position) {
 
         try{
             TradeDetailPOJO tradeDetailPOJO = tradingDetails.get(timestamps.get(position));
@@ -140,7 +138,12 @@ public class TradeListRecyclerViewAdapter extends RecyclerView.Adapter<TradeList
             );
 
             if(tradeDetail != null && tradeDetail.getPositionSizeDetail() != null){
-                riskToRewardTv.setText("RR 1:"+tradeDetail.getPositionSizeDetail().getRiskToReward());
+                holder.riskToRewardTv.setText("Risk to Reward 1:"+tradeDetail.getPositionSizeDetail().getRiskToReward());
+                holder.stoploss.setText(
+                        String.valueOf(tradingDetails.get(timestamps.get(position)).getStoploss())+"(" +
+                                "" +tradeDetail.getPositionSizeDetail().getLossPerShareByPercentage()+
+                                "%)"
+                );
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -154,7 +157,7 @@ public class TradeListRecyclerViewAdapter extends RecyclerView.Adapter<TradeList
 
     public class TradeListRecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private TextView stockTitle, entryPrice, stoploss, quantity, time, riskToRewardTv;
+        private TextView stockTitle, entryPrice, stoploss, quantity, riskToRewardTv;
         private ImageView moreOptions;
 
         private TradeListItemClickListener tradeListItemClickListener;
@@ -166,7 +169,6 @@ public class TradeListRecyclerViewAdapter extends RecyclerView.Adapter<TradeList
             entryPrice = (TextView) itemView.findViewById(R.id.trade_list_item_entry_price_tv);
             stoploss = (TextView) itemView.findViewById(R.id.trade_list_item_stoploss_tv);
             quantity = (TextView) itemView.findViewById(R.id.trade_list_item_quantity_tv);
-            time = (TextView) itemView.findViewById(R.id.trade_list_item_time_tv);
             riskToRewardTv = (TextView) itemView.findViewById(R.id.trade_list_item_risk_to_reward_tv);
             moreOptions = (ImageView) itemView.findViewById(R.id.trade_list_item_more_option);
 
@@ -184,6 +186,8 @@ public class TradeListRecyclerViewAdapter extends RecyclerView.Adapter<TradeList
         }
     }
 
+
+
     private void setPadding(TextView textView){
         float density = context.getResources().getDisplayMetrics().density;
         int paddingPixel1 = (int)(5 * density);
@@ -191,10 +195,4 @@ public class TradeListRecyclerViewAdapter extends RecyclerView.Adapter<TradeList
         textView.setPadding(paddingPixel2, paddingPixel1, paddingPixel2, paddingPixel1);
     }
 
-    public String convertTime(long time){
-        Date date = new Date(time);
-        Format format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-        return format.format(date);
-
-    }
 }

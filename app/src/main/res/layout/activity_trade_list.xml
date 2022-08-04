@@ -30,11 +30,44 @@
             android:layout_toRightOf="@id/trade_list_layout_back_btn"/>
     </RelativeLayout>
 
+    <LinearLayout
+        android:id="@+id/trade_list_showing_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/trade_list_layout_header"
+        android:gravity="center"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray"
+            android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/trade_list_showing_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="monospace"
+            android:text="                    "
+            android:textColor="@color/gray"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/trade_list_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/trade_list_layout_header">
+        android:layout_below="@id/trade_list_showing_layout">
 
     </androidx.recyclerview.widget.RecyclerView>
 

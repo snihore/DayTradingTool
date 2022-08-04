@@ -8,21 +8,29 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sourabh.daytradingtool.Data.TradeDetailPOJO;
 import com.sourabh.daytradingtool.Database.PositionSizeDetailDB;
+import com.sourabh.daytradingtool.UserInterface.ParentTradeListRecyclerViewAdapter;
 import com.sourabh.daytradingtool.UserInterface.TradeListItemClickListener;
 import com.sourabh.daytradingtool.UserInterface.TradeListRecyclerViewAdapter;
 import com.sourabh.daytradingtool.UserInterface.ViewPositionSizeLayoutDialog;
 
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class TradeListActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
+
+    private TextView showingTv;
 
     private Cursor cursor;
 
@@ -48,7 +56,8 @@ public class TradeListActivity extends AppCompatActivity {
             if(cursor != null){
 
                 if(cursor.getCount() == 0){
-                    Toast.makeText(this, "No data found", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(this, "No data found", Toast.LENGTH_SHORT).show();
+                    showingTv.setText(" No data found ");
                 }else{
 
                     while(cursor.moveToNext()){
@@ -80,7 +89,7 @@ public class TradeListActivity extends AppCompatActivity {
 
                         stockTitles.put(cursor.getLong(0), cursor.getString(1));
 
-                        handleRecyclerView();
+                        handleParentRecyclerView();
 
                     }
                 }
@@ -89,44 +98,83 @@ public class TradeListActivity extends AppCompatActivity {
         }catch (Exception e){
             e.printStackTrace();
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            showingTv.setText(" No data found ");
         }
     }
 
-    private void handleRecyclerView() {
-
+    private void handleParentRecyclerView() {
         //Sort Timestamp ArrayList
-        Collections.sort(timestamps, Collections.reverseOrder());
-
-        TradeListItemClickListener tradeListItemClickListener = new TradeListItemClickListener() {
-            @Override
-            public void onClick(View view, int position) {
-
-                //View Position Size Layout
-                ViewPositionSizeLayoutDialog viewPositionSizeLayoutDialog = new ViewPositionSizeLayoutDialog(TradeListActivity.this);
-
-                viewPositionSizeLayoutDialog.view();
-            }
-        };
 
         if(timestamps != null && timestamps.size()>0 && quantities != null && tradingDetails != null){
-            TradeListRecyclerViewAdapter tradeListRecyclerViewAdapter = new TradeListRecyclerViewAdapter(
-                    this,
-                    timestamps,
-                    quantities,
-                    stockTitles,
-                    tradingDetails,
-                    tradeListItemClickListener
-            );
 
-            recyclerView.setAdapter(tradeListRecyclerViewAdapter);
+            HashMap<String, ArrayList<Long>> timestampHashMap = separate();
+
+            if(timestampHashMap.size()>0){
+
+                ArrayList<String> dates = new ArrayList<>(timestampHashMap.keySet());
+
+                Collections.sort(dates, Collections.reverseOrder());
+
+                Log.i("TimestampsHashMap", timestampHashMap.toString());
+                Log.i("TimestampsHashMap", dates.toString());
+
+                ParentTradeListRecyclerViewAdapter parentAdapter = new ParentTradeListRecyclerViewAdapter(this, dates, timestampHashMap, quantities, stockTitles, tradingDetails);
+
+                recyclerView.setAdapter(parentAdapter);
+
+                showingTv.setText(" Showing "+timestamps.size()+" entries ");
+
+            }else {
+                Toast.makeText(this, "No trades found, kindly save your trades", Toast.LENGTH_SHORT).show();
+                showingTv.setText(" No data found ");
+            }
+
         }else{
             Toast.makeText(this, "No trades found, kindly save your trades", Toast.LENGTH_SHORT).show();
+            showingTv.setText(" No data found ");
         }
+    }
+
+    private HashMap<String, ArrayList<Long>> separate() {
+
+        HashMap<String, ArrayList<Long>> hashMap = new HashMap<>();
+
+        HashSet<String> dateSet = new HashSet<>();
+
+        for(int i=0; i<timestamps.size(); i++){
+            String date = convertTime(timestamps.get(i));
+
+            dateSet.add(date);
+        }
+
+        for(String date: dateSet){
+
+            ArrayList<Long> timestampsDateWise = new ArrayList<>();
+
+            for(int j=0; j<timestamps.size(); j++){
+                if(date.equals(convertTime(timestamps.get(j)))){
+                    timestampsDateWise.add(timestamps.get(j));
+                }
+            }
+
+            hashMap.put(date, timestampsDateWise);
+        }
+
+        return hashMap;
     }
 
     private void initViews() {
         recyclerView = (RecyclerView) findViewById(R.id.trade_list_recycler_view);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        showingTv = (TextView) findViewById(R.id.trade_list_showing_tv);
+    }
+
+    public String convertTime(long time){
+        Date date = new Date(time);
+        Format format = new SimpleDateFormat("dd MMMM yyyy");
+        return format.format(date);
+
     }
 }
