@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingTop="20dp"
-    android:background="@android:color/white">
+    android:background="@android:color/white"
+    android:foreground="?android:attr/selectableItemBackground">
 
     <TextView
         android:id="@+id/trade_list_item_stock_title"
@@ -119,7 +120,8 @@
             android:layout_height="25dp"
             android:src="@drawable/ic_baseline_more_vert_24"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"/>
+            android:layout_marginRight="10dp"
+            android:background="?android:selectableItemBackground"/>
     </LinearLayout>
     <TextView
         android:layout_width="match_parent"

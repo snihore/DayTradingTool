@@ -210,8 +210,10 @@ public class PositionSizeActivity extends AppCompatActivity {
 
         if(result){
             dialog.dismiss();
+            Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, TradeListActivity.class);
             startActivity(intent);
+            onBackPressed();
         }else{
             Toast.makeText(this, "Unable to save your trade, please try again", Toast.LENGTH_SHORT).show();
         }

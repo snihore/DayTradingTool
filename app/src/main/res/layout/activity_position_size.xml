@@ -15,7 +15,8 @@
             android:layout_width="?attr/actionBarSize"
             android:layout_height="?attr/actionBarSize"
             android:src="@drawable/ic_baseline_arrow_back_ios_new_24"
-            android:padding="18dp"/>
+            android:padding="18dp"
+            android:background="?android:selectableItemBackground"/>
 
         <ImageView
             android:id="@+id/trade_list_btn"
@@ -24,7 +25,8 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
             android:padding="15dp"
-            android:src="@drawable/list_icon" />
+            android:src="@drawable/list_icon"
+            android:background="?android:selectableItemBackground"/>
     </RelativeLayout>
 
     <RelativeLayout
@@ -61,7 +63,8 @@
                 android:layout_marginTop="7dp"
                 android:layout_marginRight="7dp"
                 android:padding="5dp"
-                android:src="@drawable/ic_baseline_add_box_24" />
+                android:src="@drawable/ic_baseline_add_box_24"
+                android:background="?android:selectableItemBackground"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
