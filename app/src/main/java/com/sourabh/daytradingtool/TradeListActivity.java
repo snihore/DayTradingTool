@@ -8,10 +8,12 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sourabh.daytradingtool.Data.TradeDetailPOJO;
+import com.sourabh.daytradingtool.Data.TradingCapitalData;
 import com.sourabh.daytradingtool.Database.PositionSizeDetailDB;
 import com.sourabh.daytradingtool.UserInterface.ParentTradeListRecyclerViewAdapter;
 import com.sourabh.daytradingtool.UserInterface.TradeListItemClickListener;
@@ -34,10 +36,13 @@ public class TradeListActivity extends AppCompatActivity {
 
     private Cursor cursor;
 
+    private ImageView backBtn;
+
     private ArrayList<Long> timestamps = new ArrayList<>();
     private HashMap<Long, Integer> quantities = new HashMap<>();
     private HashMap<Long, String> stockTitles = new HashMap<>();
     private HashMap<Long, TradeDetailPOJO> tradingDetails = new HashMap<>();
+    private HashMap<Long, TradingCapitalData> tradingCapitals = new HashMap<>();
 
 
     @Override
@@ -68,7 +73,10 @@ public class TradeListActivity extends AppCompatActivity {
                                 "IsBuy: "+cursor.getString(3)+",\n" +
                                 "Stoploss: "+cursor.getString(4)+",\n" +
                                 "ExitPrice: "+cursor.getString(5)+",\n" +
-                                "Quantity: "+cursor.getString(6));
+                                "Quantity: "+cursor.getString(6)+",\n"+
+                                "TradingCapital: "+cursor.getString(7)+",\n"+
+                                "RiskPerTrade: "+cursor.getString(8)+",\n"+
+                                "Margin: "+cursor.getString(9));
 
                         timestamps.add(cursor.getLong(0));
 
@@ -89,6 +97,12 @@ public class TradeListActivity extends AppCompatActivity {
 
                         stockTitles.put(cursor.getLong(0), cursor.getString(1));
 
+                        tradingCapitals.put(cursor.getLong(0), new TradingCapitalData(
+                                cursor.getDouble(7),
+                                cursor.getDouble(8),
+                                cursor.getFloat(9)
+                        ));
+
                         handleParentRecyclerView();
 
                     }
@@ -105,7 +119,7 @@ public class TradeListActivity extends AppCompatActivity {
     private void handleParentRecyclerView() {
         //Sort Timestamp ArrayList
 
-        if(timestamps != null && timestamps.size()>0 && quantities != null && tradingDetails != null && stockTitles != null){
+        if(timestamps != null && timestamps.size()>0 && quantities != null && tradingDetails != null && stockTitles != null && tradingCapitals != null){
 
             HashMap<String, ArrayList<Long>> timestampHashMap = separate();
 
@@ -118,7 +132,7 @@ public class TradeListActivity extends AppCompatActivity {
                 Log.i("TimestampsHashMap", timestampHashMap.toString());
                 Log.i("TimestampsHashMap", dates.toString());
 
-                ParentTradeListRecyclerViewAdapter parentAdapter = new ParentTradeListRecyclerViewAdapter(this, dates, timestampHashMap, quantities, stockTitles, tradingDetails);
+                ParentTradeListRecyclerViewAdapter parentAdapter = new ParentTradeListRecyclerViewAdapter(this, dates, timestampHashMap, quantities, stockTitles, tradingDetails, tradingCapitals, showingTv);
 
                 recyclerView.setAdapter(parentAdapter);
 
@@ -169,6 +183,15 @@ public class TradeListActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         showingTv = (TextView) findViewById(R.id.trade_list_showing_tv);
+
+        backBtn = (ImageView)findViewById(R.id.trade_list_layout_back_btn);
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
     }
 
     public String convertTime(long time){

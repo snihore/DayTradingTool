@@ -12,11 +12,12 @@
         android:layout_height="?attr/actionBarSize">
 
         <ImageView
+            android:id="@+id/position_size_back_btn"
             android:layout_width="?attr/actionBarSize"
             android:layout_height="?attr/actionBarSize"
-            android:src="@drawable/ic_baseline_arrow_back_ios_new_24"
+            android:background="?android:selectableItemBackground"
             android:padding="18dp"
-            android:background="?android:selectableItemBackground"/>
+            android:src="@drawable/ic_baseline_arrow_back_ios_new_24" />
 
         <ImageView
             android:id="@+id/trade_list_btn"

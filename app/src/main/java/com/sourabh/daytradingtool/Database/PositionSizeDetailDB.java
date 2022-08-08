@@ -27,7 +27,10 @@ public class PositionSizeDetailDB extends SQLiteOpenHelper {
                 "isbuy number, " +
                 "stoploss real, " +
                 "exitprice real," +
-                "quantity number)";
+                "quantity number," +
+                "tradingcapital real," +
+                "riskpertrade real," +
+                "margin real)";
 
         sqLiteDatabase.execSQL(query);
     }
@@ -36,7 +39,7 @@ public class PositionSizeDetailDB extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
     }
 
-    public boolean insertData(long timestamp, String stockTitle, double entryPrice, int isBuy, double stoploss, double exitPrice, int quantity){
+    public boolean insertData(long timestamp, String stockTitle, double entryPrice, int isBuy, double stoploss, double exitPrice, int quantity, double tradingCapital, double riskPerTrade, float margin){
 
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -47,7 +50,10 @@ public class PositionSizeDetailDB extends SQLiteOpenHelper {
                         isBuy == -1 ||
                         stoploss == 0 ||
                         exitPrice == 0 ||
-                        quantity == 0
+                        quantity == 0 ||
+                        tradingCapital == 0 ||
+                        riskPerTrade == 0 ||
+                        margin == 0
         ){
             return false;
         }
@@ -59,6 +65,9 @@ public class PositionSizeDetailDB extends SQLiteOpenHelper {
         contentValues.put("stoploss", stoploss);
         contentValues.put("exitprice", exitPrice);
         contentValues.put("quantity", quantity);
+        contentValues.put("tradingcapital", tradingCapital);
+        contentValues.put("riskpertrade", riskPerTrade);
+        contentValues.put("margin", margin);
 
         long result = sqLiteDatabase.insert(DatabaseUtils.TABLE_NAME_POSITION_SIZE_DETAIL, null, contentValues);
 
@@ -76,4 +85,25 @@ public class PositionSizeDetailDB extends SQLiteOpenHelper {
 
         return cursor;
     }
+
+    public boolean delete(long timestamp){
+
+        if(timestamp == 0){
+            return false;
+        }
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        if(db == null){
+            return false;
+        }
+        int result = db.delete(DatabaseUtils.TABLE_NAME_POSITION_SIZE_DETAIL, "timestamp = '"+timestamp+"'", null);
+
+        if(result <= 0){
+            return false;
+        }
+
+        return true;
+    }
+
 }

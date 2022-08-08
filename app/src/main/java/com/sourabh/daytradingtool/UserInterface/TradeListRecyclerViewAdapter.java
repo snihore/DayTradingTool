@@ -19,6 +19,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.sourabh.daytradingtool.Data.PositionSizeDetail;
 import com.sourabh.daytradingtool.Data.TradeDetail;
 import com.sourabh.daytradingtool.Data.TradeDetailPOJO;
+import com.sourabh.daytradingtool.Data.TradingCapitalData;
+import com.sourabh.daytradingtool.Database.PositionSizeDetailDB;
 import com.sourabh.daytradingtool.Database.TradingCapitalDetailDB;
 import com.sourabh.daytradingtool.R;
 import com.sourabh.daytradingtool.TradeListActivity;
@@ -36,20 +38,25 @@ public class TradeListRecyclerViewAdapter extends RecyclerView.Adapter<TradeList
     private HashMap<Long, Integer> quantities;
     private HashMap<Long, String> stockTitles;
     private HashMap<Long, TradeDetailPOJO> tradingDetails;
+    private HashMap<Long, TradingCapitalData> tradingCapitals;
+    private TextView showingTv;
 
     private TradeListItemClickListener tradeListItemClickListener;
 
 
 
-    public TradeListRecyclerViewAdapter(Context context, ArrayList<Long> timestamps, HashMap<Long, Integer> quantities, HashMap<Long, String> stockTitles, HashMap<Long, TradeDetailPOJO> tradingDetails, TradeListItemClickListener tradeListItemClickListener) {
+    public TradeListRecyclerViewAdapter(Context context, ArrayList<Long> timestamps, HashMap<Long, Integer> quantities, HashMap<Long, String> stockTitles, HashMap<Long, TradeDetailPOJO> tradingDetails, HashMap<Long, TradingCapitalData> tradingCapitals, TextView showingTv,  TradeListItemClickListener tradeListItemClickListener) {
         this.context = context;
         this.timestamps = timestamps;
         this.quantities = quantities;
         this.stockTitles = stockTitles;
         this.tradingDetails = tradingDetails;
+        this.tradingCapitals = tradingCapitals;
+        this.showingTv = showingTv;
         this.tradeListItemClickListener = tradeListItemClickListener;
 
         Log.i("Timestamps", timestamps.toString());
+
     }
 
     @NonNull
@@ -65,6 +72,7 @@ public class TradeListRecyclerViewAdapter extends RecyclerView.Adapter<TradeList
 
         Log.i("POSITION", String.valueOf(position));
         TradeDetailPOJO tradeDetailPOJO = tradingDetails.get(timestamps.get(position));
+        TradingCapitalData tradingCapitalData = tradingCapitals.get(timestamps.get(position));
 
         holder.stockTitle.setText(String.valueOf(stockTitles.get(timestamps.get(position))));
         holder.entryPrice.setText(String.valueOf(tradingDetails.get(timestamps.get(position)).getEntryPrice()));
@@ -105,9 +113,9 @@ public class TradeListRecyclerViewAdapter extends RecyclerView.Adapter<TradeList
                         switch (menuItem.getItemId()){
                             case R.id.view:
                                 try{
-                                    if (tradeDetailPOJO != null){
+                                    if (tradeDetailPOJO != null && tradingCapitalData != null){
                                         Log.i("ChildRV tradingdetails2", tradeDetailPOJO.toString());
-                                        ViewPositionSizeLayoutDialog dialog = new ViewPositionSizeLayoutDialog((TradeListActivity) context, tradeDetailPOJO, stockTitles.get(timestamps.get(position)));
+                                        ViewPositionSizeLayoutDialog dialog = new ViewPositionSizeLayoutDialog((TradeListActivity) context, tradeDetailPOJO, tradingCapitalData, stockTitles.get(timestamps.get(position)));
                                         dialog.view();
                                     }
                                 }catch (Exception e){
@@ -118,7 +126,31 @@ public class TradeListRecyclerViewAdapter extends RecyclerView.Adapter<TradeList
                                 Toast.makeText(context, "Rename", Toast.LENGTH_SHORT).show();
                                 break;
                             case R.id.delete:
-                                Toast.makeText(context, "Delete", Toast.LENGTH_SHORT).show();
+                                try{
+                                    PositionSizeDetailDB db = new PositionSizeDetailDB(context);
+
+                                    boolean result = db.delete(timestamps.get(position));
+
+                                    if(result){
+                                        Toast.makeText(context, "Deleted", Toast.LENGTH_SHORT).show();
+                                        if(timestamps.remove(timestamps.get(position))){
+                                            notifyDataSetChanged();
+                                            if(showingTv != null ){
+                                                if(timestamps.size() == 0){
+                                                    showingTv.setText(" No data found ");
+                                                }else{
+                                                    showingTv.setText(" Showing "+timestamps.size()+" entries ");
+                                                }
+
+                                            }
+                                        }
+                                    }else{
+                                        Toast.makeText(context, "Not deleted, please try again", Toast.LENGTH_SHORT).show();
+                                    }
+                                }catch (Exception e){
+                                    e.printStackTrace();
+                                    Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
                                 break;
                             case R.id.explore:
                                 Toast.makeText(context, "Explore", Toast.LENGTH_SHORT).show();

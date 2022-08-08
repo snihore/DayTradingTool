@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sourabh.daytradingtool.Data.TradeDetailPOJO;
+import com.sourabh.daytradingtool.Data.TradingCapitalData;
 import com.sourabh.daytradingtool.R;
 import com.sourabh.daytradingtool.TradeListActivity;
 
@@ -33,14 +34,19 @@ public class ParentTradeListRecyclerViewAdapter extends RecyclerView.Adapter<Par
     private HashMap<Long, Integer> quantities;
     private HashMap<Long, String> stockTitles;
     private HashMap<Long, TradeDetailPOJO> tradingDetails;
+    private HashMap<Long, TradingCapitalData> tradingCapitals;
 
-    public ParentTradeListRecyclerViewAdapter(Context context, ArrayList<String> dates, HashMap<String, ArrayList<Long>> timestampHashMap, HashMap<Long, Integer> quantities, HashMap<Long, String> stockTitles, HashMap<Long, TradeDetailPOJO> tradingDetails) {
+    private TextView showingTv;
+
+    public ParentTradeListRecyclerViewAdapter(Context context, ArrayList<String> dates, HashMap<String, ArrayList<Long>> timestampHashMap, HashMap<Long, Integer> quantities, HashMap<Long, String> stockTitles, HashMap<Long, TradeDetailPOJO> tradingDetails, HashMap<Long, TradingCapitalData> tradingCapitals, TextView showingTv) {
         this.context = context;
         this.dates = dates;
         this.timestampHashMap = timestampHashMap;
         this.quantities = quantities;
         this.stockTitles = stockTitles;
         this.tradingDetails = tradingDetails;
+        this.tradingCapitals = tradingCapitals;
+        this.showingTv = showingTv;
     }
 
     @NonNull
@@ -113,7 +119,7 @@ public class ParentTradeListRecyclerViewAdapter extends RecyclerView.Adapter<Par
 
                     TradeDetailPOJO tradeDetailPOJO = tradingDetails.get(timestamps.get(position2));
 
-                    ViewPositionSizeLayoutDialog viewPositionSizeLayoutDialog = new ViewPositionSizeLayoutDialog((TradeListActivity) context, tradeDetailPOJO, stockTitles.get(timestamps.get(position2)));
+                    ViewPositionSizeLayoutDialog viewPositionSizeLayoutDialog = new ViewPositionSizeLayoutDialog((TradeListActivity) context, tradeDetailPOJO, tradingCapitals.get(timestamps.get(position2)), stockTitles.get(timestamps.get(position2)));
 
                     viewPositionSizeLayoutDialog.view();
 
@@ -123,7 +129,7 @@ public class ParentTradeListRecyclerViewAdapter extends RecyclerView.Adapter<Par
             }
         };
 
-        if(timestamps != null && timestamps.size()>0 && quantities != null && tradingDetails != null){
+        if(timestamps != null && timestamps.size()>0 && quantities != null && tradingDetails != null && tradingCapitals != null){
 
             TradeListRecyclerViewAdapter tradeListRecyclerViewAdapter = new TradeListRecyclerViewAdapter(
                     context,
@@ -131,6 +137,8 @@ public class ParentTradeListRecyclerViewAdapter extends RecyclerView.Adapter<Par
                     quantities,
                     stockTitles,
                     tradingDetails,
+                    tradingCapitals,
+                    showingTv,
                     tradeListItemClickListener
             );
 

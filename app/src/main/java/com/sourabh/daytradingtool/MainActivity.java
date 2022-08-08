@@ -344,39 +344,88 @@ public class MainActivity extends AppCompatActivity{
 
     private void handleTradingCapitalEdit(AlertDialog dialog, View view) {
 
+        if(dialog == null || view == null){
+            return;
+        }
+
         EditText tradingCapitalEt = (EditText) view.findViewById(R.id.trading_capital_dialog_layout_trading_capital_et);
         EditText riskPerTradeEt = (EditText) view.findViewById(R.id.trading_capital_dialog_layout_risk_per_trade_et);
         EditText marginlEt = (EditText) view.findViewById(R.id.trading_capital_dialog_layout_margin_et);
         Button saveBtn = (Button) view.findViewById(R.id.trading_capital_dialog_layout_save_btn);
+        TextView typeIntraday = (TextView)view.findViewById(R.id.trading_capital_type_intraday);
+        TextView typeDelivery = (TextView)view.findViewById(R.id.trading_capital_type_delivery);
+        ImageView backBtn = (ImageView)view.findViewById(R.id.trading_capital_dialog_layout_back_btn);
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+
+        typeIntraday.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                typeIntraday.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.round_corner_black_bg));
+                typeIntraday.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
+
+                typeDelivery.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.round_corner_gray_bg));
+                typeDelivery.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.black));
+
+                marginlEt.setText("");
+                marginlEt.setEnabled(true);
+            }
+        });
+
+        typeDelivery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                typeIntraday.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.round_corner_gray_bg));
+                typeIntraday.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.black));
+
+                typeDelivery.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.round_corner_black_bg));
+                typeDelivery.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
+
+                //Set Margin to 100%
+                marginlEt.setText("100");
+                marginlEt.setEnabled(false);
+            }
+        });
 
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view2) {
 
                 try{
-
-                    TradingCapitalDetailDB tradingCapitalDetailDB = new TradingCapitalDetailDB(getApplicationContext());
-
-                    if(tradingCapitalDetailDB == null){
-                        Toast.makeText(MainActivity.this, "Not saved, please try again", Toast.LENGTH_SHORT).show();
-                        dialog.dismiss();
-                        return;
-                    }
-
-                    boolean result = tradingCapitalDetailDB.saveTradingCapitalDetail(new TradingCapitalData(
-                            Double.parseDouble(tradingCapitalEt.getText().toString().trim()),
-                            Double.parseDouble(riskPerTradeEt.getText().toString().trim()),
-                            Float.parseFloat(marginlEt.getText().toString().trim())
-                    ));
-
-                    if(result){
-                        Toast.makeText(MainActivity.this, "Saved", Toast.LENGTH_SHORT).show();
-                        setTradingCapitalDetail();
+                    if(!validateTradingCapitalInputs(view)){
+                        Toast.makeText(getApplicationContext(), "Please provide the valid inputs", Toast.LENGTH_SHORT).show();
                     }else{
-                        Toast.makeText(MainActivity.this, "Not saved, please try again", Toast.LENGTH_SHORT).show();
-                    }
 
-                    dialog.dismiss();
+                        TradingCapitalDetailDB tradingCapitalDetailDB = new TradingCapitalDetailDB(getApplicationContext());
+
+                        if(tradingCapitalDetailDB == null){
+                            Toast.makeText(MainActivity.this, "Not saved, please try again", Toast.LENGTH_SHORT).show();
+                            dialog.dismiss();
+                            return;
+                        }
+
+                        boolean result = tradingCapitalDetailDB.saveTradingCapitalDetail(new TradingCapitalData(
+                                Double.parseDouble(tradingCapitalEt.getText().toString().trim()),
+                                Double.parseDouble(riskPerTradeEt.getText().toString().trim()),
+                                Float.parseFloat(marginlEt.getText().toString().trim())
+                        ));
+
+                        if(result){
+                            Toast.makeText(MainActivity.this, "Saved", Toast.LENGTH_SHORT).show();
+                            setTradingCapitalDetail();
+                        }else{
+                            Toast.makeText(MainActivity.this, "Not saved, please try again", Toast.LENGTH_SHORT).show();
+                        }
+
+                        dialog.dismiss();
+
+                    }
 
                 }catch (Exception e){
                     e.printStackTrace();
@@ -387,6 +436,35 @@ public class MainActivity extends AppCompatActivity{
             }
         });
 
+    }
+
+    private boolean validateTradingCapitalInputs(View view) {
+        try {
+            EditText tradingCapitalEt = (EditText) view.findViewById(R.id.trading_capital_dialog_layout_trading_capital_et);
+            EditText riskPerTradeEt = (EditText) view.findViewById(R.id.trading_capital_dialog_layout_risk_per_trade_et);
+            EditText marginlEt = (EditText) view.findViewById(R.id.trading_capital_dialog_layout_margin_et);
+
+            if(tradingCapitalEt.getText().toString().trim().matches("") ||
+                    riskPerTradeEt.getText().toString().trim().matches("") ||
+                    marginlEt.getText().toString().trim().matches("")){
+                return false;
+            }
+
+            if(tradingCapitalEt.getText().toString().trim().equals("0") ||
+                    riskPerTradeEt.getText().toString().trim().equals("0") ||
+                    marginlEt.getText().toString().trim().equals("0")){
+                return false;
+            }
+
+            if(Float.valueOf(marginlEt.getText().toString().trim()) > 100){
+                return false;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
     }
 
     private void positionSizeHandle() throws Exception{
@@ -416,7 +494,7 @@ public class MainActivity extends AppCompatActivity{
             throw new Exception("Please enter valid inputs");
         }
 
-        if(tradingCapitalData.getTradingCapital() == 0){
+        if(tradingCapitalData.getTradingCapital() == 0 || tradingCapitalData.getRiskPerTrade() == 0 || tradingCapitalData.getMargin() == 0){
             Toast.makeText(this, "Please add your trading capital", Toast.LENGTH_SHORT).show();
             return;
         }

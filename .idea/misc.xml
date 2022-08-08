@@ -4,10 +4,13 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Android Projects/DayTradingTool/app/src/main/res/drawable/edit_text_bg.xml" value="0.25" />
+        <entry key="..\:/Android Projects/DayTradingTool/app/src/main/res/drawable/edit_text_gray_bg.xml" value="0.1525" />
         <entry key="..\:/Android Projects/DayTradingTool/app/src/main/res/drawable/edit_text_green_bg.xml" value="0.1495" />
         <entry key="..\:/Android Projects/DayTradingTool/app/src/main/res/drawable/edit_text_red_bg.xml" value="0.1495" />
         <entry key="..\:/Android Projects/DayTradingTool/app/src/main/res/drawable/image_fill_gray_bg.xml" value="0.1525" />
         <entry key="..\:/Android Projects/DayTradingTool/app/src/main/res/drawable/image_round_gray_bg.xml" value="0.1495" />
+        <entry key="..\:/Android Projects/DayTradingTool/app/src/main/res/drawable/round_corner_black_bg.xml" value="0.1525" />
+        <entry key="..\:/Android Projects/DayTradingTool/app/src/main/res/drawable/round_corner_gray_bg.xml" value="0.1525" />
         <entry key="..\:/Android Projects/DayTradingTool/app/src/main/res/drawable/round_corner_green_bg.xml" value="0.2165" />
         <entry key="..\:/Android Projects/DayTradingTool/app/src/main/res/drawable/round_corner_white_bg.xml" value="0.2165" />
         <entry key="..\:/Android Projects/DayTradingTool/app/src/main/res/drawable/round_corners.xml" value="0.2165" />
@@ -17,6 +20,8 @@
         <entry key="..\:/Android Projects/DayTradingTool/app/src/main/res/drawable/swipe_button_circle_bg.xml" value="0.2155" />
         <entry key="..\:/Android Projects/DayTradingTool/app/src/main/res/drawable/swipe_button_green_bg.xml" value="0.1525" />
         <entry key="..\:/Android Projects/DayTradingTool/app/src/main/res/drawable/swipe_button_red_bg.xml" value="0.1525" />
+        <entry key="..\:/Android Projects/DayTradingTool/app/src/main/res/drawable/switch_button_green_bg.xml" value="0.1525" />
+        <entry key="..\:/Android Projects/DayTradingTool/app/src/main/res/drawable/switch_button_red_bg.xml" value="0.1525" />
         <entry key="..\:/Android Projects/DayTradingTool/app/src/main/res/drawable/text_view_gray_bg.xml" value="0.1525" />
         <entry key="..\:/Android Projects/DayTradingTool/app/src/main/res/drawable/text_view_selected_bg.xml" value="0.1525" />
         <entry key="..\:/Android Projects/DayTradingTool/app/src/main/res/layout/activity_main.xml" value="0.25" />

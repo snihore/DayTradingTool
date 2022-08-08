@@ -38,7 +38,7 @@ import java.util.Timer;
 
 public class PositionSizeActivity extends AppCompatActivity {
 
-    private ImageView tradeListBtn, tradeSaveBtn;
+    private ImageView tradeListBtn, tradeSaveBtn, backBtn;
     private TextView quantityTv, riskToRewardTv, profitTv, profitPerShareTv, lossTv, lossPerShareTv, marginRequiredTv, actualCapitalRequiredTv;
 
     private TradeDetailPOJO tradeDetailPOJO;
@@ -97,6 +97,7 @@ public class PositionSizeActivity extends AppCompatActivity {
         marginRequiredTv = (TextView)findViewById(R.id.margin_required_tv);
         actualCapitalRequiredTv = (TextView)findViewById(R.id.actual_capital_required_tv);
         tradeSaveBtn = (ImageView)findViewById(R.id.trade_save_btn);
+        backBtn = (ImageView)findViewById(R.id.position_size_back_btn);
 
 
         tradeListBtn.setOnClickListener(new View.OnClickListener() {
@@ -111,6 +112,13 @@ public class PositionSizeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 openSelectStockDialog();
+            }
+        });
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
             }
         });
     }
@@ -133,6 +141,14 @@ public class PositionSizeActivity extends AppCompatActivity {
     private void openSelectStockDialogView(View view, AlertDialog dialog) {
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.search_stock_list_recycler_view);
         EditText searchStockEt = (EditText) view.findViewById(R.id.search_stock_list_et);
+        ImageView backBtn = (ImageView)view.findViewById(R.id.search_stock_list_back_btn);
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
 
         ArrayList<SearchStockItemDetail> searchStockItemDetails = GetStockList.readData(this);
         if(searchStockItemDetails != null && searchStockItemDetails.size()>0){
@@ -188,6 +204,13 @@ public class PositionSizeActivity extends AppCompatActivity {
             return;
         }
 
+        if(tradingCapitalData.getTradingCapital() == 0 ||
+        tradingCapitalData.getRiskPerTrade() == 0 ||
+        tradingCapitalData.getMargin() == 0){
+            Toast.makeText(this, "Unable to save your trade, please enter your trading capital details", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         int isBuyInt = -1;
 
         if(tradeDetailPOJO.isBuy()){
@@ -204,7 +227,10 @@ public class PositionSizeActivity extends AppCompatActivity {
                 isBuyInt,
                 tradeDetailPOJO.getStoploss(),
                 tradeDetailPOJO.getExitPrice(),
-                positionSizeDetail.getQuantity()
+                positionSizeDetail.getQuantity(),
+                tradingCapitalData.getTradingCapital(),
+                tradingCapitalData.getRiskPerTrade(),
+                tradingCapitalData.getMargin()
 
         );
 

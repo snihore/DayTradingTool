@@ -29,14 +29,19 @@ public class ViewPositionSizeLayoutDialog {
     private TextView quantityTv, riskToRewardTv, profitTv, profitPerShareTv, lossTv, lossPerShareTv, marginRequiredTv, actualCapitalRequiredTv;
     private TextView stockTitleTv, entryPriceTv, stoplossTv, exitPriceTv;
 
+    private ImageView backBtn;
+
     private PositionSizeDetail positionSizeDetail;
     private TradingCapitalData tradingCapitalData;
     private String stockTitle;
 
-    public ViewPositionSizeLayoutDialog(TradeListActivity activity, TradeDetailPOJO tradeDetailPOJO, String stockTitle) {
+    private AlertDialog dialog;
+
+    public ViewPositionSizeLayoutDialog(TradeListActivity activity, TradeDetailPOJO tradeDetailPOJO, TradingCapitalData tradingCapitalData, String stockTitle) {
         this.activity = activity;
         this.tradeDetailPOJO = tradeDetailPOJO;
         this.stockTitle = stockTitle;
+        this.tradingCapitalData = tradingCapitalData;
 
     }
 
@@ -44,10 +49,17 @@ public class ViewPositionSizeLayoutDialog {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity, R.style.full_screen_alert);
         View view1 = activity.getLayoutInflater().inflate(R.layout.view_position_size_layout_dialog, null);
         builder.setView(view1);
-        initViews(view1);
-        setViews();
-        AlertDialog dialog = builder.create();
-        dialog.show();
+        try{
+            initViews(view1);
+            setViews();
+            dialog = builder.create();
+            dialog.show();
+        }catch (Exception e){
+            e.printStackTrace();
+            if(dialog != null){
+                dialog.dismiss();
+            }
+        }
     }
 
     private void initViews(View view) {
@@ -63,6 +75,14 @@ public class ViewPositionSizeLayoutDialog {
         entryPriceTv = (TextView) view.findViewById(R.id.entry_price_tv);
         stoplossTv = (TextView) view.findViewById(R.id.stoploss_tv);
         exitPriceTv = (TextView) view.findViewById(R.id.exit_price_tv);
+        backBtn = (ImageView) view.findViewById(R.id.view_position_size_back_btn);
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
     }
 
     private void setViews() {
@@ -77,7 +97,6 @@ public class ViewPositionSizeLayoutDialog {
             stoplossTv.setText(String.valueOf(tradeDetailPOJO.getStoploss()));
             exitPriceTv.setText(String.valueOf(tradeDetailPOJO.getExitPrice()));
 
-            TradingCapitalDetailDB tradingCapitalDetailDB = new TradingCapitalDetailDB(activity.getApplicationContext());
 
             TradeDetail tradeDetail = new TradeDetail(
                     tradeDetailPOJO.getEntryPrice(),
@@ -86,13 +105,12 @@ public class ViewPositionSizeLayoutDialog {
                     "PRICE",
                     tradeDetailPOJO.getExitPrice(),
                     "PRICE",
-                    tradingCapitalDetailDB.getTradingCapitalDetail()
+                    tradingCapitalData
             );
 
             if(tradeDetail != null && tradeDetail.getPositionSizeDetail() != null){
 
                 positionSizeDetail = tradeDetail.getPositionSizeDetail();
-                tradingCapitalData = new TradingCapitalDetailDB(activity.getApplicationContext()).getTradingCapitalDetail();
 
                 if(positionSizeDetail == null || tradingCapitalData == null){
                     return;
@@ -113,6 +131,7 @@ public class ViewPositionSizeLayoutDialog {
             }
         }catch (Exception e){
             e.printStackTrace();
+
         }
     }
 

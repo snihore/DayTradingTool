@@ -110,7 +110,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="monospace"
-                android:text="Margin (Provided by Broker): "
+                android:text="Intraday Margin: "
                 android:textColor="@color/black"
                 android:textSize="15sp" />
 
@@ -178,13 +178,15 @@
                 android:text="Buy "
                 android:textColor="@color/black"
                 android:textSize="10sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:thumb="@drawable/switch_button_thumb"
+                android:track="@drawable/switch_button_track"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="monospace"
-                android:text="Sell "
+                android:text=" Sell "
                 android:textColor="@color/black"
                 android:textSize="10sp"
                 android:textStyle="bold" />
@@ -247,7 +249,7 @@
                 android:fontFamily="monospace"
                 android:gravity="center"
                 android:padding="5dp"
-                android:text=""
+                android:text="1234"
                 android:textColor="@color/white"
                 android:textSize="10sp"
                 android:visibility="gone"/>
