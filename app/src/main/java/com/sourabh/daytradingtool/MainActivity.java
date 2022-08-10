@@ -17,6 +17,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.sourabh.daytradingtool.Data.CalculateCharges;
 import com.sourabh.daytradingtool.Data.TradeDetail;
 import com.sourabh.daytradingtool.Data.TradeDetailPOJO;
 import com.sourabh.daytradingtool.Data.TradingCapitalData;
@@ -51,6 +52,8 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.activity_main);
 
         initViews();
+
+        CalculateCharges.getZerodhaChargesDelivery(2453, 2189, 101);
 
 
     }
