@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.sourabh.daytradingtool.Data.CalculateCharges;
 import com.sourabh.daytradingtool.Data.PositionSizeDetail;
 import com.sourabh.daytradingtool.Data.SearchStockItemDetail;
 import com.sourabh.daytradingtool.Data.TradeDetail;
@@ -28,6 +29,7 @@ import com.sourabh.daytradingtool.Database.PositionSizeDetailDB;
 import com.sourabh.daytradingtool.Database.TradingCapitalDetailDB;
 import com.sourabh.daytradingtool.UserInterface.SearchStockRecyclerViewAdapter;
 import com.sourabh.daytradingtool.UserInterface.SearchStockRecyclerViewClickListener;
+import com.sourabh.daytradingtool.Utils.ChargesUtils;
 import com.sourabh.daytradingtool.Utils.GetStockList;
 
 import java.text.DecimalFormat;
@@ -39,7 +41,7 @@ import java.util.Timer;
 public class PositionSizeActivity extends AppCompatActivity {
 
     private ImageView tradeListBtn, tradeSaveBtn, backBtn;
-    private TextView quantityTv, riskToRewardTv, profitTv, profitPerShareTv, lossTv, lossPerShareTv, marginRequiredTv, actualCapitalRequiredTv;
+    private TextView quantityTv, riskToRewardTv, profitTv, profitPerShareTv, lossTv, lossPerShareTv, marginRequiredTv, actualCapitalRequiredTv, profitChargesTv, lossChargesTv;
 
     private TradeDetailPOJO tradeDetailPOJO;
     private PositionSizeDetail positionSizeDetail;
@@ -84,6 +86,53 @@ public class PositionSizeActivity extends AppCompatActivity {
         lossPerShareTv.setText("-"+positionSizeDetail.getLossPerShare()+"("+positionSizeDetail.getLossPerShareByPercentage()+"%)");
         marginRequiredTv.setText("\u20B9 "+addCommasInNumber(positionSizeDetail.getMarginRequired())+"("+tradingCapitalData.getMargin()+"%)");
         actualCapitalRequiredTv.setText("\u20B9 "+addCommasInNumber(positionSizeDetail.getActualCapitalRequired()));
+
+        setCharges(tradeDetailPOJO.getEntryPrice(), tradeDetailPOJO.getExitPrice(), tradeDetailPOJO.getStoploss(), positionSizeDetail.getQuantity());
+    }
+
+    private void setCharges(double entry, double exit, double stoploss, int quantity) {
+
+        //PROFIT
+        double profitCharges = 0;
+        if(entry < exit){
+            //BUY
+            profitCharges = CalculateCharges.getZerodhaChargesIntraday(entry, exit, quantity);
+        }else{
+            //SELL
+            profitCharges = CalculateCharges.getZerodhaChargesIntraday(exit, entry, quantity);
+        }
+        if(tradingCapitalData.getMargin() == 100){
+            if(entry < exit){
+                //BUY
+                profitCharges = CalculateCharges.getZerodhaChargesDelivery(entry, exit, quantity);
+            }else{
+                //SELL
+                profitCharges = CalculateCharges.getZerodhaChargesDelivery(exit, entry, quantity);
+            }
+        }
+
+        //LOSS
+        double lossCharges = 0;
+        if(entry > stoploss){
+            //BUY
+            lossCharges = CalculateCharges.getZerodhaChargesIntraday(entry, stoploss, quantity);
+        }else{
+            //SELL
+            lossCharges = CalculateCharges.getZerodhaChargesIntraday(stoploss, entry, quantity);
+        }
+        if(tradingCapitalData.getMargin() == 100){
+            if(entry > stoploss){
+                //BUY
+                lossCharges = CalculateCharges.getZerodhaChargesDelivery(entry, stoploss, quantity);
+            }else{
+                //SELL
+                lossCharges = CalculateCharges.getZerodhaChargesDelivery(stoploss, entry, quantity);
+            }
+        }
+
+        //Set Views
+        profitChargesTv.setText("\u20B9 "+profitCharges);
+        lossChargesTv.setText("\u20B9 "+lossCharges);
     }
 
     private void initViews() {
@@ -98,6 +147,8 @@ public class PositionSizeActivity extends AppCompatActivity {
         actualCapitalRequiredTv = (TextView)findViewById(R.id.actual_capital_required_tv);
         tradeSaveBtn = (ImageView)findViewById(R.id.trade_save_btn);
         backBtn = (ImageView)findViewById(R.id.position_size_back_btn);
+        profitChargesTv = (TextView)findViewById(R.id.profit_charges);
+        lossChargesTv = (TextView)findViewById(R.id.loss_charges);
 
 
         tradeListBtn.setOnClickListener(new View.OnClickListener() {

@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 
+import com.sourabh.daytradingtool.Data.CalculateCharges;
 import com.sourabh.daytradingtool.Data.PositionSizeDetail;
 import com.sourabh.daytradingtool.Data.TradeDetail;
 import com.sourabh.daytradingtool.Data.TradeDetailPOJO;
@@ -27,7 +28,7 @@ public class ViewPositionSizeLayoutDialog {
     private TradeDetailPOJO tradeDetailPOJO;
 
     private TextView quantityTv, riskToRewardTv, profitTv, profitPerShareTv, lossTv, lossPerShareTv, marginRequiredTv, actualCapitalRequiredTv;
-    private TextView stockTitleTv, entryPriceTv, stoplossTv, exitPriceTv;
+    private TextView stockTitleTv, entryPriceTv, stoplossTv, exitPriceTv, profitChargesTv, lossChargesTv;
 
     private ImageView backBtn;
 
@@ -76,6 +77,8 @@ public class ViewPositionSizeLayoutDialog {
         stoplossTv = (TextView) view.findViewById(R.id.stoploss_tv);
         exitPriceTv = (TextView) view.findViewById(R.id.exit_price_tv);
         backBtn = (ImageView) view.findViewById(R.id.view_position_size_back_btn);
+        profitChargesTv = (TextView)view.findViewById(R.id.profit_charges);
+        lossChargesTv = (TextView)view.findViewById(R.id.loss_charges);
 
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,11 +131,58 @@ public class ViewPositionSizeLayoutDialog {
                 marginRequiredTv.setText("\u20B9 "+addCommasInNumber(positionSizeDetail.getMarginRequired())+"("+tradingCapitalData.getMargin()+"%)");
                 actualCapitalRequiredTv.setText("\u20B9 "+addCommasInNumber(positionSizeDetail.getActualCapitalRequired()));
 
+                setCharges(tradeDetailPOJO.getEntryPrice(), tradeDetailPOJO.getExitPrice(), tradeDetailPOJO.getStoploss(), positionSizeDetail.getQuantity());
+
             }
         }catch (Exception e){
             e.printStackTrace();
 
         }
+    }
+
+    private void setCharges(double entry, double exit, double stoploss, int quantity) {
+
+        //PROFIT
+        double profitCharges = 0;
+        if(entry < exit){
+            //BUY
+            profitCharges = CalculateCharges.getZerodhaChargesIntraday(entry, exit, quantity);
+        }else{
+            //SELL
+            profitCharges = CalculateCharges.getZerodhaChargesIntraday(exit, entry, quantity);
+        }
+        if(tradingCapitalData.getMargin() == 100){
+            if(entry < exit){
+                //BUY
+                profitCharges = CalculateCharges.getZerodhaChargesDelivery(entry, exit, quantity);
+            }else{
+                //SELL
+                profitCharges = CalculateCharges.getZerodhaChargesDelivery(exit, entry, quantity);
+            }
+        }
+
+        //LOSS
+        double lossCharges = 0;
+        if(entry > stoploss){
+            //BUY
+            lossCharges = CalculateCharges.getZerodhaChargesIntraday(entry, stoploss, quantity);
+        }else{
+            //SELL
+            lossCharges = CalculateCharges.getZerodhaChargesIntraday(stoploss, entry, quantity);
+        }
+        if(tradingCapitalData.getMargin() == 100){
+            if(entry > stoploss){
+                //BUY
+                lossCharges = CalculateCharges.getZerodhaChargesDelivery(entry, stoploss, quantity);
+            }else{
+                //SELL
+                lossCharges = CalculateCharges.getZerodhaChargesDelivery(stoploss, entry, quantity);
+            }
+        }
+
+        //Set Views
+        profitChargesTv.setText("\u20B9 "+profitCharges);
+        lossChargesTv.setText("\u20B9 "+lossCharges);
     }
 
     private static String addCommasInNumber(double num){

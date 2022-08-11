@@ -42,7 +42,6 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:context=".PositionSizeActivity"
                 android:padding="20dp">
 
                 <RelativeLayout
@@ -585,12 +584,13 @@
                                     android:textStyle="bold" />
 
                                 <TextView
+                                    android:id="@+id/profit_charges"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentRight="true"
                                     android:fontFamily="monospace"
                                     android:padding="2dp"
-                                    android:text="\u20B9 245.86"
+                                    android:text="\u20B9 0"
                                     android:textColor="@color/gray"
                                     android:textSize="12sp" />
 
@@ -611,12 +611,13 @@
                                     android:textStyle="bold" />
 
                                 <TextView
+                                    android:id="@+id/loss_charges"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentRight="true"
                                     android:fontFamily="monospace"
                                     android:padding="2dp"
-                                    android:text="\u20B9 244.43"
+                                    android:text="\u20B9 0"
                                     android:textColor="@color/gray"
                                     android:textSize="12sp" />
 

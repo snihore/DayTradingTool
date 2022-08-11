@@ -53,8 +53,6 @@ public class MainActivity extends AppCompatActivity{
 
         initViews();
 
-        CalculateCharges.getZerodhaChargesDelivery(2453, 2189, 101);
-
 
     }
 
