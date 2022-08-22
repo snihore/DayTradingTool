@@ -19,6 +19,7 @@ import com.sourabh.daytradingtool.UserInterface.ParentTradeListRecyclerViewAdapt
 import com.sourabh.daytradingtool.UserInterface.TradeListItemClickListener;
 import com.sourabh.daytradingtool.UserInterface.TradeListRecyclerViewAdapter;
 import com.sourabh.daytradingtool.UserInterface.ViewPositionSizeLayoutDialog;
+import com.sourabh.daytradingtool.Utils.FormatUtils;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
@@ -156,7 +157,7 @@ public class TradeListActivity extends AppCompatActivity {
         HashSet<String> dateSet = new HashSet<>();
 
         for(int i=0; i<timestamps.size(); i++){
-            String date = convertTime(timestamps.get(i));
+            String date = FormatUtils.convertTime(timestamps.get(i));
 
             dateSet.add(date);
         }
@@ -166,7 +167,7 @@ public class TradeListActivity extends AppCompatActivity {
             ArrayList<Long> timestampsDateWise = new ArrayList<>();
 
             for(int j=0; j<timestamps.size(); j++){
-                if(date.equals(convertTime(timestamps.get(j)))){
+                if(date.equals(FormatUtils.convertTime(timestamps.get(j)))){
                     timestampsDateWise.add(timestamps.get(j));
                 }
             }
@@ -192,12 +193,5 @@ public class TradeListActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-    }
-
-    public String convertTime(long time){
-        Date date = new Date(time);
-        Format format = new SimpleDateFormat("dd MMMM yyyy");
-        return format.format(date);
-
     }
 }

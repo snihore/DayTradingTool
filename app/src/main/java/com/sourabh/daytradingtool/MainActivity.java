@@ -23,6 +23,7 @@ import com.sourabh.daytradingtool.Data.TradeDetailPOJO;
 import com.sourabh.daytradingtool.Data.TradingCapitalData;
 import com.sourabh.daytradingtool.Database.TradingCapitalDetailDB;
 import com.sourabh.daytradingtool.UserInterface.BottomSheetPriceType;
+import com.sourabh.daytradingtool.Utils.FormatUtils;
 
 import java.text.DecimalFormat;
 import java.util.HashMap;
@@ -72,8 +73,8 @@ public class MainActivity extends AppCompatActivity{
                 return;
             }
 
-            tradingCapitalTv.setText("\u20B9 "+addCommasInNumber(tradingCapitalData.getTradingCapital())+" ");
-            riskPerTradeTv.setText("\u20B9 "+addCommasInNumber(tradingCapitalData.getRiskPerTrade())+" ");
+            tradingCapitalTv.setText("\u20B9 "+ FormatUtils.addCommasInNumber(tradingCapitalData.getTradingCapital())+" ");
+            riskPerTradeTv.setText("\u20B9 "+FormatUtils.addCommasInNumber(tradingCapitalData.getRiskPerTrade())+" ");
             marginTv.setText(tradingCapitalData.getMargin()+"% ");
 
         }catch (Exception e){
@@ -135,6 +136,13 @@ public class MainActivity extends AppCompatActivity{
                     stoplossEt.setPadding(paddingPixel10, paddingPixel15, paddingPixel10, paddingPixel15);
                     exitPriceEt.setPadding(paddingPixel10, paddingPixel15, paddingPixel10, paddingPixel15);
                 }
+
+                try{
+                    stoplossTextChangeListener(stoplossEt.getText().toString());
+                    exitPriceTextChangeListener(exitPriceEt.getText().toString());
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -156,7 +164,7 @@ public class MainActivity extends AppCompatActivity{
         stoplossOptionsbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                BottomSheetPriceType bottomSheetPriceType = new BottomSheetPriceType(stoplossPriceType, stoplossOptionsTv);
+                BottomSheetPriceType bottomSheetPriceType = new BottomSheetPriceType(stoplossPriceType, stoplossOptionsTv, stoplossEt, stoplossPriceShowTv);
                 bottomSheetPriceType.show(getSupportFragmentManager(), "BOTTOM_SHEET_PRICE_TYPE");
             }
         });
@@ -166,7 +174,7 @@ public class MainActivity extends AppCompatActivity{
         exitPriceOptionsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                BottomSheetPriceType bottomSheetPriceType = new BottomSheetPriceType(exitPricePriceType, exitPriceOptionsTv);
+                BottomSheetPriceType bottomSheetPriceType = new BottomSheetPriceType(exitPricePriceType, exitPriceOptionsTv, exitPriceEt, exitPricePriceShowTv);
                 bottomSheetPriceType.show(getSupportFragmentManager(), "BOTTOM_SHEET_PRICE_TYPE");
             }
         });
@@ -199,6 +207,24 @@ public class MainActivity extends AppCompatActivity{
         ////EDIT TEXT
         try{
 
+            entryPriceEt.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                    stoplossTextChangeListener(stoplossEt.getText().toString());
+                    exitPriceTextChangeListener(exitPriceEt.getText().toString());
+                }
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+
+                }
+            });
+
             stoplossEt.addTextChangedListener(new TextWatcher()
             {
                 public void afterTextChanged(Editable s){}
@@ -206,66 +232,7 @@ public class MainActivity extends AppCompatActivity{
 
                 }
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    if(s.length() > 0) {
-//                        Log.i("STOPLOSS EDITTEXT", s.toString());
-
-                        String stoplossType = stoplossPriceType.get(TYPE[0]);
-
-                        String entryPriceStr = entryPriceEt.getText().toString();
-                        if(entryPriceStr != null && !entryPriceStr.matches("")){
-
-                        }else{
-                            stoplossPriceShowTv.setVisibility(View.GONE);
-                            return;
-                        }
-                        Double entryPrice = null;
-                        Double stoploss = null;
-                        try{
-                            entryPrice = Double.parseDouble(entryPriceStr);
-                            stoploss = Double.parseDouble(s.toString());
-                        }catch (Exception e){
-                            stoplossPriceShowTv.setVisibility(View.GONE);
-                        }
-
-                        if(entryPrice == null || stoploss == null){
-                            stoplossPriceShowTv.setVisibility(View.GONE);
-                            return;
-                        }
-
-                        if(!isSwitchBtnChecked){
-
-                            //BUY
-
-                            if(stoplossType.equals(PRICE_TYPES[0])){
-                                //Price
-                                stoplossPriceShowTv.setVisibility(View.GONE);
-                            }else if(stoplossType.equals(PRICE_TYPES[1])){
-                                //Percentage
-                                stoplossPriceShowTv.setVisibility(View.VISIBLE);
-                                stoplossPriceShowTv.setText(String.valueOf(round(entryPrice - ((entryPrice*stoploss)/100), 2)));
-                            }else if(stoplossType.equals(PRICE_TYPES[2])){
-                                //Points
-                                stoplossPriceShowTv.setVisibility(View.VISIBLE);
-                                stoplossPriceShowTv.setText(String.valueOf(round(entryPrice - stoploss, 2)));
-                            }
-
-                        }else{
-                            //SELL
-
-                            if(stoplossType.equals(PRICE_TYPES[0])){
-                                //Price
-                                stoplossPriceShowTv.setVisibility(View.GONE);
-                            }else if(stoplossType.equals(PRICE_TYPES[1])){
-                                //Percentage
-                                stoplossPriceShowTv.setVisibility(View.VISIBLE);
-                                stoplossPriceShowTv.setText(String.valueOf(round(entryPrice + ((entryPrice*stoploss)/100), 2)));
-                            }else if(stoplossType.equals(PRICE_TYPES[2])){
-                                //Points
-                                stoplossPriceShowTv.setVisibility(View.VISIBLE);
-                                stoplossPriceShowTv.setText(String.valueOf(round(entryPrice + stoploss, 2)));
-                            }
-                        }
-                    }
+                    stoplossTextChangeListener(s);
                 }
             });
 
@@ -276,70 +243,138 @@ public class MainActivity extends AppCompatActivity{
 
                 }
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    if(s.length() > 0) {
-
-                        String exitPriceType = exitPricePriceType.get(TYPE[1]);
-
-                        String entryPriceStr = entryPriceEt.getText().toString();
-                        if(entryPriceStr != null && !entryPriceStr.matches("")){
-
-                        }else{
-                            exitPricePriceShowTv.setVisibility(View.GONE);
-                            return;
-                        }
-                        Double entryPrice = null;
-                        Double exitPrice = null;
-                        try{
-                            entryPrice = Double.parseDouble(entryPriceStr);
-                            exitPrice = Double.parseDouble(s.toString());
-                        }catch (Exception e){
-                            exitPricePriceShowTv.setVisibility(View.GONE);
-                        }
-
-                        if(entryPrice == null || exitPrice == null){
-                            exitPricePriceShowTv.setVisibility(View.GONE);
-                            return;
-                        }
-
-                        if(!isSwitchBtnChecked){
-                            //BUY
-
-                            if(exitPriceType.equals(PRICE_TYPES[0])){
-                                //Price
-                                exitPricePriceShowTv.setVisibility(View.GONE);
-                            }else if(exitPriceType.equals(PRICE_TYPES[1])){
-                                //Percentage
-                                exitPricePriceShowTv.setVisibility(View.VISIBLE);
-                                exitPricePriceShowTv.setText(String.valueOf(round(entryPrice + ((entryPrice*exitPrice)/100), 2)));
-                            }else if(exitPriceType.equals(PRICE_TYPES[2])){
-                                //Points
-                                exitPricePriceShowTv.setVisibility(View.VISIBLE);
-                                exitPricePriceShowTv.setText(String.valueOf(round(entryPrice + exitPrice, 2)));
-                            }
-
-                        }else{
-
-                            //SELL
-
-                            if(exitPriceType.equals(PRICE_TYPES[0])){
-                                //Price
-                                exitPricePriceShowTv.setVisibility(View.GONE);
-                            }else if(exitPriceType.equals(PRICE_TYPES[1])){
-                                //Percentage
-                                exitPricePriceShowTv.setVisibility(View.VISIBLE);
-                                exitPricePriceShowTv.setText(String.valueOf(round(entryPrice - ((entryPrice*exitPrice)/100), 2)));
-                            }else if(exitPriceType.equals(PRICE_TYPES[2])){
-                                //Points
-                                exitPricePriceShowTv.setVisibility(View.VISIBLE);
-                                exitPricePriceShowTv.setText(String.valueOf(round(entryPrice - exitPrice, 2)));
-                            }
-                        }
-                    }
+                    exitPriceTextChangeListener(s);
                 }
             });
 
         }catch (Exception e){
 
+        }
+    }
+
+    private void exitPriceTextChangeListener(CharSequence s) {
+        if(s.length() > 0) {
+
+            String exitPriceType = exitPricePriceType.get(TYPE[1]);
+
+            String entryPriceStr = entryPriceEt.getText().toString();
+            if(entryPriceStr != null && !entryPriceStr.matches("")){
+
+            }else{
+                exitPricePriceShowTv.setVisibility(View.GONE);
+                return;
+            }
+            Double entryPrice = null;
+            Double exitPrice = null;
+            try{
+                entryPrice = Double.parseDouble(entryPriceStr);
+                exitPrice = Double.parseDouble(s.toString());
+            }catch (Exception e){
+                exitPricePriceShowTv.setVisibility(View.GONE);
+            }
+
+            if(entryPrice == null || exitPrice == null){
+                exitPricePriceShowTv.setVisibility(View.GONE);
+                return;
+            }
+
+            if(!isSwitchBtnChecked){
+                //BUY
+
+                if(exitPriceType.equals(PRICE_TYPES[0])){
+                    //Price
+                    exitPricePriceShowTv.setVisibility(View.GONE);
+                }else if(exitPriceType.equals(PRICE_TYPES[1])){
+                    //Percentage
+                    exitPricePriceShowTv.setVisibility(View.VISIBLE);
+                    exitPricePriceShowTv.setText(String.valueOf(FormatUtils.round(entryPrice + ((entryPrice*exitPrice)/100), 2)));
+                }else if(exitPriceType.equals(PRICE_TYPES[2])){
+                    //Points
+                    exitPricePriceShowTv.setVisibility(View.VISIBLE);
+                    exitPricePriceShowTv.setText(String.valueOf(FormatUtils.round(entryPrice + exitPrice, 2)));
+                }
+
+            }else{
+
+                //SELL
+
+                if(exitPriceType.equals(PRICE_TYPES[0])){
+                    //Price
+                    exitPricePriceShowTv.setVisibility(View.GONE);
+                }else if(exitPriceType.equals(PRICE_TYPES[1])){
+                    //Percentage
+                    exitPricePriceShowTv.setVisibility(View.VISIBLE);
+                    exitPricePriceShowTv.setText(String.valueOf(FormatUtils.round(entryPrice - ((entryPrice*exitPrice)/100), 2)));
+                }else if(exitPriceType.equals(PRICE_TYPES[2])){
+                    //Points
+                    exitPricePriceShowTv.setVisibility(View.VISIBLE);
+                    exitPricePriceShowTv.setText(String.valueOf(FormatUtils.round(entryPrice - exitPrice, 2)));
+                }
+            }
+        }
+    }
+
+    private void stoplossTextChangeListener(CharSequence s) {
+
+        if(s.length() > 0) {
+//                        Log.i("STOPLOSS EDITTEXT", s.toString());
+
+            String stoplossType = stoplossPriceType.get(TYPE[0]);
+
+            String entryPriceStr = entryPriceEt.getText().toString();
+            if(entryPriceStr != null && !entryPriceStr.matches("")){
+
+            }else{
+                stoplossPriceShowTv.setVisibility(View.GONE);
+                return;
+            }
+            Double entryPrice = null;
+            Double stoploss = null;
+            try{
+                entryPrice = Double.parseDouble(entryPriceStr);
+                stoploss = Double.parseDouble(s.toString());
+            }catch (Exception e){
+                stoplossPriceShowTv.setVisibility(View.GONE);
+            }
+
+            if(entryPrice == null || stoploss == null){
+                stoplossPriceShowTv.setVisibility(View.GONE);
+                return;
+            }
+
+            if(!isSwitchBtnChecked){
+
+                //BUY
+
+                if(stoplossType.equals(PRICE_TYPES[0])){
+                    //Price
+                    stoplossPriceShowTv.setVisibility(View.GONE);
+                }else if(stoplossType.equals(PRICE_TYPES[1])){
+                    //Percentage
+                    stoplossPriceShowTv.setVisibility(View.VISIBLE);
+                    stoplossPriceShowTv.setText(String.valueOf(FormatUtils.round(entryPrice - ((entryPrice*stoploss)/100), 2)));
+                }else if(stoplossType.equals(PRICE_TYPES[2])){
+                    //Points
+                    stoplossPriceShowTv.setVisibility(View.VISIBLE);
+                    stoplossPriceShowTv.setText(String.valueOf(FormatUtils.round(entryPrice - stoploss, 2)));
+                }
+
+            }else{
+                //SELL
+
+                if(stoplossType.equals(PRICE_TYPES[0])){
+                    //Price
+                    stoplossPriceShowTv.setVisibility(View.GONE);
+                }else if(stoplossType.equals(PRICE_TYPES[1])){
+                    //Percentage
+                    stoplossPriceShowTv.setVisibility(View.VISIBLE);
+                    stoplossPriceShowTv.setText(String.valueOf(FormatUtils.round(entryPrice + ((entryPrice*stoploss)/100), 2)));
+                }else if(stoplossType.equals(PRICE_TYPES[2])){
+                    //Points
+                    stoplossPriceShowTv.setVisibility(View.VISIBLE);
+                    stoplossPriceShowTv.setText(String.valueOf(FormatUtils.round(entryPrice + stoploss, 2)));
+                }
+            }
         }
     }
 
@@ -470,30 +505,14 @@ public class MainActivity extends AppCompatActivity{
 
     private void positionSizeHandle() throws Exception{
 
-        String tempStr = entryPriceEt.getText().toString();
-        double entryPrice, stoploss, exitPrice;
-
-        if(tempStr != null && !tempStr.matches("")){
-            entryPrice = Double.parseDouble(tempStr);
-        }else {
-            throw new Exception("Please enter valid inputs");
+        if(!validateInputs()){
+            Toast.makeText(this, "Please enter valid inputs", Toast.LENGTH_SHORT).show();
+            return;
         }
 
-        tempStr = stoplossEt.getText().toString();
-
-        if(tempStr != null && !tempStr.matches("")){
-            stoploss = Double.parseDouble(tempStr);
-        }else {
-            throw new Exception("Please enter valid inputs");
-        }
-
-        tempStr = exitPriceEt.getText().toString();
-
-        if(tempStr != null && !tempStr.matches("")){
-            exitPrice = Double.parseDouble(tempStr);
-        }else {
-            throw new Exception("Please enter valid inputs");
-        }
+        double entryPrice = Double.parseDouble(entryPriceEt.getText().toString().trim());
+        double exitPrice = Double.parseDouble(exitPriceEt.getText().toString().trim());
+        double stoploss = Double.parseDouble(stoplossEt.getText().toString().trim());
 
         if(tradingCapitalData.getTradingCapital() == 0 || tradingCapitalData.getRiskPerTrade() == 0 || tradingCapitalData.getMargin() == 0){
             Toast.makeText(this, "Please add your trading capital", Toast.LENGTH_SHORT).show();
@@ -521,14 +540,116 @@ public class MainActivity extends AppCompatActivity{
         startActivity(intent);
     }
 
-    public static double round(double value, int places) {
-        if (places < 0) throw new IllegalArgumentException();
+    private boolean validateInputs() {
 
-        long factor = (long) Math.pow(10, places);
-        value = value * factor;
-        long tmp = Math.round(value);
-        return (double) tmp / factor;
+        if(entryPriceEt == null || exitPriceEt == null || stoplossEt == null){
+            return false;
+        }
+
+        if(entryPriceEt.getText().toString().matches("") ||
+        exitPriceEt.getText().toString().matches("") ||
+        stoplossEt.getText().toString().matches("")){
+            return false;
+        }
+
+        String stoplossType = stoplossPriceType.get(TYPE[0]);
+        String exitPriceType = exitPricePriceType.get(TYPE[1]);
+
+        double entry = Double.parseDouble(entryPriceEt.getText().toString().trim());
+        double exit = Double.parseDouble(exitPriceEt.getText().toString().trim());
+        double stoploss = Double.parseDouble(stoplossEt.getText().toString().trim());
+
+        if(entry < 1){
+            return false;
+        }
+
+        if(!isSwitchBtnChecked){
+
+            //BUY
+            if(stoplossType.matches(PRICE_TYPES[0])){
+                if(entry<=stoploss){
+                    return false;
+                }
+                if(stoploss<1){
+                    return false;
+                }
+            }
+            if(exitPriceType.matches(PRICE_TYPES[0])){
+                if(entry>=exit){
+                    return false;
+                }
+                if(exit<1){
+                    return false;
+                }
+            }
+
+            if(stoplossType.matches(PRICE_TYPES[1])){
+                if(stoploss <= 0 || stoploss > 100){
+                    return false;
+                }
+            }
+            if(exitPriceType.matches(PRICE_TYPES[1])){
+                if(exit <= 0 || exit > 100){
+                    return false;
+                }
+            }
+
+            if(stoplossType.matches(PRICE_TYPES[2])){
+                if(stoploss<=0 || stoploss >= entry){
+                    return false;
+                }
+            }
+            if(exitPriceType.matches(PRICE_TYPES[2])){
+                if(exit<=0){
+                    return false;
+                }
+            }
+
+        }else{
+            //SELL
+            if(stoplossType.matches(PRICE_TYPES[0])){
+                if(entry>=stoploss){
+                    return false;
+                }
+                if(stoploss<1){
+                    return false;
+                }
+            }
+            if(exitPriceType.matches(PRICE_TYPES[0])){
+                if(entry<=exit){
+                    return false;
+                }
+                if(exit<1){
+                    return false;
+                }
+            }
+            if(stoplossType.matches(PRICE_TYPES[1])){
+                if(stoploss <= 0 || stoploss > 100){
+                    return false;
+                }
+            }
+            if(exitPriceType.matches(PRICE_TYPES[1])){
+                if(exit <= 0 || exit > 100){
+                    return false;
+                }
+            }
+            if(stoplossType.matches(PRICE_TYPES[2])){
+                if(stoploss<=0 || stoploss >= entry){
+                    return false;
+                }
+            }
+            if(exitPriceType.matches(PRICE_TYPES[2])){
+                if(exit<=0){
+                    return false;
+                }
+            }
+
+        }
+
+        return true;
+
     }
+
 
     @Override
     protected void onResume() {
@@ -537,15 +658,4 @@ public class MainActivity extends AppCompatActivity{
         setTradingCapitalDetail();
     }
 
-    private static String addCommasInNumber(double num){
-        try{
-            DecimalFormat df = new DecimalFormat("#,###.00");
-
-            return df.format(num);
-        }catch (Exception e){
-
-        }
-
-        return String.valueOf(num);
-    }
 }

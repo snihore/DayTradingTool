@@ -16,7 +16,6 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.sourabh.daytradingtool.Data.PositionSizeDetail;
 import com.sourabh.daytradingtool.Data.TradeDetail;
 import com.sourabh.daytradingtool.Data.TradeDetailPOJO;
 import com.sourabh.daytradingtool.Data.TradingCapitalData;
@@ -25,10 +24,9 @@ import com.sourabh.daytradingtool.Database.TradingCapitalDetailDB;
 import com.sourabh.daytradingtool.R;
 import com.sourabh.daytradingtool.TradeListActivity;
 
-import java.text.Format;
-import java.text.SimpleDateFormat;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 
 public class TradeListRecyclerViewAdapter extends RecyclerView.Adapter<TradeListRecyclerViewAdapter.TradeListRecyclerViewHolder> {
@@ -97,12 +95,16 @@ public class TradeListRecyclerViewAdapter extends RecyclerView.Adapter<TradeList
         setRiskToReward(holder, tradeDetailPOJO, position);
 
         holder.moreOptions.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("RestrictedApi")
             @Override
             public void onClick(View view) {
                 //More Options
                 PopupMenu popupMenu = new PopupMenu(context, view);
 
+                showPopupMenuIcons(popupMenu);
+
                 popupMenu.getMenuInflater().inflate(R.menu.trade_list_item_popup_menu, popupMenu.getMenu());
+
 
                 popupMenu.show();
 
@@ -121,9 +123,6 @@ public class TradeListRecyclerViewAdapter extends RecyclerView.Adapter<TradeList
                                 }catch (Exception e){
                                     e.printStackTrace();
                                 }
-                                break;
-                            case R.id.rename:
-                                Toast.makeText(context, "Rename", Toast.LENGTH_SHORT).show();
                                 break;
                             case R.id.delete:
                                 try{
@@ -152,9 +151,6 @@ public class TradeListRecyclerViewAdapter extends RecyclerView.Adapter<TradeList
                                     Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
                                 }
                                 break;
-                            case R.id.explore:
-                                Toast.makeText(context, "Explore", Toast.LENGTH_SHORT).show();
-                                break;
                         }
 
                         return true;
@@ -163,6 +159,25 @@ public class TradeListRecyclerViewAdapter extends RecyclerView.Adapter<TradeList
             }
         });
 
+
+    }
+
+    private void showPopupMenuIcons(PopupMenu popupMenu) {
+        try {
+            Field[] fields = popupMenu.getClass().getDeclaredFields();
+            for (Field field : fields) {
+                if ("mPopup".equals(field.getName())) {
+                    field.setAccessible(true);
+                    Object menuPopupHelper = field.get(popupMenu);
+                    Class<?> classPopupHelper = Class.forName(menuPopupHelper.getClass().getName());
+                    Method setForceIcons = classPopupHelper.getMethod("setForceShowIcon",boolean.class);
+                    setForceIcons.invoke(menuPopupHelper, true);
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -233,9 +248,7 @@ public class TradeListRecyclerViewAdapter extends RecyclerView.Adapter<TradeList
         }
     }
 
-
-
-    private void setPadding(TextView textView){
+    public void setPadding(TextView textView){
         float density = context.getResources().getDisplayMetrics().density;
         int paddingPixel1 = (int)(5 * density);
         int paddingPixel2 = (int)(20 * density);

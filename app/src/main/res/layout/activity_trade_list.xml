@@ -24,9 +24,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="monospace"
-            android:text="Trade List: "
+            android:text="Trade List "
             android:textColor="@color/black"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/trade_list_layout_back_btn"/>
     </RelativeLayout>
@@ -53,7 +53,7 @@
             android:fontFamily="monospace"
             android:text="                    "
             android:textColor="@color/gray"
-            android:textSize="12sp"
+            android:textSize="10sp"
             android:textStyle="bold"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"/>

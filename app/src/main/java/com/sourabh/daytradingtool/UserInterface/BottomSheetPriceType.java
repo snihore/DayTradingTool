@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -17,7 +18,8 @@ import java.util.HashMap;
 
 public class BottomSheetPriceType extends BottomSheetDialogFragment implements View.OnClickListener {
 
-    private TextView priceTv, percentageTv, pointsTv, optionsTv;
+    private TextView priceTv, percentageTv, pointsTv, optionsTv, priceShowTv;
+    private EditText editText;
     private boolean isBuy;
 
     private String stoplossValue, exitPriceValue;
@@ -25,9 +27,11 @@ public class BottomSheetPriceType extends BottomSheetDialogFragment implements V
     private final String[] PRICE_TYPES = {"PRICE", "PERCENTAGE", "POINTS"};
     private final String[] TYPE = {"STOPLOSS_PRICETYPE", "EXITPRICE_PRICETYPE"};
 
-    public BottomSheetPriceType(HashMap<String, String> priceType, TextView optionsTv){
+    public BottomSheetPriceType(HashMap<String, String> priceType, TextView optionsTv, EditText editText, TextView priceShowTv){
         this.priceType = priceType;
         this.optionsTv = optionsTv;
+        this.editText = editText;
+        this.priceShowTv = priceShowTv;
     }
 
     @Override
@@ -54,6 +58,7 @@ public class BottomSheetPriceType extends BottomSheetDialogFragment implements V
                     pointsTv.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.black));
                     pointsTv.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
                 }
+
             }
 
             if(exitPriceValue != null && !exitPriceValue.matches("")){
@@ -67,6 +72,7 @@ public class BottomSheetPriceType extends BottomSheetDialogFragment implements V
                     pointsTv.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.black));
                     pointsTv.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
                 }
+
             }
         }
 
@@ -92,9 +98,17 @@ public class BottomSheetPriceType extends BottomSheetDialogFragment implements V
             case R.id.bottom_sheet_price_type_price_tv:
                 if(stoplossValue != null && !stoplossValue.matches("")){
                     priceType.put(TYPE[0], PRICE_TYPES[0]);
+                    if(editText != null && priceShowTv != null && !stoplossValue.matches(PRICE_TYPES[0])){
+                        editText.setText("");
+                        priceShowTv.setVisibility(View.GONE);
+                    }
                 }
                 if(exitPriceValue != null && !exitPriceValue.matches("")){
                     priceType.put(TYPE[1], PRICE_TYPES[0]);
+                    if(editText != null && priceShowTv != null && !exitPriceValue.matches(PRICE_TYPES[0])){
+                        editText.setText("");
+                        priceShowTv.setVisibility(View.GONE);
+                    }
                 }
                 optionsTv.setText("price ");
                 dismiss();
@@ -102,9 +116,17 @@ public class BottomSheetPriceType extends BottomSheetDialogFragment implements V
             case R.id.bottom_sheet_price_type_percentage_tv:
                 if(stoplossValue != null && !stoplossValue.matches("")){
                     priceType.put(TYPE[0], PRICE_TYPES[1]);
+                    if(editText != null && priceShowTv != null && !stoplossValue.matches(PRICE_TYPES[1])){
+                        editText.setText("");
+                        priceShowTv.setVisibility(View.GONE);
+                    }
                 }
                 if(exitPriceValue != null && !exitPriceValue.matches("")){
                     priceType.put(TYPE[1], PRICE_TYPES[1]);
+                    if(editText != null && priceShowTv != null && !exitPriceValue.matches(PRICE_TYPES[1])){
+                        editText.setText("");
+                        priceShowTv.setVisibility(View.GONE);
+                    }
                 }
                 optionsTv.setText("percentage ");
                 getPriceByPercentage();
@@ -113,9 +135,17 @@ public class BottomSheetPriceType extends BottomSheetDialogFragment implements V
             case R.id.bottom_sheet_price_type_points_tv:
                 if(stoplossValue != null && !stoplossValue.matches("")){
                     priceType.put(TYPE[0], PRICE_TYPES[2]);
+                    if(editText != null && priceShowTv != null && !stoplossValue.matches(PRICE_TYPES[2])){
+                        editText.setText("");
+                        priceShowTv.setVisibility(View.GONE);
+                    }
                 }
                 if(exitPriceValue != null && !exitPriceValue.matches("")){
                     priceType.put(TYPE[1], PRICE_TYPES[2]);
+                    if(editText != null && priceShowTv != null && !exitPriceValue.matches(PRICE_TYPES[2])){
+                        editText.setText("");
+                        priceShowTv.setVisibility(View.GONE);
+                    }
                 }
                 optionsTv.setText("points ");
                 getPriceByPoints();

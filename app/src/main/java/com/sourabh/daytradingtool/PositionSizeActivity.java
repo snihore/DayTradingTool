@@ -30,6 +30,7 @@ import com.sourabh.daytradingtool.Database.TradingCapitalDetailDB;
 import com.sourabh.daytradingtool.UserInterface.SearchStockRecyclerViewAdapter;
 import com.sourabh.daytradingtool.UserInterface.SearchStockRecyclerViewClickListener;
 import com.sourabh.daytradingtool.Utils.ChargesUtils;
+import com.sourabh.daytradingtool.Utils.FormatUtils;
 import com.sourabh.daytradingtool.Utils.GetStockList;
 
 import java.text.DecimalFormat;
@@ -79,13 +80,13 @@ public class PositionSizeActivity extends AppCompatActivity {
         quantityTv.setText(String.valueOf(positionSizeDetail.getQuantity()));
         riskToRewardTv.setText("Risk to Reward 1:"+positionSizeDetail.getRiskToReward());
 
-        profitTv.setText("+"+addCommasInNumber(positionSizeDetail.getProfit())+"("+positionSizeDetail.getProfitByPercentage()+"%)");
+        profitTv.setText("+"+ FormatUtils.addCommasInNumber(positionSizeDetail.getProfit())+"("+positionSizeDetail.getProfitByPercentage()+"%)");
 
         profitPerShareTv.setText("+"+positionSizeDetail.getProfitPerShare()+"("+positionSizeDetail.getProfitPerShareByPercentage()+"%)");
-        lossTv.setText("-"+addCommasInNumber(positionSizeDetail.getLoss())+"("+positionSizeDetail.getLossByPercentage()+"%)");
+        lossTv.setText("-"+FormatUtils.addCommasInNumber(positionSizeDetail.getLoss())+"("+positionSizeDetail.getLossByPercentage()+"%)");
         lossPerShareTv.setText("-"+positionSizeDetail.getLossPerShare()+"("+positionSizeDetail.getLossPerShareByPercentage()+"%)");
-        marginRequiredTv.setText("\u20B9 "+addCommasInNumber(positionSizeDetail.getMarginRequired())+"("+tradingCapitalData.getMargin()+"%)");
-        actualCapitalRequiredTv.setText("\u20B9 "+addCommasInNumber(positionSizeDetail.getActualCapitalRequired()));
+        marginRequiredTv.setText("\u20B9 "+FormatUtils.addCommasInNumber(positionSizeDetail.getMarginRequired())+"("+tradingCapitalData.getMargin()+"%)");
+        actualCapitalRequiredTv.setText("\u20B9 "+FormatUtils.addCommasInNumber(positionSizeDetail.getActualCapitalRequired()));
 
         setCharges(tradeDetailPOJO.getEntryPrice(), tradeDetailPOJO.getExitPrice(), tradeDetailPOJO.getStoploss(), positionSizeDetail.getQuantity());
     }
@@ -297,18 +298,6 @@ public class PositionSizeActivity extends AppCompatActivity {
 
 
 
-    }
-
-    private static String addCommasInNumber(double num){
-        try{
-            DecimalFormat df = new DecimalFormat("#,###.00");
-
-            return df.format(num);
-        }catch (Exception e){
-
-        }
-
-        return String.valueOf(num);
     }
 
 }
