@@ -48,7 +48,7 @@
             android:fontFamily="monospace"
             android:text="Trading Capital(\u20B9)"
             android:textColor="@color/gray"
-            android:textSize="12sp" />
+            android:textSize="14sp" />
 
         <EditText
             android:id="@+id/trading_capital_dialog_layout_trading_capital_et"
@@ -63,7 +63,7 @@
             android:paddingRight="10dp"
             android:paddingBottom="15dp"
             android:textColor="@color/black"
-            android:textSize="12sp" />
+            android:textSize="14sp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -72,7 +72,7 @@
             android:fontFamily="monospace"
             android:text="Risk Per Trade(\u20B9)"
             android:textColor="@color/gray"
-            android:textSize="12sp" />
+            android:textSize="14sp" />
 
         <EditText
             android:id="@+id/trading_capital_dialog_layout_risk_per_trade_et"
@@ -87,7 +87,7 @@
             android:paddingRight="10dp"
             android:paddingBottom="15dp"
             android:textColor="@color/black"
-            android:textSize="12sp" />
+            android:textSize="14sp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -96,7 +96,7 @@
             android:fontFamily="monospace"
             android:text="Margin(%)"
             android:textColor="@color/gray"
-            android:textSize="12sp" />
+            android:textSize="14sp" />
 
         <EditText
             android:id="@+id/trading_capital_dialog_layout_margin_et"
@@ -110,7 +110,7 @@
             android:paddingRight="10dp"
             android:paddingBottom="15dp"
             android:textColor="@color/black"
-            android:textSize="12sp" />
+            android:textSize="14sp" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -129,7 +129,7 @@
             android:fontFamily="monospace"
             android:text="Trading Type"
             android:textColor="@color/black"
-            android:textSize="12sp"
+            android:textSize="15sp"
             android:textStyle="bold" />
 
         <LinearLayout
@@ -150,7 +150,7 @@
                 android:paddingBottom="5dp"
                 android:text=" Intraday "
                 android:textColor="@color/white"
-                android:textSize="12sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/trading_capital_type_delivery"
@@ -164,7 +164,7 @@
                 android:paddingBottom="5dp"
                 android:text=" Delivery "
                 android:textColor="@color/black"
-                android:textSize="12sp" />
+                android:textSize="14sp" />
 
         </LinearLayout>
     </LinearLayout>
@@ -181,6 +181,6 @@
         android:foreground="?android:attr/selectableItemBackground"
         android:text="Save"
         android:textColor="@android:color/white"
-        android:textSize="12sp" />
+        android:textSize="15sp" />
 
 </RelativeLayout>

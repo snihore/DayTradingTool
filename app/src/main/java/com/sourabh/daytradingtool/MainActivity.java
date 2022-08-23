@@ -386,11 +386,17 @@ public class MainActivity extends AppCompatActivity{
 
         EditText tradingCapitalEt = (EditText) view.findViewById(R.id.trading_capital_dialog_layout_trading_capital_et);
         EditText riskPerTradeEt = (EditText) view.findViewById(R.id.trading_capital_dialog_layout_risk_per_trade_et);
-        EditText marginlEt = (EditText) view.findViewById(R.id.trading_capital_dialog_layout_margin_et);
+        EditText marginEt = (EditText) view.findViewById(R.id.trading_capital_dialog_layout_margin_et);
         Button saveBtn = (Button) view.findViewById(R.id.trading_capital_dialog_layout_save_btn);
         TextView typeIntraday = (TextView)view.findViewById(R.id.trading_capital_type_intraday);
         TextView typeDelivery = (TextView)view.findViewById(R.id.trading_capital_type_delivery);
         ImageView backBtn = (ImageView)view.findViewById(R.id.trading_capital_dialog_layout_back_btn);
+
+        if(tradingCapitalData != null){
+            tradingCapitalEt.setText(String.valueOf(tradingCapitalData.getTradingCapital()));
+            riskPerTradeEt.setText(String.valueOf(tradingCapitalData.getRiskPerTrade()));
+            marginEt.setText(String.valueOf(tradingCapitalData.getMargin()));
+        }
 
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -409,8 +415,8 @@ public class MainActivity extends AppCompatActivity{
                 typeDelivery.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.round_corner_gray_bg));
                 typeDelivery.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.black));
 
-                marginlEt.setText("");
-                marginlEt.setEnabled(true);
+                marginEt.setText("");
+                marginEt.setEnabled(true);
             }
         });
 
@@ -424,8 +430,8 @@ public class MainActivity extends AppCompatActivity{
                 typeDelivery.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
 
                 //Set Margin to 100%
-                marginlEt.setText("100");
-                marginlEt.setEnabled(false);
+                marginEt.setText("100");
+                marginEt.setEnabled(false);
             }
         });
 
@@ -449,7 +455,7 @@ public class MainActivity extends AppCompatActivity{
                         boolean result = tradingCapitalDetailDB.saveTradingCapitalDetail(new TradingCapitalData(
                                 Double.parseDouble(tradingCapitalEt.getText().toString().trim()),
                                 Double.parseDouble(riskPerTradeEt.getText().toString().trim()),
-                                Float.parseFloat(marginlEt.getText().toString().trim())
+                                Float.parseFloat(marginEt.getText().toString().trim())
                         ));
 
                         if(result){

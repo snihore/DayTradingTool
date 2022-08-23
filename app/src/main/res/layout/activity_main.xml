@@ -61,7 +61,7 @@
                 android:fontFamily="monospace"
                 android:text="Trading Capital: "
                 android:textColor="@color/black"
-                android:textSize="12sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/trading_capital_tv"
@@ -70,7 +70,7 @@
                 android:fontFamily="monospace"
                 android:text=""
                 android:textColor="@color/gray"
-                android:textSize="12sp" />
+                android:textSize="14sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -87,7 +87,7 @@
                 android:fontFamily="monospace"
                 android:text="Risk Per Trade: "
                 android:textColor="@color/black"
-                android:textSize="12sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/risk_per_trade_tv"
@@ -96,7 +96,7 @@
                 android:fontFamily="monospace"
                 android:text=""
                 android:textColor="@color/gray"
-                android:textSize="12sp" />
+                android:textSize="14sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -112,7 +112,7 @@
                 android:fontFamily="monospace"
                 android:text="Intraday Margin: "
                 android:textColor="@color/black"
-                android:textSize="12sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/margin_tv"
@@ -121,9 +121,10 @@
                 android:fontFamily="monospace"
                 android:text=""
                 android:textColor="@color/gray"
-                android:textSize="12sp" />
+                android:textSize="14sp" />
         </LinearLayout>
 
+<!--        android:background="@drawable/image_round_gray_bg"-->
         <ImageView
             android:id="@+id/trading_capital_edit_btn"
             android:layout_width="30dp"
@@ -131,10 +132,9 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
-            android:background="@drawable/image_round_gray_bg"
-            android:padding="7dp"
-            android:src="@drawable/ic_baseline_edit_24"
-            android:foreground="?android:attr/selectableItemBackground"/>
+            android:foreground="?android:attr/selectableItemBackground"
+            android:padding="4dp"
+            android:src="@drawable/ic_baseline_edit_24" />
 
     </RelativeLayout>
 
@@ -169,7 +169,7 @@
                 android:fontFamily="monospace"
                 android:text="Enter Trade Details"
                 android:textColor="@color/black"
-                android:textSize="12sp"
+                android:textSize="15sp"
                 android:textStyle="bold" />
 
             <Switch
@@ -208,7 +208,7 @@
                 android:fontFamily="monospace"
                 android:text="Entry Price"
                 android:textColor="@color/gray"
-                android:textSize="12sp" />
+                android:textSize="14sp" />
 
         </LinearLayout>
 
@@ -225,7 +225,7 @@
             android:paddingRight="10dp"
             android:paddingBottom="15dp"
             android:textColor="@color/black"
-            android:textSize="12sp" />
+            android:textSize="14sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -240,21 +240,20 @@
                 android:fontFamily="monospace"
                 android:text="Stoploss"
                 android:textColor="@color/gray"
-                android:textSize="12sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/stoploss_price_show_tv"
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:background="@drawable/button_round_black_bg"
                 android:fontFamily="monospace"
-                android:gravity="center"
                 android:padding="5dp"
                 android:text=""
-                android:textColor="@color/white"
+                android:textColor="@color/red"
+                android:textStyle="bold"
                 android:textSize="10sp"
-                android:visibility="gone" />
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/stoploss_options_tv"
@@ -281,7 +280,6 @@
             android:id="@+id/stoploss_et"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
             android:background="@drawable/edit_text_green_bg"
             android:fontFamily="monospace"
             android:inputType="numberDecimal"
@@ -290,7 +288,9 @@
             android:paddingRight="10dp"
             android:paddingBottom="15dp"
             android:textColor="@color/black"
-            android:textSize="12sp" />
+            android:textSize="14sp"
+            android:layout_marginBottom="20dp"/>
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -305,22 +305,20 @@
                 android:fontFamily="monospace"
                 android:text="Exit Price"
                 android:textColor="@color/gray"
-                android:textSize="12sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/exit_price_price_show_tv"
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:background="@drawable/button_round_black_bg"
                 android:fontFamily="monospace"
-                android:gravity="center"
                 android:padding="5dp"
                 android:text=""
-                android:textColor="@color/white"
+                android:textColor="@color/green"
                 android:textSize="10sp"
-                android:visibility="gone" />
-
+                android:textStyle="bold"
+                android:visibility="gone"/>
             <TextView
                 android:id="@+id/exit_price_options_tv"
                 android:layout_width="wrap_content"
@@ -346,7 +344,6 @@
             android:id="@+id/exit_price_et"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
             android:background="@drawable/edit_text_green_bg"
             android:fontFamily="monospace"
             android:inputType="numberDecimal"
@@ -355,7 +352,9 @@
             android:paddingRight="10dp"
             android:paddingBottom="15dp"
             android:textColor="@color/black"
-            android:textSize="12sp" />
+            android:textSize="14sp"
+            android:layout_marginBottom="20dp"/>
+
     </LinearLayout>
 
 
@@ -369,6 +368,6 @@
         android:fontFamily="monospace"
         android:text="Get Position Size"
         android:textColor="@android:color/white"
-        android:textSize="12sp"
+        android:textSize="15sp"
         android:foreground="?android:attr/selectableItemBackground"/>
 </RelativeLayout>

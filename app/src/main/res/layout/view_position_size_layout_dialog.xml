@@ -30,6 +30,16 @@
             android:textSize="15sp"
             android:textStyle="bold" />
 
+        <ImageView
+            android:id="@+id/view_position_size_delete_btn"
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?android:selectableItemBackground"
+            android:padding="18dp"
+            android:src="@drawable/ic_baseline_delete_24"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"/>
+
     </RelativeLayout>
 
     <ScrollView
@@ -81,7 +91,7 @@
                             android:padding="2dp"
                             android:text="Number of shares"
                             android:textColor="@color/green"
-                            android:textSize="15sp" />
+                            android:textSize="18sp" />
 
                         <TextView
                             android:id="@+id/quantity_tv"
@@ -91,7 +101,8 @@
                             android:padding="2dp"
                             android:text="0"
                             android:textColor="@color/black"
-                            android:textSize="28sp" />
+                            android:textSize="30sp"
+                            android:textStyle="bold"/>
 
                         <TextView
                             android:id="@+id/risk_to_reward_tv"
@@ -101,7 +112,7 @@
                             android:padding="2dp"
                             android:text="Risk to Reward "
                             android:textColor="@color/gray"
-                            android:textSize="12sp" />
+                            android:textSize="15sp" />
                     </LinearLayout>
 
                 </RelativeLayout>
@@ -121,9 +132,10 @@
                         android:padding="2dp"
                         android:text="Inputs"
                         android:textColor="@color/black"
-                        android:textSize="12sp" />
+                        android:textSize="15sp" />
 
                     <RelativeLayout
+                        android:id="@+id/view_position_size_layout_inputs_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/position_size_inputs_heading"
@@ -134,18 +146,19 @@
                         android:paddingRight="15dp"
                         android:paddingBottom="15dp">
 
-                        <ImageView
-                            android:id="@+id/position_size_inputs_img"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:background="@drawable/image_round_gray_bg"
-                            android:padding="7dp" />
+<!--                        <ImageView-->
+<!--                            android:id="@+id/position_size_inputs_img"-->
+<!--                            android:layout_width="30dp"-->
+<!--                            android:layout_height="30dp"-->
+<!--                            android:background="@drawable/image_round_gray_bg"-->
+<!--                            android:padding="7dp" />-->
+
+<!--                        android:layout_toRightOf="@+id/position_size_inputs_img"-->
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
-                            android:layout_toRightOf="@+id/position_size_inputs_img"
                             android:orientation="vertical">
 
                             <RelativeLayout
@@ -159,7 +172,7 @@
                                     android:padding="2dp"
                                     android:text="Entry Price"
                                     android:textColor="@color/black"
-                                    android:textSize="10sp"
+                                    android:textSize="12sp"
                                     android:textStyle="bold" />
 
                                 <TextView
@@ -171,7 +184,7 @@
                                     android:padding="2dp"
                                     android:text="0.0"
                                     android:textColor="@color/black"
-                                    android:textSize="10sp" />
+                                    android:textSize="12sp" />
 
                             </RelativeLayout>
 
@@ -186,7 +199,7 @@
                                     android:padding="2dp"
                                     android:text="Stoploss"
                                     android:textColor="@color/black"
-                                    android:textSize="10sp"
+                                    android:textSize="12sp"
                                     android:textStyle="bold" />
 
                                 <TextView
@@ -198,7 +211,7 @@
                                     android:padding="2dp"
                                     android:text="0.0"
                                     android:textColor="@color/black"
-                                    android:textSize="10sp" />
+                                    android:textSize="12sp" />
 
                             </RelativeLayout>
 
@@ -213,7 +226,7 @@
                                     android:padding="2dp"
                                     android:text="Exit Price"
                                     android:textColor="@color/black"
-                                    android:textSize="10sp"
+                                    android:textSize="12sp"
                                     android:textStyle="bold" />
 
                                 <TextView
@@ -225,7 +238,7 @@
                                     android:padding="2dp"
                                     android:text="0.0"
                                     android:textColor="@color/black"
-                                    android:textSize="10sp" />
+                                    android:textSize="12sp" />
 
                             </RelativeLayout>
 
@@ -245,7 +258,7 @@
                         android:layout_height="wrap_content"
                         android:text="Profit"
                         android:fontFamily="monospace"
-                        android:textSize="12sp"
+                        android:textSize="15sp"
                         android:textColor="@color/black"
                         android:padding="2dp"/>
 
@@ -286,7 +299,7 @@
                                     android:padding="2dp"
                                     android:text="Total Profit"
                                     android:textColor="@color/green"
-                                    android:textSize="12sp"
+                                    android:textSize="14sp"
                                     android:textStyle="bold" />
 
                                 <TextView
@@ -298,7 +311,7 @@
                                     android:padding="2dp"
                                     android:text="0.0(0.0%)"
                                     android:textColor="@color/green"
-                                    android:textSize="12sp" />
+                                    android:textSize="14sp" />
 
                             </RelativeLayout>
 
@@ -313,7 +326,7 @@
                                     android:padding="2dp"
                                     android:text="Profit per share"
                                     android:textColor="@color/gray"
-                                    android:textSize="10sp"
+                                    android:textSize="12sp"
                                     android:textStyle="bold" />
 
                                 <TextView
@@ -325,7 +338,7 @@
                                     android:padding="2dp"
                                     android:text="0.0(0.0%)"
                                     android:textColor="@color/gray"
-                                    android:textSize="10sp" />
+                                    android:textSize="12sp" />
 
                             </RelativeLayout>
 
@@ -344,7 +357,7 @@
                         android:layout_height="wrap_content"
                         android:text="Loss"
                         android:fontFamily="monospace"
-                        android:textSize="12sp"
+                        android:textSize="15sp"
                         android:textColor="@color/black"
                         android:padding="2dp"/>
                     <RelativeLayout
@@ -382,7 +395,7 @@
                                     android:padding="2dp"
                                     android:text="Total Loss"
                                     android:textColor="@color/red"
-                                    android:textSize="12sp"
+                                    android:textSize="14sp"
                                     android:textStyle="bold" />
 
                                 <TextView
@@ -394,7 +407,7 @@
                                     android:padding="2dp"
                                     android:text="0.0(0.0%)"
                                     android:textColor="@color/red"
-                                    android:textSize="12sp" />
+                                    android:textSize="14sp" />
 
                             </RelativeLayout>
                             <RelativeLayout
@@ -405,7 +418,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="Loss per share"
                                     android:fontFamily="monospace"
-                                    android:textSize="10sp"
+                                    android:textSize="12sp"
                                     android:textStyle="bold"
                                     android:textColor="@color/gray"
                                     android:padding="2dp"/>
@@ -419,7 +432,7 @@
                                     android:padding="2dp"
                                     android:text="0.0(0.0%)"
                                     android:textColor="@color/gray"
-                                    android:textSize="10sp" />
+                                    android:textSize="12sp" />
 
                             </RelativeLayout>
 
@@ -439,7 +452,7 @@
                         android:layout_height="wrap_content"
                         android:text="Margin"
                         android:fontFamily="monospace"
-                        android:textSize="12sp"
+                        android:textSize="15sp"
                         android:textColor="@color/black"
                         android:padding="2dp"/>
 
@@ -480,7 +493,7 @@
                                     android:padding="2dp"
                                     android:text="Margin Used"
                                     android:textColor="@color/black"
-                                    android:textSize="12sp"
+                                    android:textSize="14sp"
                                     android:textStyle="bold" />
 
                                 <TextView
@@ -492,7 +505,7 @@
                                     android:padding="2dp"
                                     android:text="\u20B9 0"
                                     android:textColor="@color/black"
-                                    android:textSize="12sp" />
+                                    android:textSize="14sp" />
 
                             </RelativeLayout>
 
@@ -507,7 +520,7 @@
                                     android:padding="2dp"
                                     android:text="Actual Capital"
                                     android:textColor="@color/gray"
-                                    android:textSize="10sp"
+                                    android:textSize="12sp"
                                     android:textStyle="bold" />
 
                                 <TextView
@@ -519,7 +532,7 @@
                                     android:padding="2dp"
                                     android:text="\u20B9 0"
                                     android:textColor="@color/gray"
-                                    android:textSize="10sp" />
+                                    android:textSize="12sp" />
 
                             </RelativeLayout>
 
@@ -539,7 +552,7 @@
                         android:layout_height="wrap_content"
                         android:text="Charges"
                         android:fontFamily="monospace"
-                        android:textSize="12sp"
+                        android:textSize="15sp"
                         android:textColor="@color/black"
                         android:padding="2dp"/>
 
@@ -580,7 +593,7 @@
                                     android:padding="2dp"
                                     android:text="Profit Charge"
                                     android:textColor="@color/gray"
-                                    android:textSize="12sp"
+                                    android:textSize="14sp"
                                     android:textStyle="bold" />
 
                                 <TextView
@@ -591,8 +604,8 @@
                                     android:fontFamily="monospace"
                                     android:padding="2dp"
                                     android:text="\u20B9 0"
-                                    android:textColor="@color/gray"
-                                    android:textSize="12sp" />
+                                    android:textColor="@color/green"
+                                    android:textSize="14sp" />
 
                             </RelativeLayout>
 
@@ -607,7 +620,7 @@
                                     android:padding="2dp"
                                     android:text="Loss Charge"
                                     android:textColor="@color/gray"
-                                    android:textSize="12sp"
+                                    android:textSize="14sp"
                                     android:textStyle="bold" />
 
                                 <TextView
@@ -618,8 +631,8 @@
                                     android:fontFamily="monospace"
                                     android:padding="2dp"
                                     android:text="\u20B9 0"
-                                    android:textColor="@color/gray"
-                                    android:textSize="12sp" />
+                                    android:textColor="@color/red"
+                                    android:textSize="14sp" />
 
                             </RelativeLayout>
 

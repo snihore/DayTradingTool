@@ -132,8 +132,10 @@ public class ParentTradeListRecyclerViewAdapter extends RecyclerView.Adapter<Par
         if(timestamps != null && timestamps.size()>0 && quantities != null && tradingDetails != null && tradingCapitals != null){
 
             TradeListRecyclerViewAdapter tradeListRecyclerViewAdapter = new TradeListRecyclerViewAdapter(
+                    this,
                     context,
                     timestamps,
+                    timestampHashMap,
                     quantities,
                     stockTitles,
                     tradingDetails,

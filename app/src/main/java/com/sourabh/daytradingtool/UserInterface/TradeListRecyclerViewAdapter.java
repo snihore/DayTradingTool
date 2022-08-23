@@ -31,8 +31,11 @@ import java.util.HashMap;
 
 public class TradeListRecyclerViewAdapter extends RecyclerView.Adapter<TradeListRecyclerViewAdapter.TradeListRecyclerViewHolder> {
 
+    private ParentTradeListRecyclerViewAdapter parentTradeListRecyclerViewAdapter;
+
     private Context context;
     private ArrayList<Long> timestamps;
+    private HashMap<String, ArrayList<Long>> timestampHashMap;
     private HashMap<Long, Integer> quantities;
     private HashMap<Long, String> stockTitles;
     private HashMap<Long, TradeDetailPOJO> tradingDetails;
@@ -43,9 +46,11 @@ public class TradeListRecyclerViewAdapter extends RecyclerView.Adapter<TradeList
 
 
 
-    public TradeListRecyclerViewAdapter(Context context, ArrayList<Long> timestamps, HashMap<Long, Integer> quantities, HashMap<Long, String> stockTitles, HashMap<Long, TradeDetailPOJO> tradingDetails, HashMap<Long, TradingCapitalData> tradingCapitals, TextView showingTv,  TradeListItemClickListener tradeListItemClickListener) {
+    public TradeListRecyclerViewAdapter(ParentTradeListRecyclerViewAdapter parentTradeListRecyclerViewAdapter, Context context, ArrayList<Long> timestamps, HashMap<String, ArrayList<Long>> timestampHashMap, HashMap<Long, Integer> quantities, HashMap<Long, String> stockTitles, HashMap<Long, TradeDetailPOJO> tradingDetails, HashMap<Long, TradingCapitalData> tradingCapitals, TextView showingTv,  TradeListItemClickListener tradeListItemClickListener) {
+        this.parentTradeListRecyclerViewAdapter = parentTradeListRecyclerViewAdapter;
         this.context = context;
         this.timestamps = timestamps;
+        this.timestampHashMap = timestampHashMap;
         this.quantities = quantities;
         this.stockTitles = stockTitles;
         this.tradingDetails = tradingDetails;
@@ -134,11 +139,12 @@ public class TradeListRecyclerViewAdapter extends RecyclerView.Adapter<TradeList
                                         Toast.makeText(context, "Deleted", Toast.LENGTH_SHORT).show();
                                         if(timestamps.remove(timestamps.get(position))){
                                             notifyDataSetChanged();
+                                            parentTradeListRecyclerViewAdapter.notifyDataSetChanged();
                                             if(showingTv != null ){
                                                 if(timestamps.size() == 0){
                                                     showingTv.setText(" No data found ");
                                                 }else{
-                                                    showingTv.setText(" Showing "+timestamps.size()+" entries ");
+                                                    setShowingTv();
                                                 }
 
                                             }
@@ -160,6 +166,11 @@ public class TradeListRecyclerViewAdapter extends RecyclerView.Adapter<TradeList
         });
 
 
+    }
+
+    private void setShowingTv() {
+
+        showingTv.setText(" Showing "+timestampHashMap.values().size()+" entries ");
     }
 
     private void showPopupMenuIcons(PopupMenu popupMenu) {

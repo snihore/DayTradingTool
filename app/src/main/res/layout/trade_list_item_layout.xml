@@ -14,7 +14,7 @@
         android:fontFamily="monospace"
         android:text="TCS"
         android:textColor="@color/black"
-        android:textSize="12sp"
+        android:textSize="14sp"
         android:textStyle="bold"
         android:layout_marginLeft="20dp"/>
     <LinearLayout
@@ -30,7 +30,7 @@
             android:text="E "
             android:fontFamily="monospace"
             android:textColor="@color/green"
-            android:textSize="10sp"/>
+            android:textSize="12sp"/>
         <TextView
             android:id="@+id/trade_list_item_entry_price_tv"
             android:layout_width="wrap_content"
@@ -38,7 +38,7 @@
             android:text="0.0"
             android:fontFamily="monospace"
             android:textColor="@color/gray"
-            android:textSize="10sp"/>
+            android:textSize="12sp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -46,14 +46,14 @@
             android:textStyle="bold"
             android:fontFamily="monospace"
             android:textColor="@color/gray"
-            android:textSize="10sp"/>
+            android:textSize="12sp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="SL "
             android:fontFamily="monospace"
             android:textColor="@color/red"
-            android:textSize="10sp"/>
+            android:textSize="12sp"/>
         <TextView
             android:id="@+id/trade_list_item_stoploss_tv"
             android:layout_width="wrap_content"
@@ -61,7 +61,7 @@
             android:text="0.0"
             android:fontFamily="monospace"
             android:textColor="@color/gray"
-            android:textSize="10sp"/>
+            android:textSize="12sp"/>
 <!--        <TextView-->
 <!--            android:layout_width="wrap_content"-->
 <!--            android:layout_height="wrap_content"-->
@@ -88,7 +88,7 @@
         android:text=""
         android:fontFamily="monospace"
         android:textColor="@color/gray"
-        android:textSize="10sp"
+        android:textSize="12sp"
         android:layout_below="@+id/trade_list_item_entry_price_layout"
         android:layout_marginLeft="20dp"/>
 
@@ -112,7 +112,7 @@
             android:paddingBottom="5dp"
             android:text="0"
             android:textColor="@color/green"
-            android:textSize="12sp"
+            android:textSize="14sp"
             android:textStyle="bold" />
         <ImageView
             android:id="@+id/trade_list_item_more_option"

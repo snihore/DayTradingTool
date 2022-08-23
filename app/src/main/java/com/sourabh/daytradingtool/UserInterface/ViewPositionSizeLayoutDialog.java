@@ -5,16 +5,19 @@ import android.content.Context;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
 
 import com.sourabh.daytradingtool.Data.CalculateCharges;
 import com.sourabh.daytradingtool.Data.PositionSizeDetail;
 import com.sourabh.daytradingtool.Data.TradeDetail;
 import com.sourabh.daytradingtool.Data.TradeDetailPOJO;
 import com.sourabh.daytradingtool.Data.TradingCapitalData;
+import com.sourabh.daytradingtool.Database.PositionSizeDetailDB;
 import com.sourabh.daytradingtool.Database.TradingCapitalDetailDB;
 import com.sourabh.daytradingtool.MainActivity;
 import com.sourabh.daytradingtool.R;
@@ -22,6 +25,7 @@ import com.sourabh.daytradingtool.TradeListActivity;
 import com.sourabh.daytradingtool.Utils.FormatUtils;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 public class ViewPositionSizeLayoutDialog {
 
@@ -31,13 +35,16 @@ public class ViewPositionSizeLayoutDialog {
     private TextView quantityTv, riskToRewardTv, profitTv, profitPerShareTv, lossTv, lossPerShareTv, marginRequiredTv, actualCapitalRequiredTv;
     private TextView stockTitleTv, entryPriceTv, stoplossTv, exitPriceTv, profitChargesTv, lossChargesTv;
 
-    private ImageView backBtn;
+    private ImageView backBtn, deleteBtn;
+
+    private RelativeLayout inputsLayout;
 
     private PositionSizeDetail positionSizeDetail;
     private TradingCapitalData tradingCapitalData;
     private String stockTitle;
 
     private AlertDialog dialog;
+
 
     public ViewPositionSizeLayoutDialog(TradeListActivity activity, TradeDetailPOJO tradeDetailPOJO, TradingCapitalData tradingCapitalData, String stockTitle) {
         this.activity = activity;
@@ -78,13 +85,22 @@ public class ViewPositionSizeLayoutDialog {
         stoplossTv = (TextView) view.findViewById(R.id.stoploss_tv);
         exitPriceTv = (TextView) view.findViewById(R.id.exit_price_tv);
         backBtn = (ImageView) view.findViewById(R.id.view_position_size_back_btn);
+        deleteBtn = (ImageView)view.findViewById(R.id.view_position_size_delete_btn);
         profitChargesTv = (TextView)view.findViewById(R.id.profit_charges);
         lossChargesTv = (TextView)view.findViewById(R.id.loss_charges);
+        inputsLayout = (RelativeLayout)view.findViewById(R.id.view_position_size_layout_inputs_layout);
 
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dialog.dismiss();
+            }
+        });
+
+        deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
             }
         });
     }
@@ -132,6 +148,15 @@ public class ViewPositionSizeLayoutDialog {
                 marginRequiredTv.setText("\u20B9 "+FormatUtils.addCommasInNumber(positionSizeDetail.getMarginRequired())+"("+tradingCapitalData.getMargin()+"%)");
                 actualCapitalRequiredTv.setText("\u20B9 "+FormatUtils.addCommasInNumber(positionSizeDetail.getActualCapitalRequired()));
 
+                //Set Inputs Layout -- GREEN / RED
+                if(tradeDetailPOJO.isBuy()){
+                    inputsLayout.setBackground(ContextCompat.getDrawable(activity.getApplicationContext(), R.drawable.edit_text_green_bg));
+                }else{
+                    inputsLayout.setBackground(ContextCompat.getDrawable(activity.getApplicationContext(), R.drawable.edit_text_red_bg));
+                }
+                setPadding(inputsLayout);
+
+                //SET CHARGES
                 setCharges(tradeDetailPOJO.getEntryPrice(), tradeDetailPOJO.getExitPrice(), tradeDetailPOJO.getStoploss(), positionSizeDetail.getQuantity());
 
             }
@@ -184,6 +209,12 @@ public class ViewPositionSizeLayoutDialog {
         //Set Views
         profitChargesTv.setText("\u20B9 "+profitCharges);
         lossChargesTv.setText("\u20B9 "+lossCharges);
+    }
+
+    public void setPadding(RelativeLayout relativeLayout){
+        float density = activity.getApplicationContext().getResources().getDisplayMetrics().density;
+        int paddingPixel = (int)(15 * density);
+        relativeLayout.setPadding(paddingPixel, paddingPixel, paddingPixel, paddingPixel);
     }
 
 }
