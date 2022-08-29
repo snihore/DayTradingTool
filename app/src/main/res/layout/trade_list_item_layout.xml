@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="20dp"
+    android:paddingTop="10dp"
     android:background="@android:color/white"
     android:foreground="?android:attr/selectableItemBackground">
 
@@ -10,13 +10,13 @@
         android:id="@+id/trade_list_item_stock_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="10dp"
         android:fontFamily="monospace"
         android:text="TCS"
         android:textColor="@color/black"
         android:textSize="14sp"
-        android:textStyle="bold"
-        android:layout_marginLeft="20dp"/>
+        android:textStyle="bold" />
     <LinearLayout
         android:id="@+id/trade_list_item_entry_price_layout"
         android:layout_width="wrap_content"
@@ -25,12 +25,15 @@
         android:layout_below="@id/trade_list_item_stock_title"
         android:layout_marginLeft="20dp">
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="E "
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:text="E"
             android:fontFamily="monospace"
-            android:textColor="@color/green"
-            android:textSize="12sp"/>
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            android:background="@drawable/trade_list_item_green_bg"
+            android:gravity="center"
+            android:layout_marginRight="2dp"/>
         <TextView
             android:id="@+id/trade_list_item_entry_price_tv"
             android:layout_width="wrap_content"
@@ -39,21 +42,18 @@
             android:fontFamily="monospace"
             android:textColor="@color/gray"
             android:textSize="12sp"/>
+
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=" | "
-            android:textStyle="bold"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:text="SL"
             android:fontFamily="monospace"
-            android:textColor="@color/gray"
-            android:textSize="12sp"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="SL "
-            android:fontFamily="monospace"
-            android:textColor="@color/red"
-            android:textSize="12sp"/>
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            android:background="@drawable/trade_list_item_red_bg"
+            android:gravity="center"
+            android:layout_marginRight="2dp"
+            android:layout_marginLeft="10dp"/>
         <TextView
             android:id="@+id/trade_list_item_stoploss_tv"
             android:layout_width="wrap_content"
@@ -62,22 +62,7 @@
             android:fontFamily="monospace"
             android:textColor="@color/gray"
             android:textSize="12sp"/>
-<!--        <TextView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text=" | "-->
-<!--            android:textStyle="bold"-->
-<!--            android:fontFamily="monospace"-->
-<!--            android:textColor="@color/gray"-->
-<!--            android:textSize="12sp"/>-->
-<!--        <TextView-->
-<!--            android:id="@+id/trade_list_item_risk_to_reward_tv"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text=""-->
-<!--            android:fontFamily="monospace"-->
-<!--            android:textColor="@color/gray"-->
-<!--            android:textSize="12sp"/>-->
+
 
     </LinearLayout>
 
@@ -90,7 +75,8 @@
         android:textColor="@color/gray"
         android:textSize="12sp"
         android:layout_below="@+id/trade_list_item_entry_price_layout"
-        android:layout_marginLeft="20dp"/>
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -98,7 +84,8 @@
         android:orientation="horizontal"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:layout_marginLeft="10dp">
         <TextView
             android:id="@+id/trade_list_item_quantity_tv"
             android:layout_width="wrap_content"
@@ -112,7 +99,7 @@
             android:paddingBottom="5dp"
             android:text="0"
             android:textColor="@color/green"
-            android:textSize="14sp"
+            android:textSize="12sp"
             android:textStyle="bold" />
         <ImageView
             android:id="@+id/trade_list_item_more_option"
@@ -128,5 +115,5 @@
         android:layout_height="1dp"
         android:background="@color/background"
         android:layout_below="@+id/trade_list_item_entry_price_layout"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="30dp"/>
 </RelativeLayout>

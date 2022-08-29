@@ -13,17 +13,24 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize">
 
+        <ImageView
+            android:id="@+id/main_logo_img_view"
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="?attr/actionBarSize"
+            android:src="@drawable/day_trading_tool_logo"
+            android:padding="10dp"/>
+
         <TextView
             android:id="@+id/heading"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
             android:background="@color/background"
             android:fontFamily="monospace"
             android:text="Day Trading Tool"
             android:textColor="@color/black"
-            android:textSize="20sp" />
+            android:textSize="18sp"
+            android:layout_toRightOf="@+id/main_logo_img_view"/>
 
         <ImageView
             android:id="@+id/trade_list_btn"
@@ -37,325 +44,338 @@
 
     <!--    Trading Capital -->
 
-    <RelativeLayout
-        android:id="@+id/trading_capital_layout"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@id/header"
-        android:layout_margin="10dp"
-        android:background="@drawable/round_corner_white_bg"
-        android:paddingLeft="10dp"
-        android:paddingTop="20dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="20dp">
-
-        <LinearLayout
-            android:id="@+id/trading_capital_layout_capital"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="monospace"
-                android:text="Trading Capital: "
-                android:textColor="@color/black"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/trading_capital_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="monospace"
-                android:text=""
-                android:textColor="@color/gray"
-                android:textSize="14sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/trading_capital_layout_rpt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/trading_capital_layout_capital"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="monospace"
-                android:text="Risk Per Trade: "
-                android:textColor="@color/black"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/risk_per_trade_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="monospace"
-                android:text=""
-                android:textColor="@color/gray"
-                android:textSize="14sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/trading_capital_layout_rpt"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="monospace"
-                android:text="Intraday Margin: "
-                android:textColor="@color/black"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/margin_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="monospace"
-                android:text=""
-                android:textColor="@color/gray"
-                android:textSize="14sp" />
-        </LinearLayout>
-
-<!--        android:background="@drawable/image_round_gray_bg"-->
-        <ImageView
-            android:id="@+id/trading_capital_edit_btn"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:padding="4dp"
-            android:src="@drawable/ic_baseline_edit_24" />
-
-    </RelativeLayout>
-
-    <LinearLayout
-        android:id="@+id/enter_trade_details_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/trading_capital_layout"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/round_corner_white_bg"
-        android:orientation="vertical"
-        android:paddingLeft="10dp"
-        android:paddingTop="20dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="20dp">
-
-        <LinearLayout
+        android:layout_above="@+id/get_position_size_btn">
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:orientation="horizontal"
-            android:paddingTop="2dp"
-            android:paddingBottom="2dp">
+            android:layout_height="wrap_content">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <RelativeLayout
+                    android:id="@+id/trading_capital_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/round_corner_white_bg"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="20dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="20dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="monospace"
-                android:text="Enter Trade Details"
-                android:textColor="@color/black"
-                android:textSize="15sp"
-                android:textStyle="bold" />
+                    <LinearLayout
+                        android:id="@+id/trading_capital_layout_capital"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
 
-            <Switch
-                android:id="@+id/enter_trade_details_layout_switch_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="monospace"
-                android:text="Buy "
-                android:textColor="@color/black"
-                android:textSize="10sp"
-                android:textStyle="bold"
-                android:thumb="@drawable/switch_button_thumb"
-                android:track="@drawable/switch_button_track" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="monospace"
+                            android:text="Trading Capital: "
+                            android:textColor="@color/black"
+                            android:textSize="12sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="monospace"
-                android:text=" Sell "
-                android:textColor="@color/black"
-                android:textSize="10sp"
-                android:textStyle="bold" />
-        </LinearLayout>
+                        <TextView
+                            android:id="@+id/trading_capital_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="monospace"
+                            android:text=""
+                            android:textColor="@color/gray"
+                            android:textSize="12sp" />
+                    </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:gravity="center"
-            android:orientation="horizontal">
+                    <LinearLayout
+                        android:id="@+id/trading_capital_layout_rpt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/trading_capital_layout_capital"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="monospace"
-                android:text="Entry Price"
-                android:textColor="@color/gray"
-                android:textSize="14sp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="monospace"
+                            android:text="Risk Per Trade: "
+                            android:textColor="@color/black"
+                            android:textSize="12sp" />
 
-        </LinearLayout>
+                        <TextView
+                            android:id="@+id/risk_per_trade_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="monospace"
+                            android:text=""
+                            android:textColor="@color/gray"
+                            android:textSize="12sp" />
+                    </LinearLayout>
 
-        <EditText
-            android:id="@+id/entry_price_et"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/edit_text_green_bg"
-            android:fontFamily="monospace"
-            android:inputType="numberDecimal"
-            android:paddingLeft="10dp"
-            android:paddingTop="15dp"
-            android:paddingRight="10dp"
-            android:paddingBottom="15dp"
-            android:textColor="@color/black"
-            android:textSize="14sp" />
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/trading_capital_layout_rpt"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:gravity="center"
-            android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="monospace"
+                            android:text="Intraday Margin: "
+                            android:textColor="@color/black"
+                            android:textSize="12sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="monospace"
-                android:text="Stoploss"
-                android:textColor="@color/gray"
-                android:textSize="14sp" />
+                        <TextView
+                            android:id="@+id/margin_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="monospace"
+                            android:text=""
+                            android:textColor="@color/gray"
+                            android:textSize="12sp" />
+                    </LinearLayout>
 
-            <TextView
-                android:id="@+id/stoploss_price_show_tv"
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:fontFamily="monospace"
-                android:padding="5dp"
-                android:text=""
-                android:textColor="@color/red"
-                android:textStyle="bold"
-                android:textSize="10sp"
-                android:visibility="gone"/>
+                    <!--        android:background="@drawable/image_round_gray_bg"-->
+                    <ImageView
+                        android:id="@+id/trading_capital_edit_btn"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:padding="4dp"
+                        android:src="@drawable/ic_baseline_edit_24" />
 
-            <TextView
-                android:id="@+id/stoploss_options_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="monospace"
-                android:gravity="right"
-                android:text="price "
-                android:textColor="@color/black"
-                android:textSize="10sp"
-                android:textStyle="italic|bold" />
+                </RelativeLayout>
 
-            <ImageView
-                android:id="@+id/stoploss_options_btn"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="?android:selectableItemBackground"
-                android:padding="5dp"
-                android:src="@drawable/options_icon" />
-        </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/enter_trade_details_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/trading_capital_layout"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/round_corner_white_bg"
+                    android:orientation="vertical"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="20dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="20dp">
 
-        <EditText
-            android:id="@+id/stoploss_et"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/edit_text_green_bg"
-            android:fontFamily="monospace"
-            android:inputType="numberDecimal"
-            android:paddingLeft="10dp"
-            android:paddingTop="15dp"
-            android:paddingRight="10dp"
-            android:paddingBottom="15dp"
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            android:layout_marginBottom="20dp"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
+                        android:orientation="horizontal"
+                        android:paddingTop="2dp"
+                        android:paddingBottom="2dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="monospace"
+                            android:text="Enter Trade Details"
+                            android:textColor="@color/black"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                        <Switch
+                            android:id="@+id/enter_trade_details_layout_switch_btn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="monospace"
+                            android:text="Buy "
+                            android:textColor="@color/black"
+                            android:textSize="10sp"
+                            android:textStyle="bold"
+                            android:thumb="@drawable/switch_button_thumb"
+                            android:track="@drawable/switch_button_track" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="monospace"
+                            android:text=" Sell "
+                            android:textColor="@color/black"
+                            android:textSize="10sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="monospace"
+                            android:text="Entry Price"
+                            android:textColor="@color/gray"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/entry_price_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
+                        android:background="@drawable/edit_text_green_bg"
+                        android:fontFamily="monospace"
+                        android:inputType="numberDecimal"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="15dp"
+                        android:paddingRight="10dp"
+                        android:paddingBottom="15dp"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="monospace"
+                            android:text="Stoploss"
+                            android:textColor="@color/gray"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/stoploss_price_show_tv"
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:fontFamily="monospace"
+                            android:padding="5dp"
+                            android:text=""
+                            android:textColor="@color/red"
+                            android:textStyle="bold"
+                            android:textSize="10sp"
+                            android:visibility="gone"/>
+
+                        <TextView
+                            android:id="@+id/stoploss_options_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="monospace"
+                            android:gravity="right"
+                            android:text="price "
+                            android:textColor="@color/black"
+                            android:textSize="10sp"
+                            android:textStyle="italic|bold" />
+
+                        <ImageView
+                            android:id="@+id/stoploss_options_btn"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:background="?android:selectableItemBackground"
+                            android:padding="5dp"
+                            android:src="@drawable/options_icon" />
+                    </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/stoploss_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/edit_text_green_bg"
+                        android:fontFamily="monospace"
+                        android:inputType="numberDecimal"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="15dp"
+                        android:paddingRight="10dp"
+                        android:paddingBottom="15dp"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+                        android:layout_marginBottom="20dp"/>
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:gravity="center"
-            android:orientation="horizontal">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="monospace"
-                android:text="Exit Price"
-                android:textColor="@color/gray"
-                android:textSize="14sp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="monospace"
+                            android:text="Exit Price"
+                            android:textColor="@color/gray"
+                            android:textSize="12sp" />
 
-            <TextView
-                android:id="@+id/exit_price_price_show_tv"
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:fontFamily="monospace"
-                android:padding="5dp"
-                android:text=""
-                android:textColor="@color/green"
-                android:textSize="10sp"
-                android:textStyle="bold"
-                android:visibility="gone"/>
-            <TextView
-                android:id="@+id/exit_price_options_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="monospace"
-                android:gravity="right"
-                android:text="price "
-                android:textColor="@color/black"
-                android:textSize="10sp"
-                android:textStyle="italic|bold" />
+                        <TextView
+                            android:id="@+id/exit_price_price_show_tv"
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:fontFamily="monospace"
+                            android:padding="5dp"
+                            android:text=""
+                            android:textColor="@color/green"
+                            android:textSize="10sp"
+                            android:textStyle="bold"
+                            android:visibility="gone"/>
+                        <TextView
+                            android:id="@+id/exit_price_options_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="monospace"
+                            android:gravity="right"
+                            android:text="price "
+                            android:textColor="@color/black"
+                            android:textSize="10sp"
+                            android:textStyle="italic|bold" />
 
-            <ImageView
-                android:id="@+id/exit_price_options_btn"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="?android:selectableItemBackground"
-                android:padding="5dp"
-                android:src="@drawable/options_icon" />
-        </LinearLayout>
+                        <ImageView
+                            android:id="@+id/exit_price_options_btn"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:background="?android:selectableItemBackground"
+                            android:padding="5dp"
+                            android:src="@drawable/options_icon" />
+                    </LinearLayout>
 
-        <EditText
-            android:id="@+id/exit_price_et"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/edit_text_green_bg"
-            android:fontFamily="monospace"
-            android:inputType="numberDecimal"
-            android:paddingLeft="10dp"
-            android:paddingTop="15dp"
-            android:paddingRight="10dp"
-            android:paddingBottom="15dp"
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            android:layout_marginBottom="20dp"/>
+                    <EditText
+                        android:id="@+id/exit_price_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/edit_text_green_bg"
+                        android:fontFamily="monospace"
+                        android:inputType="numberDecimal"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="15dp"
+                        android:paddingRight="10dp"
+                        android:paddingBottom="15dp"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+                        android:layout_marginBottom="20dp"/>
 
-    </LinearLayout>
+                </LinearLayout>
+            </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
 
 
     <Button

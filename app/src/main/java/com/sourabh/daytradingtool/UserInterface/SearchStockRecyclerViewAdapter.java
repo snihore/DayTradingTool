@@ -1,5 +1,6 @@
 package com.sourabh.daytradingtool.UserInterface;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -103,6 +104,7 @@ public class SearchStockRecyclerViewAdapter extends RecyclerView.Adapter<SearchS
             FilterResults results = new FilterResults();
             results.values = filterInboxes;
 
+
             return results;
         }
 
@@ -111,6 +113,18 @@ public class SearchStockRecyclerViewAdapter extends RecyclerView.Adapter<SearchS
 
             searchStockItemDetails.clear();
             searchStockItemDetails.addAll((ArrayList<SearchStockItemDetail>)filterResults.values);
+
+            if(searchStockItemDetails.size() == 0){
+
+                ArrayList<SearchStockItemDetail> customNameList = new ArrayList<>();
+                customNameList.add(new SearchStockItemDetail(
+                        charSequence.toString(),
+                        charSequence.toString()
+                ));
+
+                searchStockItemDetails.addAll(customNameList);
+            }
+
             notifyDataSetChanged();
         }
     };

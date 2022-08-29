@@ -3,6 +3,7 @@ package com.sourabh.daytradingtool.Utils;
 import android.content.Context;
 import android.widget.TextView;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.Format;
 import java.text.SimpleDateFormat;
@@ -36,5 +37,22 @@ public class FormatUtils {
         Format format = new SimpleDateFormat("dd MMMM yyyy");
         return format.format(date);
 
+    }
+
+    public static String floatToString(Float d) {
+        if (d == null)
+            return null;
+        if (d.isNaN() || d.isInfinite())
+            return d.toString();
+
+        return new BigDecimal(d.toString()).stripTrailingZeros().toPlainString();
+    }
+    public static String doubleToString(Double d) {
+        if (d == null)
+            return null;
+        if (d.isNaN() || d.isInfinite())
+            return d.toString();
+
+        return new BigDecimal(d.toString()).stripTrailingZeros().toPlainString();
     }
 }

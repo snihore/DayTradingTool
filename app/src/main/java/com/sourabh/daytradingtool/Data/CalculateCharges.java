@@ -6,10 +6,58 @@ import com.sourabh.daytradingtool.Utils.ChargesUtils;
 
 public class CalculateCharges {
 
-    public static double getZerodhaChargesDelivery(double buy, double sell, int quantity){
+    public class GetIndividualCharges{
+        private double brokerage;
+        private double stt;
+        private double transaction;
+        private double gst;
+        private double sebi;
+        private double stamp;
+        private double total;
+
+        public GetIndividualCharges(double brokerage, double stt, double transaction, double gst, double sebi, double stamp, double total) {
+            this.brokerage = brokerage;
+            this.stt = stt;
+            this.transaction = transaction;
+            this.gst = gst;
+            this.sebi = sebi;
+            this.stamp = stamp;
+            this.total = total;
+        }
+
+        public double getBrokerage() {
+            return brokerage;
+        }
+
+        public double getStt() {
+            return stt;
+        }
+
+        public double getTransaction() {
+            return transaction;
+        }
+
+        public double getGst() {
+            return gst;
+        }
+
+        public double getSebi() {
+            return sebi;
+        }
+
+        public double getStamp() {
+            return stamp;
+        }
+
+        public double getTotal() {
+            return total;
+        }
+    }
+
+    public GetIndividualCharges getZerodhaChargesDelivery(double buy, double sell, int quantity){
 
         if (buy == 0.0 || sell == 0.0 || quantity < 1){
-            return 0.0;
+            return null;
         }
 
         double brokerage = 0;
@@ -51,6 +99,7 @@ public class CalculateCharges {
 
 
 
+
         Log.i("ZERODHA_CHARGES", "Brokerage: "+brokerage+"\n" +
                 "STT BUY: "+sttBuy+"\n" +
                 "STT SELL: "+sttSell+"\n" +
@@ -63,13 +112,22 @@ public class CalculateCharges {
                 "Stamp Charegs: "+stampCharges+"\n" +
                 "Total Charges: "+totalCharges);
 
-        return totalCharges;
+        return new GetIndividualCharges(
+                brokerage,
+                (sttSell+sttBuy),
+                transactionChargesNSE,
+                gst,
+                sebiCharges,
+                stampCharges,
+                totalCharges
+        );
+
     }
 
-    public static double getZerodhaChargesIntraday(double buy, double sell, int quantity){
+    public GetIndividualCharges getZerodhaChargesIntraday(double buy, double sell, int quantity){
 
         if (buy == 0.0 || sell == 0.0 || quantity < 1){
-            return 0.0;
+            return null;
         }
 
         double brokerage1 = quantity*((buy* ChargesUtils.ZerodhaCharges.BROKERAGE_INTRADAY_PER_B_S)/100);
@@ -127,7 +185,15 @@ public class CalculateCharges {
                 "Stamp Charegs: "+stampCharges+"\n" +
                 "Total Charges: "+totalCharges);
 
-        return totalCharges;
+        return new GetIndividualCharges(
+                brokerage,
+                stt,
+                transactionChargesNSE,
+                gst,
+                sebiCharges,
+                stampCharges,
+                totalCharges
+        );
     }
 
     public static double round(double value, int places) {

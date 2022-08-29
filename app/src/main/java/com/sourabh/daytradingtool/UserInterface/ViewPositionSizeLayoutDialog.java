@@ -1,8 +1,6 @@
 package com.sourabh.daytradingtool.UserInterface;
 
-import android.app.Activity;
-import android.content.Context;
-import android.util.Log;
+import android.content.ClipboardManager;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -17,15 +15,9 @@ import com.sourabh.daytradingtool.Data.PositionSizeDetail;
 import com.sourabh.daytradingtool.Data.TradeDetail;
 import com.sourabh.daytradingtool.Data.TradeDetailPOJO;
 import com.sourabh.daytradingtool.Data.TradingCapitalData;
-import com.sourabh.daytradingtool.Database.PositionSizeDetailDB;
-import com.sourabh.daytradingtool.Database.TradingCapitalDetailDB;
-import com.sourabh.daytradingtool.MainActivity;
 import com.sourabh.daytradingtool.R;
 import com.sourabh.daytradingtool.TradeListActivity;
 import com.sourabh.daytradingtool.Utils.FormatUtils;
-
-import java.text.DecimalFormat;
-import java.util.ArrayList;
 
 public class ViewPositionSizeLayoutDialog {
 
@@ -35,13 +27,15 @@ public class ViewPositionSizeLayoutDialog {
     private TextView quantityTv, riskToRewardTv, profitTv, profitPerShareTv, lossTv, lossPerShareTv, marginRequiredTv, actualCapitalRequiredTv;
     private TextView stockTitleTv, entryPriceTv, stoplossTv, exitPriceTv, profitChargesTv, lossChargesTv;
 
-    private ImageView backBtn, deleteBtn;
+    private ImageView backBtn, copyBtn, chargesInfoBtn, entryPriceCopyBtn, stoplossCopyBtn, exitPriceCopyBtn;
 
     private RelativeLayout inputsLayout;
 
     private PositionSizeDetail positionSizeDetail;
     private TradingCapitalData tradingCapitalData;
     private String stockTitle;
+
+    private CalculateCharges.GetIndividualCharges profitChargesObj, lossChargesObj;
 
     private AlertDialog dialog;
 
@@ -85,10 +79,14 @@ public class ViewPositionSizeLayoutDialog {
         stoplossTv = (TextView) view.findViewById(R.id.stoploss_tv);
         exitPriceTv = (TextView) view.findViewById(R.id.exit_price_tv);
         backBtn = (ImageView) view.findViewById(R.id.view_position_size_back_btn);
-        deleteBtn = (ImageView)view.findViewById(R.id.view_position_size_delete_btn);
         profitChargesTv = (TextView)view.findViewById(R.id.profit_charges);
         lossChargesTv = (TextView)view.findViewById(R.id.loss_charges);
         inputsLayout = (RelativeLayout)view.findViewById(R.id.view_position_size_layout_inputs_layout);
+        copyBtn = (ImageView)view.findViewById(R.id.copy_img_btn);
+        chargesInfoBtn = (ImageView)view.findViewById(R.id.charges_info_btn);
+        entryPriceCopyBtn = (ImageView)view.findViewById(R.id.entry_price_copy);
+        stoplossCopyBtn = (ImageView)view.findViewById(R.id.stoploss_copy);
+        exitPriceCopyBtn = (ImageView)view.findViewById(R.id.exit_price_copy);
 
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,12 +95,79 @@ public class ViewPositionSizeLayoutDialog {
             }
         });
 
-        deleteBtn.setOnClickListener(new View.OnClickListener() {
+        chargesInfoBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                try {
+                    ChargesInfoDialog chargesInfoDialog = new ChargesInfoDialog();
 
+                    chargesInfoDialog.view(activity, profitChargesObj, lossChargesObj);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
             }
         });
+
+        //COPY
+        copyBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                copyValue(quantityTv, "Quantity");
+            }
+        });
+        //COPY
+        entryPriceCopyBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                copyValue(entryPriceTv, "Entry Price");
+            }
+        });
+        //COPY
+        stoplossCopyBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                copyValue(stoplossTv, "Stoploss");
+            }
+        });
+        //COPY
+        exitPriceCopyBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                copyValue(exitPriceTv, "Exit Price");
+            }
+        });
+
+    }
+
+    private void copyValue(TextView textView, String tag) {
+        try{
+
+            if(textView != null && !textView.getText().toString().trim().matches("")){
+
+                String copyText = textView.getText().toString().trim();
+
+                int sdk = android.os.Build.VERSION.SDK_INT;
+                if (sdk < android.os.Build.VERSION_CODES.HONEYCOMB) {
+                    ClipboardManager clipboard = (ClipboardManager)
+                            activity.getSystemService(activity.getApplicationContext().CLIPBOARD_SERVICE);
+                    clipboard.setText(copyText);
+                } else {
+                    ClipboardManager clipboard = (ClipboardManager)
+                            activity.getSystemService(activity.getApplicationContext().CLIPBOARD_SERVICE);
+                    android.content.ClipData clip = android.content.ClipData
+                            .newPlainText(tag, copyText);
+                    clipboard.setPrimaryClip(clip);
+                }
+
+                Toast.makeText(activity, copyText+" "+tag+" copied", Toast.LENGTH_SHORT).show();
+
+            }else{
+                Toast.makeText(activity, "Can't copied", Toast.LENGTH_SHORT).show();
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            Toast.makeText(activity, "Can't copied", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void setViews() {
@@ -166,44 +231,82 @@ public class ViewPositionSizeLayoutDialog {
         }
     }
 
+
     private void setCharges(double entry, double exit, double stoploss, int quantity) {
 
         //PROFIT
         double profitCharges = 0;
+        CalculateCharges.GetIndividualCharges getIndividualCharges = null;
+
+        CalculateCharges calculateCharges = new CalculateCharges();
+
         if(entry < exit){
             //BUY
-            profitCharges = CalculateCharges.getZerodhaChargesIntraday(entry, exit, quantity);
+            getIndividualCharges = calculateCharges.getZerodhaChargesIntraday(entry, exit, quantity);
+            if(getIndividualCharges != null){
+                profitCharges = getIndividualCharges.getTotal();
+            }
         }else{
             //SELL
-            profitCharges = CalculateCharges.getZerodhaChargesIntraday(exit, entry, quantity);
+            getIndividualCharges = calculateCharges.getZerodhaChargesIntraday(exit, entry, quantity);
+            if(getIndividualCharges != null){
+                profitCharges = getIndividualCharges.getTotal();
+            }
         }
         if(tradingCapitalData.getMargin() == 100){
             if(entry < exit){
                 //BUY
-                profitCharges = CalculateCharges.getZerodhaChargesDelivery(entry, exit, quantity);
+                getIndividualCharges = calculateCharges.getZerodhaChargesDelivery(entry, exit, quantity);
+                if(getIndividualCharges != null){
+                    profitCharges = getIndividualCharges.getTotal();
+                }
             }else{
                 //SELL
-                profitCharges = CalculateCharges.getZerodhaChargesDelivery(exit, entry, quantity);
+                getIndividualCharges = calculateCharges.getZerodhaChargesDelivery(exit, entry, quantity);
+                if(getIndividualCharges != null){
+                    profitCharges = getIndividualCharges.getTotal();
+                }
             }
+        }
+        if(getIndividualCharges != null){
+            profitChargesObj = getIndividualCharges;
         }
 
         //LOSS
         double lossCharges = 0;
+        CalculateCharges.GetIndividualCharges getIndividualChargesL = null;
+
         if(entry > stoploss){
             //BUY
-            lossCharges = CalculateCharges.getZerodhaChargesIntraday(entry, stoploss, quantity);
+            getIndividualChargesL = calculateCharges.getZerodhaChargesIntraday(entry, stoploss, quantity);
+            if(getIndividualChargesL != null){
+                lossCharges = getIndividualChargesL.getTotal();
+            }
         }else{
             //SELL
-            lossCharges = CalculateCharges.getZerodhaChargesIntraday(stoploss, entry, quantity);
+            getIndividualChargesL = calculateCharges.getZerodhaChargesIntraday(stoploss, entry, quantity);
+            if(getIndividualChargesL != null){
+                lossCharges = getIndividualChargesL.getTotal();
+            }
         }
         if(tradingCapitalData.getMargin() == 100){
             if(entry > stoploss){
                 //BUY
-                lossCharges = CalculateCharges.getZerodhaChargesDelivery(entry, stoploss, quantity);
+                getIndividualChargesL = calculateCharges.getZerodhaChargesDelivery(entry, stoploss, quantity);
+                if(getIndividualChargesL != null){
+                    lossCharges = getIndividualChargesL.getTotal();
+                }
             }else{
                 //SELL
-                lossCharges = CalculateCharges.getZerodhaChargesDelivery(stoploss, entry, quantity);
+                getIndividualChargesL = calculateCharges.getZerodhaChargesDelivery(stoploss, entry, quantity);
+                if(getIndividualChargesL != null){
+                    lossCharges = getIndividualChargesL.getTotal();
+                }
             }
+        }
+
+        if(getIndividualChargesL != null){
+            lossChargesObj = getIndividualChargesL;
         }
 
         //Set Views

@@ -1,5 +1,9 @@
 package com.sourabh.daytradingtool;
 
+import static com.sourabh.daytradingtool.Utils.FormatUtils.doubleToString;
+import static com.sourabh.daytradingtool.Utils.FormatUtils.floatToString;
+import static com.sourabh.daytradingtool.Utils.FormatUtils.round;
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -390,12 +394,34 @@ public class MainActivity extends AppCompatActivity{
         Button saveBtn = (Button) view.findViewById(R.id.trading_capital_dialog_layout_save_btn);
         TextView typeIntraday = (TextView)view.findViewById(R.id.trading_capital_type_intraday);
         TextView typeDelivery = (TextView)view.findViewById(R.id.trading_capital_type_delivery);
+        TextView rupeeSelect = (TextView)view.findViewById(R.id.trading_capital_rupee_select);
+        TextView percentageSelect = (TextView)view.findViewById(R.id.trading_capital_percentage_select);
         ImageView backBtn = (ImageView)view.findViewById(R.id.trading_capital_dialog_layout_back_btn);
 
+        final boolean[] isRupeeSelect = {true};
+
         if(tradingCapitalData != null){
-            tradingCapitalEt.setText(String.valueOf(tradingCapitalData.getTradingCapital()));
-            riskPerTradeEt.setText(String.valueOf(tradingCapitalData.getRiskPerTrade()));
-            marginEt.setText(String.valueOf(tradingCapitalData.getMargin()));
+            try {
+                tradingCapitalEt.setText(doubleToString(tradingCapitalData.getTradingCapital()));
+
+            }catch (Exception e){
+                tradingCapitalEt.setText(String.valueOf(tradingCapitalData.getTradingCapital()));
+            }
+
+            try {
+                riskPerTradeEt.setText(doubleToString(tradingCapitalData.getRiskPerTrade()));
+
+            }catch (Exception e){
+                riskPerTradeEt.setText(String.valueOf(tradingCapitalData.getRiskPerTrade()));
+            }
+
+            try {
+                marginEt.setText(floatToString(tradingCapitalData.getMargin()));
+
+            }catch (Exception e){
+                marginEt.setText(String.valueOf(tradingCapitalData.getMargin()));
+            }
+
         }
 
         backBtn.setOnClickListener(new View.OnClickListener() {
@@ -435,12 +461,41 @@ public class MainActivity extends AppCompatActivity{
             }
         });
 
+        rupeeSelect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                rupeeSelect.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.black));
+                rupeeSelect.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
+
+                percentageSelect.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.background));
+                percentageSelect.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.black));
+
+                riskPerTradeEt.setText("");
+                isRupeeSelect[0] = true;
+
+            }
+        });
+
+        percentageSelect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                percentageSelect.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.black));
+                percentageSelect.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
+
+                rupeeSelect.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.background));
+                rupeeSelect.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.black));
+
+                riskPerTradeEt.setText("");
+                isRupeeSelect[0] = false;
+            }
+        });
+
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view2) {
 
                 try{
-                    if(!validateTradingCapitalInputs(view)){
+                    if(!validateTradingCapitalInputs(view, isRupeeSelect[0])){
                         Toast.makeText(getApplicationContext(), "Please provide the valid inputs", Toast.LENGTH_SHORT).show();
                     }else{
 
@@ -452,9 +507,22 @@ public class MainActivity extends AppCompatActivity{
                             return;
                         }
 
+                        double riskPerTrade = Double.parseDouble(riskPerTradeEt.getText().toString().trim());
+
+                        if(!isRupeeSelect[0]){
+                            //PERCENTAGE
+                            double tempPercentage = Double.parseDouble(riskPerTradeEt.getText().toString().trim());
+
+                            double tempCapital = Double.parseDouble(tradingCapitalEt.getText().toString().trim());
+
+                            double tempRupee = round((tempCapital*tempPercentage)/100, 2);
+
+                            riskPerTrade = tempRupee;
+                        }
+
                         boolean result = tradingCapitalDetailDB.saveTradingCapitalDetail(new TradingCapitalData(
                                 Double.parseDouble(tradingCapitalEt.getText().toString().trim()),
-                                Double.parseDouble(riskPerTradeEt.getText().toString().trim()),
+                                riskPerTrade,
                                 Float.parseFloat(marginEt.getText().toString().trim())
                         ));
 
@@ -480,7 +548,7 @@ public class MainActivity extends AppCompatActivity{
 
     }
 
-    private boolean validateTradingCapitalInputs(View view) {
+    private boolean validateTradingCapitalInputs(View view, boolean isRupeeSelect) {
         try {
             EditText tradingCapitalEt = (EditText) view.findViewById(R.id.trading_capital_dialog_layout_trading_capital_et);
             EditText riskPerTradeEt = (EditText) view.findViewById(R.id.trading_capital_dialog_layout_risk_per_trade_et);
@@ -500,6 +568,13 @@ public class MainActivity extends AppCompatActivity{
 
             if(Float.valueOf(marginlEt.getText().toString().trim()) > 100){
                 return false;
+            }
+
+            if(!isRupeeSelect){
+                //PERCENTAGE
+                if(Float.valueOf(riskPerTradeEt.getText().toString().trim()) > 100){
+                    return false;
+                }
             }
         }catch (Exception e){
             e.printStackTrace();
