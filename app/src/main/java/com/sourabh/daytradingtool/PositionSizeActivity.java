@@ -29,6 +29,7 @@ import com.sourabh.daytradingtool.Data.TradingCapitalData;
 import com.sourabh.daytradingtool.Database.PositionSizeDetailDB;
 import com.sourabh.daytradingtool.Database.TradingCapitalDetailDB;
 import com.sourabh.daytradingtool.UserInterface.ChargesInfoDialog;
+import com.sourabh.daytradingtool.UserInterface.MarginInfoDialog;
 import com.sourabh.daytradingtool.UserInterface.SearchStockRecyclerViewAdapter;
 import com.sourabh.daytradingtool.UserInterface.SearchStockRecyclerViewClickListener;
 import com.sourabh.daytradingtool.Utils.ChargesUtils;
@@ -43,7 +44,7 @@ import java.util.Timer;
 
 public class PositionSizeActivity extends AppCompatActivity {
 
-    private ImageView tradeListBtn, tradeSaveBtn, backBtn, copyBtn, chargesInfoBtn;
+    private ImageView tradeListBtn, tradeSaveBtn, backBtn, copyBtn, chargesInfoBtn, marginInfoBtn;
     private TextView quantityTv, riskToRewardTv, profitTv, profitPerShareTv, lossTv, lossPerShareTv, marginRequiredTv, actualCapitalRequiredTv, profitChargesTv, lossChargesTv;
 
     private TradeDetailPOJO tradeDetailPOJO;
@@ -193,6 +194,7 @@ public class PositionSizeActivity extends AppCompatActivity {
         lossChargesTv = (TextView)findViewById(R.id.loss_charges);
         copyBtn = (ImageView)findViewById(R.id.copy_img_btn);
         chargesInfoBtn = (ImageView)findViewById(R.id.charges_info_btn);
+        marginInfoBtn = (ImageView)findViewById(R.id.margin_info_btn);
 
 
         tradeListBtn.setOnClickListener(new View.OnClickListener() {
@@ -258,6 +260,18 @@ public class PositionSizeActivity extends AppCompatActivity {
                     ChargesInfoDialog chargesInfoDialog = new ChargesInfoDialog();
 
                     chargesInfoDialog.view(PositionSizeActivity.this, profitChargesObj, lossChargesObj);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        });
+        marginInfoBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    MarginInfoDialog marginInfoDialog = new MarginInfoDialog();
+
+                    marginInfoDialog.view(PositionSizeActivity.this, tradingCapitalData);
                 }catch (Exception e){
                     e.printStackTrace();
                 }

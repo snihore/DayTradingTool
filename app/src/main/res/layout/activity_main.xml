@@ -17,20 +17,31 @@
             android:id="@+id/main_logo_img_view"
             android:layout_width="?attr/actionBarSize"
             android:layout_height="?attr/actionBarSize"
-            android:src="@drawable/day_trading_tool_logo"
-            android:padding="10dp"/>
+            android:padding="10dp"
+            android:src="@drawable/day_trading_tool_logo" />
 
         <TextView
             android:id="@+id/heading"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/main_logo_img_view"
             android:background="@color/background"
             android:fontFamily="monospace"
-            android:text="Day Trading Tool"
+            android:text="Day Trading Tool "
             android:textColor="@color/black"
-            android:textSize="18sp"
-            android:layout_toRightOf="@+id/main_logo_img_view"/>
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/heading"
+            android:background="?android:selectableItemBackground"
+            android:padding="5dp"
+            android:src="@drawable/ic_baseline_expand_more_24"
+            android:layout_centerVertical="true"/>
+
 
         <ImageView
             android:id="@+id/trade_list_btn"
@@ -47,14 +58,17 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/header"
-        android:layout_above="@+id/get_position_size_btn">
+        android:layout_above="@+id/get_position_size_btn"
+        android:layout_below="@id/header">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+
                 <RelativeLayout
                     android:id="@+id/trading_capital_layout"
                     android:layout_width="match_parent"
@@ -268,9 +282,9 @@
                             android:padding="5dp"
                             android:text=""
                             android:textColor="@color/red"
-                            android:textStyle="bold"
                             android:textSize="10sp"
-                            android:visibility="gone"/>
+                            android:textStyle="bold"
+                            android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/stoploss_options_tv"
@@ -297,6 +311,7 @@
                         android:id="@+id/stoploss_et"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
                         android:background="@drawable/edit_text_green_bg"
                         android:fontFamily="monospace"
                         android:inputType="numberDecimal"
@@ -305,8 +320,7 @@
                         android:paddingRight="10dp"
                         android:paddingBottom="15dp"
                         android:textColor="@color/black"
-                        android:textSize="12sp"
-                        android:layout_marginBottom="20dp"/>
+                        android:textSize="12sp" />
 
 
                     <LinearLayout
@@ -335,7 +349,8 @@
                             android:textColor="@color/green"
                             android:textSize="10sp"
                             android:textStyle="bold"
-                            android:visibility="gone"/>
+                            android:visibility="gone" />
+
                         <TextView
                             android:id="@+id/exit_price_options_tv"
                             android:layout_width="wrap_content"
@@ -361,6 +376,7 @@
                         android:id="@+id/exit_price_et"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
                         android:background="@drawable/edit_text_green_bg"
                         android:fontFamily="monospace"
                         android:inputType="numberDecimal"
@@ -369,8 +385,7 @@
                         android:paddingRight="10dp"
                         android:paddingBottom="15dp"
                         android:textColor="@color/black"
-                        android:textSize="12sp"
-                        android:layout_marginBottom="20dp"/>
+                        android:textSize="12sp" />
 
                 </LinearLayout>
             </RelativeLayout>
@@ -386,8 +401,8 @@
         android:layout_margin="20dp"
         android:background="@drawable/button_round_black_bg"
         android:fontFamily="monospace"
+        android:foreground="?android:attr/selectableItemBackground"
         android:text="Get Position Size"
         android:textColor="@android:color/white"
-        android:textSize="15sp"
-        android:foreground="?android:attr/selectableItemBackground"/>
+        android:textSize="15sp" />
 </RelativeLayout>

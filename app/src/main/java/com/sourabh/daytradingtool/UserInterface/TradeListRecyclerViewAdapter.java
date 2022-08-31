@@ -41,12 +41,13 @@ public class TradeListRecyclerViewAdapter extends RecyclerView.Adapter<TradeList
     private HashMap<Long, TradeDetailPOJO> tradingDetails;
     private HashMap<Long, TradingCapitalData> tradingCapitals;
     private TextView showingTv;
+    private ArrayList<String> dates;
 
     private TradeListItemClickListener tradeListItemClickListener;
 
 
 
-    public TradeListRecyclerViewAdapter(ParentTradeListRecyclerViewAdapter parentTradeListRecyclerViewAdapter, Context context, ArrayList<Long> timestamps, HashMap<String, ArrayList<Long>> timestampHashMap, HashMap<Long, Integer> quantities, HashMap<Long, String> stockTitles, HashMap<Long, TradeDetailPOJO> tradingDetails, HashMap<Long, TradingCapitalData> tradingCapitals, TextView showingTv,  TradeListItemClickListener tradeListItemClickListener) {
+    public TradeListRecyclerViewAdapter(ParentTradeListRecyclerViewAdapter parentTradeListRecyclerViewAdapter, Context context, ArrayList<Long> timestamps, HashMap<String, ArrayList<Long>> timestampHashMap, HashMap<Long, Integer> quantities, HashMap<Long, String> stockTitles, HashMap<Long, TradeDetailPOJO> tradingDetails, HashMap<Long, TradingCapitalData> tradingCapitals, TextView showingTv, ArrayList<String> dates,  TradeListItemClickListener tradeListItemClickListener) {
         this.parentTradeListRecyclerViewAdapter = parentTradeListRecyclerViewAdapter;
         this.context = context;
         this.timestamps = timestamps;
@@ -56,6 +57,7 @@ public class TradeListRecyclerViewAdapter extends RecyclerView.Adapter<TradeList
         this.tradingDetails = tradingDetails;
         this.tradingCapitals = tradingCapitals;
         this.showingTv = showingTv;
+        this.dates = dates;
         this.tradeListItemClickListener = tradeListItemClickListener;
 
         Log.i("Timestamps", timestamps.toString());
@@ -138,13 +140,14 @@ public class TradeListRecyclerViewAdapter extends RecyclerView.Adapter<TradeList
                                     if(result){
                                         Toast.makeText(context, "Deleted", Toast.LENGTH_SHORT).show();
                                         if(timestamps.remove(timestamps.get(position))){
+                                            checkAndRemove();
                                             notifyDataSetChanged();
                                             parentTradeListRecyclerViewAdapter.notifyDataSetChanged();
                                             if(showingTv != null ){
-                                                if(timestamps.size() == 0){
+                                                if(getShowingTv() == 0){
                                                     showingTv.setText(" No data found ");
                                                 }else{
-                                                    setShowingTv();
+                                                    showingTv.setText(" Showing "+getShowingTv()+" entries ");
                                                 }
 
                                             }
@@ -168,9 +171,49 @@ public class TradeListRecyclerViewAdapter extends RecyclerView.Adapter<TradeList
 
     }
 
-    private void setShowingTv() {
+    private void checkAndRemove() {
 
-        showingTv.setText(" Showing "+timestampHashMap.values().size()+" entries ");
+        try{
+
+            if(dates == null || timestampHashMap == null){
+                return;
+            }
+
+            for(String date: dates){
+
+                if(timestampHashMap.get(date).size() < 1){
+                    //No trades on this date
+                    //Remove
+                    dates.remove(date);
+                }
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private int getShowingTv() {
+
+        try{
+
+            int count = 0;
+
+            ArrayList<String> keys = new ArrayList<>(timestampHashMap.keySet());
+
+            for(String key: keys){
+
+                ArrayList<Long> list = timestampHashMap.get(key);
+                count += list.size();
+            }
+
+            return count;
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return 0;
     }
 
     private void showPopupMenuIcons(PopupMenu popupMenu) {

@@ -37,42 +37,45 @@
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/gray_list"
             android:paddingTop="20dp"
-            android:paddingBottom="20dp"
-            android:background="@color/gray_list">
+            android:paddingBottom="20dp">
+
             <TextView
                 android:layout_width="140dp"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
+                android:layout_marginRight="5dp"
                 android:fontFamily="monospace"
+                android:gravity="center"
                 android:text="Charges"
                 android:textColor="@color/black"
                 android:textSize="14sp"
-                android:textStyle="bold"
-                android:gravity="center"
-                android:layout_marginRight="5dp"/>
+                android:textStyle="bold" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
+                android:layout_weight="1"
                 android:fontFamily="monospace"
+                android:gravity="center"
                 android:text="Profit"
                 android:textColor="@color/black"
                 android:textSize="14sp"
-                android:textStyle="bold"
-                android:layout_weight="1"
-                android:gravity="center"/>
+                android:textStyle="bold" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
+                android:layout_weight="1"
                 android:fontFamily="monospace"
+                android:gravity="center"
                 android:text="Loss"
                 android:textColor="@color/black"
                 android:textSize="14sp"
-                android:textStyle="bold"
-                android:layout_weight="1"
-                android:gravity="center"/>
+                android:textStyle="bold" />
         </TableRow>
 
         <TableRow
@@ -80,38 +83,41 @@
             android:layout_height="match_parent"
             android:paddingTop="20dp"
             android:paddingBottom="20dp">
+
             <TextView
                 android:layout_width="140dp"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
+                android:layout_marginRight="5dp"
                 android:fontFamily="monospace"
+                android:gravity="center"
                 android:text="Brokerage"
                 android:textColor="@color/gray"
-                android:textSize="12sp"
-                android:gravity="center"
-                android:layout_marginRight="5dp"/>
+                android:textSize="12sp" />
+
             <TextView
                 android:id="@+id/brokerage_profit_show"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
+                android:layout_weight="1"
                 android:fontFamily="monospace"
+                android:gravity="center"
                 android:text=""
                 android:textColor="@color/gray"
-                android:textSize="12sp"
-                android:layout_weight="1"
-                android:gravity="center"/>
+                android:textSize="12sp" />
+
             <TextView
                 android:id="@+id/brokerage_loss_show"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
+                android:layout_weight="1"
                 android:fontFamily="monospace"
+                android:gravity="center"
                 android:text=""
                 android:textColor="@color/gray"
-                android:textSize="12sp"
-                android:layout_weight="1"
-                android:gravity="center"/>
+                android:textSize="12sp" />
         </TableRow>
 
         <TableRow
@@ -119,38 +125,41 @@
             android:layout_height="match_parent"
             android:paddingTop="20dp"
             android:paddingBottom="20dp">
+
             <TextView
                 android:layout_width="140dp"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
+                android:layout_marginRight="5dp"
                 android:fontFamily="monospace"
+                android:gravity="center"
                 android:text="STT/CTT"
                 android:textColor="@color/gray"
-                android:textSize="12sp"
-                android:gravity="center"
-                android:layout_marginRight="5dp"/>
+                android:textSize="12sp" />
+
             <TextView
                 android:id="@+id/stt_profit_show"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
+                android:layout_weight="1"
                 android:fontFamily="monospace"
+                android:gravity="center"
                 android:text=""
                 android:textColor="@color/gray"
-                android:textSize="12sp"
-                android:layout_weight="1"
-                android:gravity="center"/>
+                android:textSize="12sp" />
+
             <TextView
                 android:id="@+id/stt_loss_show"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
+                android:layout_weight="1"
                 android:fontFamily="monospace"
+                android:gravity="center"
                 android:text=""
                 android:textColor="@color/gray"
-                android:textSize="12sp"
-                android:layout_weight="1"
-                android:gravity="center"/>
+                android:textSize="12sp" />
         </TableRow>
 
         <TableRow
@@ -158,38 +167,41 @@
             android:layout_height="match_parent"
             android:paddingTop="20dp"
             android:paddingBottom="20dp">
+
             <TextView
                 android:layout_width="140dp"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
+                android:layout_marginRight="5dp"
                 android:fontFamily="monospace"
+                android:gravity="center"
                 android:text="Transaction\ncharges"
                 android:textColor="@color/gray"
-                android:textSize="12sp"
-                android:gravity="center"
-                android:layout_marginRight="5dp"/>
+                android:textSize="12sp" />
+
             <TextView
                 android:id="@+id/transaction_charges_profit_show"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
+                android:layout_weight="1"
                 android:fontFamily="monospace"
+                android:gravity="center"
                 android:text=""
                 android:textColor="@color/gray"
-                android:textSize="12sp"
-                android:layout_weight="1"
-                android:gravity="center"/>
+                android:textSize="12sp" />
+
             <TextView
                 android:id="@+id/transaction_charges_loss_show"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
+                android:layout_weight="1"
                 android:fontFamily="monospace"
+                android:gravity="center"
                 android:text=""
                 android:textColor="@color/gray"
-                android:textSize="12sp"
-                android:layout_weight="1"
-                android:gravity="center"/>
+                android:textSize="12sp" />
         </TableRow>
 
         <TableRow
@@ -197,38 +209,41 @@
             android:layout_height="match_parent"
             android:paddingTop="20dp"
             android:paddingBottom="20dp">
+
             <TextView
                 android:layout_width="140dp"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
+                android:layout_marginRight="5dp"
                 android:fontFamily="monospace"
+                android:gravity="center"
                 android:text="GST"
                 android:textColor="@color/gray"
-                android:textSize="12sp"
-                android:gravity="center"
-                android:layout_marginRight="5dp"/>
+                android:textSize="12sp" />
+
             <TextView
                 android:id="@+id/gst_profit_show"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
+                android:layout_weight="1"
                 android:fontFamily="monospace"
+                android:gravity="center"
                 android:text=""
                 android:textColor="@color/gray"
-                android:textSize="12sp"
-                android:layout_weight="1"
-                android:gravity="center"/>
+                android:textSize="12sp" />
+
             <TextView
                 android:id="@+id/gst_loss_show"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
+                android:layout_weight="1"
                 android:fontFamily="monospace"
+                android:gravity="center"
                 android:text=""
                 android:textColor="@color/gray"
-                android:textSize="12sp"
-                android:layout_weight="1"
-                android:gravity="center"/>
+                android:textSize="12sp" />
         </TableRow>
 
         <TableRow
@@ -236,38 +251,41 @@
             android:layout_height="match_parent"
             android:paddingTop="20dp"
             android:paddingBottom="20dp">
+
             <TextView
                 android:layout_width="140dp"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
+                android:layout_marginRight="5dp"
                 android:fontFamily="monospace"
+                android:gravity="center"
                 android:text="SEBI charges"
                 android:textColor="@color/gray"
-                android:textSize="12sp"
-                android:gravity="center"
-                android:layout_marginRight="5dp"/>
+                android:textSize="12sp" />
+
             <TextView
                 android:id="@+id/sebi_charges_profit_show"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
+                android:layout_weight="1"
                 android:fontFamily="monospace"
+                android:gravity="center"
                 android:text=""
                 android:textColor="@color/gray"
-                android:textSize="12sp"
-                android:layout_weight="1"
-                android:gravity="center"/>
+                android:textSize="12sp" />
+
             <TextView
                 android:id="@+id/sebi_charges_loss_show"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
+                android:layout_weight="1"
                 android:fontFamily="monospace"
+                android:gravity="center"
                 android:text=""
                 android:textColor="@color/gray"
-                android:textSize="12sp"
-                android:layout_weight="1"
-                android:gravity="center"/>
+                android:textSize="12sp" />
         </TableRow>
 
         <TableRow
@@ -275,78 +293,90 @@
             android:layout_height="match_parent"
             android:paddingTop="20dp"
             android:paddingBottom="20dp">
+
             <TextView
                 android:layout_width="140dp"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
+                android:layout_marginRight="5dp"
                 android:fontFamily="monospace"
+                android:gravity="center"
                 android:text="Stamp charges"
                 android:textColor="@color/gray"
-                android:textSize="12sp"
-                android:gravity="center"
-                android:layout_marginRight="5dp"/>
+                android:textSize="12sp" />
+
             <TextView
                 android:id="@+id/stamp_charges_profit_show"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
+                android:layout_weight="1"
                 android:fontFamily="monospace"
+                android:gravity="center"
                 android:text=""
                 android:textColor="@color/gray"
-                android:textSize="12sp"
-                android:layout_weight="1"
-                android:gravity="center"/>
+                android:textSize="12sp" />
+
             <TextView
                 android:id="@+id/stamp_charges_loss_show"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
+                android:layout_weight="1"
                 android:fontFamily="monospace"
+                android:gravity="center"
                 android:text=""
                 android:textColor="@color/gray"
-                android:textSize="12sp"
-                android:layout_weight="1"
-                android:gravity="center"/>
+                android:textSize="12sp" />
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingTop="20dp"
-            android:paddingBottom="20dp"
             android:background="@color/background">
+
             <TextView
                 android:layout_width="140dp"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
+                android:layout_marginRight="5dp"
                 android:fontFamily="monospace"
-                android:text="Total"
-                android:textColor="@color/gray"
-                android:textSize="12sp"
                 android:gravity="center"
-                android:layout_marginRight="5dp"/>
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:text="Total"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+
             <TextView
                 android:id="@+id/total_charges_profit_show"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:fontFamily="monospace"
-                android:text=""
-                android:textColor="@color/gray"
-                android:textSize="12sp"
                 android:layout_weight="1"
-                android:gravity="center"/>
+                android:background="#3318A558"
+                android:fontFamily="monospace"
+                android:gravity="center"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="12sp"/>
+
             <TextView
                 android:id="@+id/total_charges_loss_show"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:fontFamily="monospace"
-                android:text=""
-                android:textColor="@color/gray"
-                android:textSize="12sp"
                 android:layout_weight="1"
-                android:gravity="center"/>
+                android:background="#33FF4444"
+                android:fontFamily="monospace"
+                android:gravity="center"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="12sp"/>
         </TableRow>
 
     </TableLayout>

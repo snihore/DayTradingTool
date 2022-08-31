@@ -27,7 +27,7 @@ public class ViewPositionSizeLayoutDialog {
     private TextView quantityTv, riskToRewardTv, profitTv, profitPerShareTv, lossTv, lossPerShareTv, marginRequiredTv, actualCapitalRequiredTv;
     private TextView stockTitleTv, entryPriceTv, stoplossTv, exitPriceTv, profitChargesTv, lossChargesTv;
 
-    private ImageView backBtn, copyBtn, chargesInfoBtn, entryPriceCopyBtn, stoplossCopyBtn, exitPriceCopyBtn;
+    private ImageView backBtn, copyBtn, chargesInfoBtn, marginInfoBtn, entryPriceCopyBtn, stoplossCopyBtn, exitPriceCopyBtn;
 
     private RelativeLayout inputsLayout;
 
@@ -84,6 +84,7 @@ public class ViewPositionSizeLayoutDialog {
         inputsLayout = (RelativeLayout)view.findViewById(R.id.view_position_size_layout_inputs_layout);
         copyBtn = (ImageView)view.findViewById(R.id.copy_img_btn);
         chargesInfoBtn = (ImageView)view.findViewById(R.id.charges_info_btn);
+        marginInfoBtn = (ImageView)view.findViewById(R.id.margin_info_btn);
         entryPriceCopyBtn = (ImageView)view.findViewById(R.id.entry_price_copy);
         stoplossCopyBtn = (ImageView)view.findViewById(R.id.stoploss_copy);
         exitPriceCopyBtn = (ImageView)view.findViewById(R.id.exit_price_copy);
@@ -102,6 +103,19 @@ public class ViewPositionSizeLayoutDialog {
                     ChargesInfoDialog chargesInfoDialog = new ChargesInfoDialog();
 
                     chargesInfoDialog.view(activity, profitChargesObj, lossChargesObj);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        marginInfoBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    MarginInfoDialog marginInfoDialog = new MarginInfoDialog();
+
+                    marginInfoDialog.view(activity, tradingCapitalData);
                 }catch (Exception e){
                     e.printStackTrace();
                 }

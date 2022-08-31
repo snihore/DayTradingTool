@@ -366,6 +366,14 @@
                        android:text="Margin"
                        android:textColor="@color/black"
                        android:textSize="12sp" />
+                   <ImageView
+                       android:id="@+id/margin_info_btn"
+                       android:layout_width="18dp"
+                       android:layout_height="18dp"
+                       android:layout_marginLeft="10dp"
+                       android:layout_toRightOf="@id/position_size_margin_heading"
+                       android:background="?android:selectableItemBackground"
+                       android:src="@drawable/ic_baseline_info_24" />
 
                    <RelativeLayout
                        android:layout_width="match_parent"

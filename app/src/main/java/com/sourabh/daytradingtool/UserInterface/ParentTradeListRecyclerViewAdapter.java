@@ -141,6 +141,7 @@ public class ParentTradeListRecyclerViewAdapter extends RecyclerView.Adapter<Par
                     tradingDetails,
                     tradingCapitals,
                     showingTv,
+                    dates,
                     tradeListItemClickListener
             );
 
