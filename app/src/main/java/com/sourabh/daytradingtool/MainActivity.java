@@ -8,7 +8,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -25,10 +28,15 @@ import com.sourabh.daytradingtool.Data.CalculateCharges;
 import com.sourabh.daytradingtool.Data.TradeDetail;
 import com.sourabh.daytradingtool.Data.TradeDetailPOJO;
 import com.sourabh.daytradingtool.Data.TradingCapitalData;
+import com.sourabh.daytradingtool.Database.FirebaseHandle;
 import com.sourabh.daytradingtool.Database.TradingCapitalDetailDB;
+import com.sourabh.daytradingtool.UserInterface.BottomSheetDashboardOptions;
 import com.sourabh.daytradingtool.UserInterface.BottomSheetPriceType;
+import com.sourabh.daytradingtool.Utils.FirebaseUtils;
 import com.sourabh.daytradingtool.Utils.FormatUtils;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 
@@ -38,7 +46,7 @@ public class MainActivity extends AppCompatActivity{
     private Switch switchBtn;
     private EditText entryPriceEt, stoplossEt, exitPriceEt;
     private Button getPositionSizeBtn;
-    private ImageView stoplossOptionsbtn, exitPriceOptionsBtn, tradingCapitalEditBtn, tradeListBtn;
+    private ImageView stoplossOptionsbtn, exitPriceOptionsBtn, tradingCapitalEditBtn, tradeListBtn, dashboardOptions;
     private TextView stoplossOptionsTv, exitPriceOptionsTv, stoplossPriceShowTv, exitPricePriceShowTv, tradingCapitalTv, riskPerTradeTv, marginTv;
     //Custom Classes
 
@@ -59,6 +67,15 @@ public class MainActivity extends AppCompatActivity{
         initViews();
 
 
+    }
+
+    private void updateAppDialog() {
+        try{
+            FirebaseHandle firebaseHandle = new FirebaseHandle(MainActivity.this);
+            firebaseHandle.updateApp();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     private void setTradingCapitalDetail() {
@@ -107,6 +124,7 @@ public class MainActivity extends AppCompatActivity{
         tradingCapitalTv = (TextView)findViewById(R.id.trading_capital_tv);
         riskPerTradeTv = (TextView)findViewById(R.id.risk_per_trade_tv);
         marginTv = (TextView)findViewById(R.id.margin_tv);
+        dashboardOptions = (ImageView)findViewById(R.id.dashboard_options);
 
 
         switchBtn.setOnClickListener(new View.OnClickListener() {
@@ -163,6 +181,13 @@ public class MainActivity extends AppCompatActivity{
             }
         });
 
+        dashboardOptions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                BottomSheetDashboardOptions dashboardOptions = new BottomSheetDashboardOptions();
+                dashboardOptions.show(getSupportFragmentManager(), "BOTTOM_SHEET_DASHBOARD_OPTIONS");
+            }
+        });
 
         stoplossPriceType.put(TYPE[0], PRICE_TYPES[0]);
         stoplossOptionsbtn.setOnClickListener(new View.OnClickListener() {
@@ -633,54 +658,63 @@ public class MainActivity extends AppCompatActivity{
             return false;
         }
 
-        String stoplossType = stoplossPriceType.get(TYPE[0]);
-        String exitPriceType = exitPricePriceType.get(TYPE[1]);
+        String stoplossType = stoplossPriceType.get(TYPE[0]); // Select Stoploss
+        String exitPriceType = exitPricePriceType.get(TYPE[1]); // Select Exit Price
 
         double entry = Double.parseDouble(entryPriceEt.getText().toString().trim());
         double exit = Double.parseDouble(exitPriceEt.getText().toString().trim());
         double stoploss = Double.parseDouble(stoplossEt.getText().toString().trim());
 
-        if(entry < 1){
+        if(entry <= 0){
             return false;
         }
 
         if(!isSwitchBtnChecked){
 
             //BUY
-            if(stoplossType.matches(PRICE_TYPES[0])){
-                if(entry<=stoploss){
+            if(stoplossType.matches(PRICE_TYPES[0])){ // Price
+                if(entry<=stoploss){ // Entry should not be less than stoploss in BUY
                     return false;
                 }
-                if(stoploss<1){
+                if(stoploss<=0){ // Stoploss should not be zero (100% stoploss)
                     return false;
                 }
-            }
-            if(exitPriceType.matches(PRICE_TYPES[0])){
-                if(entry>=exit){
-                    return false;
-                }
-                if(exit<1){
+                if(tradingCapitalData != null && entry-stoploss > tradingCapitalData.getRiskPerTrade()){
                     return false;
                 }
             }
-
-            if(stoplossType.matches(PRICE_TYPES[1])){
-                if(stoploss <= 0 || stoploss > 100){
+            if(exitPriceType.matches(PRICE_TYPES[0])){ // Price
+                if(entry>=exit){ // Entry should not be more than exit in BUY
                     return false;
                 }
-            }
-            if(exitPriceType.matches(PRICE_TYPES[1])){
-                if(exit <= 0 || exit > 100){
+                if(exit<=0){ // Exit price should not be zero (stock price must not be zero at all)
                     return false;
                 }
             }
 
-            if(stoplossType.matches(PRICE_TYPES[2])){
-                if(stoploss<=0 || stoploss >= entry){
+            if(stoplossType.matches(PRICE_TYPES[1])){ // Percentage
+                if(stoploss <= 0 || stoploss > 100){ // stoploss must be in between Zero and 100 (Exclusive)
+                    return false;
+                }
+                if(tradingCapitalData != null && ((stoploss*entry)/100) > tradingCapitalData.getRiskPerTrade()){
                     return false;
                 }
             }
-            if(exitPriceType.matches(PRICE_TYPES[2])){
+            if(exitPriceType.matches(PRICE_TYPES[1])){ // Percentage
+                if(exit <= 0 || exit > 100){ // Exit price must be in between Zero and 100 (Exclusive)
+                    return false;
+                }
+            }
+
+            if(stoplossType.matches(PRICE_TYPES[2])){ // Points
+                if(stoploss<=0 || stoploss >= entry){// Stoploss must be more than Zero points
+                    return false;
+                }
+                if(tradingCapitalData != null && stoploss>tradingCapitalData.getRiskPerTrade()){
+                    return false;
+                }
+            }
+            if(exitPriceType.matches(PRICE_TYPES[2])){ // Points
                 if(exit<=0){
                     return false;
                 }
@@ -688,39 +722,48 @@ public class MainActivity extends AppCompatActivity{
 
         }else{
             //SELL
-            if(stoplossType.matches(PRICE_TYPES[0])){
+            if(stoplossType.matches(PRICE_TYPES[0])){//Price
                 if(entry>=stoploss){
                     return false;
                 }
-                if(stoploss<1){
+                if(stoploss<=0){
+                    return false;
+                }
+                if(tradingCapitalData != null && stoploss-entry > tradingCapitalData.getRiskPerTrade()){
                     return false;
                 }
             }
-            if(exitPriceType.matches(PRICE_TYPES[0])){
+            if(exitPriceType.matches(PRICE_TYPES[0])){//Price
                 if(entry<=exit){
                     return false;
                 }
-                if(exit<1){
+                if(exit<=0){
                     return false;
                 }
             }
-            if(stoplossType.matches(PRICE_TYPES[1])){
+            if(stoplossType.matches(PRICE_TYPES[1])){//Percentage
                 if(stoploss <= 0 || stoploss > 100){
                     return false;
                 }
+                if(tradingCapitalData != null && ((stoploss*entry)/100) > tradingCapitalData.getRiskPerTrade()){
+                    return false;
+                }
             }
-            if(exitPriceType.matches(PRICE_TYPES[1])){
+            if(exitPriceType.matches(PRICE_TYPES[1])){//Percentage
                 if(exit <= 0 || exit > 100){
                     return false;
                 }
             }
-            if(stoplossType.matches(PRICE_TYPES[2])){
+            if(stoplossType.matches(PRICE_TYPES[2])){//Points
                 if(stoploss<=0 || stoploss >= entry){
                     return false;
                 }
+                if(tradingCapitalData != null && stoploss>tradingCapitalData.getRiskPerTrade()){
+                    return false;
+                }
             }
-            if(exitPriceType.matches(PRICE_TYPES[2])){
-                if(exit<=0){
+            if(exitPriceType.matches(PRICE_TYPES[2])){//Points
+                if(exit<=0 || exit>entry){
                     return false;
                 }
             }
@@ -732,11 +775,18 @@ public class MainActivity extends AppCompatActivity{
     }
 
 
+
     @Override
     protected void onResume() {
         super.onResume();
 
         setTradingCapitalDetail();
+
+        //CHECK CONNECTION
+        if(FirebaseUtils.isNetworkAvailable(getApplicationContext())){
+            Log.i("NETWORK", "AVAILABLE");
+            updateAppDialog();
+        }
     }
 
 }

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "984496164865",
+    "project_id": "day-trading-tool",
+    "storage_bucket": "day-trading-tool.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:984496164865:android:7ccaeae8e4b5f25f617000",
+        "android_client_info": {
+          "package_name": "com.sourabh.daytradingtool"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "984496164865-fnhk8ag87gbcminsvpupsub534ru4kne.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFE0gwz860bbHrGlldZeWFowCcrbE4IvU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "984496164865-fnhk8ag87gbcminsvpupsub534ru4kne.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
