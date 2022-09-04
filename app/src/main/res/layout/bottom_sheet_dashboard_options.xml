@@ -60,5 +60,34 @@
             android:padding="15dp"
             android:layout_weight="1"/>
     </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/background"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"/>
+    <LinearLayout
+        android:id="@+id/about_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:background="?android:selectableItemBackground">
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_baseline_info_24"
+            android:padding="8dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="About"
+            android:fontFamily="monospace"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:padding="15dp"
+            android:layout_weight="1"/>
+    </LinearLayout>
 
 </LinearLayout>

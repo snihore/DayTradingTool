@@ -94,9 +94,17 @@ public class MainActivity extends AppCompatActivity{
                 return;
             }
 
+            if(tradingCapitalData.getMargin() == 0){
+                marginTv.setText(20+"% ");
+            }
+
             tradingCapitalTv.setText("\u20B9 "+ FormatUtils.addCommasInNumber(tradingCapitalData.getTradingCapital())+" ");
             riskPerTradeTv.setText("\u20B9 "+FormatUtils.addCommasInNumber(tradingCapitalData.getRiskPerTrade())+" ");
             marginTv.setText(tradingCapitalData.getMargin()+"% ");
+
+            if(tradingCapitalData.getMargin() == 0){
+                marginTv.setText(20+"% ");
+            }
 
         }catch (Exception e){
             e.printStackTrace();
@@ -443,8 +451,13 @@ public class MainActivity extends AppCompatActivity{
             try {
                 marginEt.setText(floatToString(tradingCapitalData.getMargin()));
 
+
             }catch (Exception e){
                 marginEt.setText(String.valueOf(tradingCapitalData.getMargin()));
+            }
+
+            if(tradingCapitalData.getMargin() == 0){
+                marginEt.setText(String.valueOf(20));
             }
 
         }

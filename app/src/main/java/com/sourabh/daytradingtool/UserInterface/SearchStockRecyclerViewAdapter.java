@@ -118,7 +118,7 @@ public class SearchStockRecyclerViewAdapter extends RecyclerView.Adapter<SearchS
 
                 ArrayList<SearchStockItemDetail> customNameList = new ArrayList<>();
                 customNameList.add(new SearchStockItemDetail(
-                        charSequence.toString(),
+                        charSequence.toString().toUpperCase(),
                         charSequence.toString()
                 ));
 

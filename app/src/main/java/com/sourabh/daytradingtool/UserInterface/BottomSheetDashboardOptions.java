@@ -13,13 +13,14 @@ import android.widget.LinearLayout;
 import androidx.annotation.Nullable;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.sourabh.daytradingtool.AboutActivity;
 import com.sourabh.daytradingtool.Database.FirebaseHandle;
 import com.sourabh.daytradingtool.MainActivity;
 import com.sourabh.daytradingtool.R;
 
 public class BottomSheetDashboardOptions extends BottomSheetDialogFragment implements View.OnClickListener{
 
-    private LinearLayout shareBtn, feedbackBtn;
+    private LinearLayout shareBtn, feedbackBtn, aboutBtn;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable
@@ -36,9 +37,11 @@ public class BottomSheetDashboardOptions extends BottomSheetDialogFragment imple
     private void initViews(View view) {
         shareBtn = (LinearLayout) view.findViewById(R.id.share_btn);
         feedbackBtn = (LinearLayout) view.findViewById(R.id.feedback_btn);
+        aboutBtn = (LinearLayout)view.findViewById(R.id.about_btn);
 
         shareBtn.setOnClickListener(this);
         feedbackBtn.setOnClickListener(this);
+        aboutBtn.setOnClickListener(this);
     }
 
     @Override
@@ -52,6 +55,12 @@ public class BottomSheetDashboardOptions extends BottomSheetDialogFragment imple
 
             case R.id.feedback_btn:
                 feedback((MainActivity) getActivity());
+                break;
+
+            case R.id.about_btn:
+                Intent intent = new Intent(getActivity(), AboutActivity.class);
+                startActivity(intent);
+                dismiss();
                 break;
         }
     }

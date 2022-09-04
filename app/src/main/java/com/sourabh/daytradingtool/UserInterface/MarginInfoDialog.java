@@ -1,6 +1,7 @@
 package com.sourabh.daytradingtool.UserInterface;
 
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
@@ -58,6 +59,17 @@ public class MarginInfoDialog {
         TextView tradingCapitalTv = (TextView)view.findViewById(R.id.margin_info_trading_capital);
         TextView riskPerTradeTv = (TextView)view.findViewById(R.id.margin_info_risk_per_trade);
         TextView marginTv = (TextView)view.findViewById(R.id.margin_info_margin);
+
+        ImageView backBtn = (ImageView) view.findViewById(R.id.margin_info_back_btn);
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(dialog != null){
+                    dialog.dismiss();
+                }
+            }
+        });
 
         try{
 
