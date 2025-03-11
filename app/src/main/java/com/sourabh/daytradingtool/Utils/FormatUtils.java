@@ -13,6 +13,9 @@ public class FormatUtils {
 
     public static String addCommasInNumber(double num){
         try{
+            if(num <= 0){
+                return String.valueOf("0");
+            }
             DecimalFormat df = new DecimalFormat("#,###.00");
 
             return df.format(num);
@@ -24,6 +27,9 @@ public class FormatUtils {
     }
 
     public static double round(double value, int places) {
+        if(value <= 0){
+            return 0;
+        }
         if (places < 0) throw new IllegalArgumentException();
 
         long factor = (long) Math.pow(10, places);
@@ -40,6 +46,9 @@ public class FormatUtils {
     }
 
     public static String floatToString(Float d) {
+        if(d == 0){
+            return String.valueOf(0);
+        }
         if (d == null)
             return null;
         if (d.isNaN() || d.isInfinite())
@@ -48,6 +57,9 @@ public class FormatUtils {
         return new BigDecimal(d.toString()).stripTrailingZeros().toPlainString();
     }
     public static String doubleToString(Double d) {
+        if(d == 0){
+            return String.valueOf(0);
+        }
         if (d == null)
             return null;
         if (d.isNaN() || d.isInfinite())

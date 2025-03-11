@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="10dp"
+    android:background="@android:color/white">
+
+    <TextView
+        android:id="@+id/fno_item_stoploss_points"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="monospace"
+        android:text="Stoploss points: 0"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
+    <LinearLayout
+        android:id="@+id/fno_item_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/fno_item_stoploss_points"
+        android:layout_marginLeft="20dp">
+        <TextView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:text="L"
+            android:fontFamily="monospace"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:background="@drawable/trade_list_item_green_bg"
+            android:gravity="center"
+            android:layout_marginRight="2dp"/>
+        <TextView
+            android:id="@+id/fno_item_lots_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0.0"
+            android:fontFamily="monospace"
+            android:textColor="@color/gray"
+            android:textSize="13sp"/>
+
+        <TextView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:text="Q"
+            android:fontFamily="monospace"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:background="@drawable/trade_list_item_green_bg"
+            android:gravity="center"
+            android:layout_marginRight="2dp"
+            android:layout_marginLeft="10dp"/>
+        <TextView
+            android:id="@+id/fno_item_quantity_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0.0"
+            android:fontFamily="monospace"
+            android:textColor="@color/gray"
+            android:textSize="13sp"/>
+        <TextView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:text="TL"
+            android:fontFamily="monospace"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:background="@drawable/trade_list_item_red_bg"
+            android:gravity="center"
+            android:layout_marginRight="2dp"
+            android:layout_marginLeft="10dp"/>
+        <TextView
+            android:id="@+id/fno_item_total_loss_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0.0"
+            android:fontFamily="monospace"
+            android:textColor="@color/gray"
+            android:textSize="13sp"/>
+
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/background"
+        android:layout_below="@+id/fno_item_layout"
+        android:layout_marginTop="15dp"/>
+</RelativeLayout>

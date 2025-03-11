@@ -8,10 +8,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -20,24 +18,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.sourabh.daytradingtool.Data.CalculateCharges;
+import com.google.android.material.snackbar.Snackbar;
 import com.sourabh.daytradingtool.Data.TradeDetail;
 import com.sourabh.daytradingtool.Data.TradeDetailPOJO;
 import com.sourabh.daytradingtool.Data.TradingCapitalData;
-import com.sourabh.daytradingtool.Database.FirebaseHandle;
 import com.sourabh.daytradingtool.Database.TradingCapitalDetailDB;
 import com.sourabh.daytradingtool.UserInterface.BottomSheetDashboardOptions;
 import com.sourabh.daytradingtool.UserInterface.BottomSheetPriceType;
-import com.sourabh.daytradingtool.Utils.FirebaseUtils;
 import com.sourabh.daytradingtool.Utils.FormatUtils;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.text.DecimalFormat;
 import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity{
@@ -48,6 +42,7 @@ public class MainActivity extends AppCompatActivity{
     private Button getPositionSizeBtn;
     private ImageView stoplossOptionsbtn, exitPriceOptionsBtn, tradingCapitalEditBtn, tradeListBtn, dashboardOptions;
     private TextView stoplossOptionsTv, exitPriceOptionsTv, stoplossPriceShowTv, exitPricePriceShowTv, tradingCapitalTv, riskPerTradeTv, marginTv;
+    private RelativeLayout fnoCalculatorbtn;
     //Custom Classes
 
     //Variables
@@ -69,14 +64,6 @@ public class MainActivity extends AppCompatActivity{
 
     }
 
-    private void updateAppDialog() {
-        try{
-            FirebaseHandle firebaseHandle = new FirebaseHandle(MainActivity.this);
-            firebaseHandle.updateApp();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
 
     private void setTradingCapitalDetail() {
 
@@ -85,26 +72,25 @@ public class MainActivity extends AppCompatActivity{
             TradingCapitalDetailDB tradingCapitalDetailDB = new TradingCapitalDetailDB(this);
 
             if(tradingCapitalDetailDB == null){
+                tradingCapitalDialog();
                 return;
             }
 
             tradingCapitalData = tradingCapitalDetailDB.getTradingCapitalDetail();
 
             if(tradingCapitalData == null){
+                tradingCapitalDialog();
                 return;
             }
 
-            if(tradingCapitalData.getMargin() == 0){
-                marginTv.setText(20+"% ");
+            if(tradingCapitalData.getTradingCapital() == 0 || tradingCapitalData.getRiskPerTrade() == 0 || tradingCapitalData.getMargin() == 0){
+                tradingCapitalDialog();
             }
 
             tradingCapitalTv.setText("\u20B9 "+ FormatUtils.addCommasInNumber(tradingCapitalData.getTradingCapital())+" ");
             riskPerTradeTv.setText("\u20B9 "+FormatUtils.addCommasInNumber(tradingCapitalData.getRiskPerTrade())+" ");
             marginTv.setText(tradingCapitalData.getMargin()+"% ");
 
-            if(tradingCapitalData.getMargin() == 0){
-                marginTv.setText(20+"% ");
-            }
 
         }catch (Exception e){
             e.printStackTrace();
@@ -133,6 +119,8 @@ public class MainActivity extends AppCompatActivity{
         riskPerTradeTv = (TextView)findViewById(R.id.risk_per_trade_tv);
         marginTv = (TextView)findViewById(R.id.margin_tv);
         dashboardOptions = (ImageView)findViewById(R.id.dashboard_options);
+//        fnoCalculatorbtn = (RelativeLayout)findViewById(R.id.fno_calculator);
+
 
 
         switchBtn.setOnClickListener(new View.OnClickListener() {
@@ -221,12 +209,7 @@ public class MainActivity extends AppCompatActivity{
             public void onClick(View view) {
 
                 try {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.full_screen_alert);
-                    View view1 = getLayoutInflater().inflate(R.layout.trading_capital_dialog_layout, null);
-                    builder.setView(view1);
-                    AlertDialog dialog = builder.create();
-                    handleTradingCapitalEdit(dialog, view1);
-                    dialog.show();
+                    tradingCapitalDialog();
                 }catch (Exception e){
                     e.printStackTrace();
                 }
@@ -284,8 +267,33 @@ public class MainActivity extends AppCompatActivity{
                 }
             });
 
+            /// Future and Options Calculator Button
+//            fnoCalculatorbtn.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//
+//                    Intent intent = new Intent(getApplicationContext(), FutureAndOptionsCalculatorActivity.class);
+//
+//                    startActivity(intent);
+//
+//                }
+//            });
+
         }catch (Exception e){
 
+        }
+    }
+
+    private void tradingCapitalDialog() {
+        try{
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.full_screen_alert);
+            View view1 = getLayoutInflater().inflate(R.layout.trading_capital_dialog_layout, null);
+            builder.setView(view1);
+            AlertDialog dialog = builder.create();
+            handleTradingCapitalEdit(dialog, view1);
+            dialog.show();
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 
@@ -534,7 +542,7 @@ public class MainActivity extends AppCompatActivity{
 
                 try{
                     if(!validateTradingCapitalInputs(view, isRupeeSelect[0])){
-                        Toast.makeText(getApplicationContext(), "Please provide the valid inputs", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getApplicationContext(), "Please provide the valid inputs", Toast.LENGTH_SHORT).show();
                     }else{
 
                         TradingCapitalDetailDB tradingCapitalDetailDB = new TradingCapitalDetailDB(getApplicationContext());
@@ -595,24 +603,38 @@ public class MainActivity extends AppCompatActivity{
             if(tradingCapitalEt.getText().toString().trim().matches("") ||
                     riskPerTradeEt.getText().toString().trim().matches("") ||
                     marginlEt.getText().toString().trim().matches("")){
+
+                snackBarError(view, "Please enter all the input fields");
+
                 return false;
             }
 
             if(tradingCapitalEt.getText().toString().trim().equals("0") ||
                     riskPerTradeEt.getText().toString().trim().equals("0") ||
                     marginlEt.getText().toString().trim().equals("0")){
-                return false;
-            }
-
-            if(Float.valueOf(marginlEt.getText().toString().trim()) > 100){
+                snackBarError(view, "Inputs should not be zero");
                 return false;
             }
 
             if(!isRupeeSelect){
                 //PERCENTAGE
                 if(Float.valueOf(riskPerTradeEt.getText().toString().trim()) > 100){
+                    snackBarError(view, "Risk Per Trade must be less than or equal to 100%");
                     return false;
                 }
+            }
+
+            if(isRupeeSelect){
+                //RUPEE
+                if(Double.parseDouble(riskPerTradeEt.getText().toString().trim()) > Double.parseDouble(tradingCapitalEt.getText().toString())){
+                    snackBarError(view, "Risk Per Trade must be less than or equal to Trading Capital");
+                    return false;
+                }
+            }
+
+            if(Float.valueOf(marginlEt.getText().toString().trim()) > 100){
+                snackBarError(view, "Margin must be less than or equal to 100%");
+                return false;
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -622,10 +644,23 @@ public class MainActivity extends AppCompatActivity{
         return true;
     }
 
+    private void snackBarError(View view, String text) {
+        try{
+
+            Snackbar
+                    .make(view, text, Snackbar.LENGTH_LONG)
+                    .setBackgroundTint(ContextCompat.getColor(getApplicationContext(), R.color.red))
+                    .show();
+
+        }catch (Exception e){
+            Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+        }
+    }
+
     private void positionSizeHandle() throws Exception{
 
         if(!validateInputs()){
-            Toast.makeText(this, "Please enter valid inputs", Toast.LENGTH_SHORT).show();
+
             return;
         }
 
@@ -633,10 +668,7 @@ public class MainActivity extends AppCompatActivity{
         double exitPrice = Double.parseDouble(exitPriceEt.getText().toString().trim());
         double stoploss = Double.parseDouble(stoplossEt.getText().toString().trim());
 
-        if(tradingCapitalData.getTradingCapital() == 0 || tradingCapitalData.getRiskPerTrade() == 0 || tradingCapitalData.getMargin() == 0){
-            Toast.makeText(this, "Please add your trading capital", Toast.LENGTH_SHORT).show();
-            return;
-        }
+
 
         TradeDetail tradeDetail = new TradeDetail(
                 entryPrice,
@@ -647,6 +679,15 @@ public class MainActivity extends AppCompatActivity{
                 exitPricePriceType.get(TYPE[1]),
                 tradingCapitalData
         );
+
+        if(tradeDetail.getPositionSizeDetail() == null){
+            return;
+        }
+
+        if(tradeDetail.getPositionSizeDetail().getQuantity() <= 0){
+            quantityWarningDialog();
+            return;
+        }
 
         Intent intent = new Intent(getApplicationContext(), PositionSizeActivity.class);
         intent.putExtra("GET_POSITION_SIZE_DETAIL", tradeDetail.getPositionSizeDetail());
@@ -659,7 +700,35 @@ public class MainActivity extends AppCompatActivity{
         startActivity(intent);
     }
 
+    private void quantityWarningDialog() {
+        new AlertDialog.Builder(MainActivity.this)
+                .setTitle("Position Size")
+                .setMessage("Number of shares are zero based on your trading capital and risk per trade (RPT).\n" +
+                        "Please search another trade.")
+
+                // Specifying a listener allows you to take an action before dismissing the dialog.
+                // The dialog is automatically dismissed when a dialog button is clicked.
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                })
+                .show();
+    }
+
     private boolean validateInputs() {
+
+        if(tradingCapitalData.getTradingCapital() == 0){
+            snackBarError(findViewById(R.id.parent), "Please save Trading Capital details first");
+            return false;
+        }
+        if(tradingCapitalData.getRiskPerTrade() == 0){
+            snackBarError(findViewById(R.id.parent), "Please save Risk Per Trade in Trading capital");
+            return false;
+        }
+        if(tradingCapitalData.getMargin() == 0){
+            snackBarError(findViewById(R.id.parent), "Please save margin in Trading capital");
+            return false;
+        }
 
         if(entryPriceEt == null || exitPriceEt == null || stoplossEt == null){
             return false;
@@ -668,6 +737,7 @@ public class MainActivity extends AppCompatActivity{
         if(entryPriceEt.getText().toString().matches("") ||
         exitPriceEt.getText().toString().matches("") ||
         stoplossEt.getText().toString().matches("")){
+            snackBarError(findViewById(R.id.parent), "Please enter all the input fields");
             return false;
         }
 
@@ -679,6 +749,7 @@ public class MainActivity extends AppCompatActivity{
         double stoploss = Double.parseDouble(stoplossEt.getText().toString().trim());
 
         if(entry <= 0){
+            snackBarError(findViewById(R.id.parent), "Entry price must be more than zero");
             return false;
         }
 
@@ -687,48 +758,59 @@ public class MainActivity extends AppCompatActivity{
             //BUY
             if(stoplossType.matches(PRICE_TYPES[0])){ // Price
                 if(entry<=stoploss){ // Entry should not be less than stoploss in BUY
+                    snackBarError(findViewById(R.id.parent), "Stoploss must be less than Entry price");
                     return false;
                 }
                 if(stoploss<=0){ // Stoploss should not be zero (100% stoploss)
+                    snackBarError(findViewById(R.id.parent), "Stoploss should not be zero");
                     return false;
                 }
                 if(tradingCapitalData != null && entry-stoploss > tradingCapitalData.getRiskPerTrade()){
+                    snackBarError(findViewById(R.id.parent), "Stoploss points must be less than Risk Per Trade");
                     return false;
                 }
             }
             if(exitPriceType.matches(PRICE_TYPES[0])){ // Price
                 if(entry>=exit){ // Entry should not be more than exit in BUY
+                    snackBarError(findViewById(R.id.parent), "Exit price must be more than Entry price");
                     return false;
                 }
                 if(exit<=0){ // Exit price should not be zero (stock price must not be zero at all)
+                    snackBarError(findViewById(R.id.parent), "Exit price should not be zero");
                     return false;
                 }
             }
 
             if(stoplossType.matches(PRICE_TYPES[1])){ // Percentage
                 if(stoploss <= 0 || stoploss > 100){ // stoploss must be in between Zero and 100 (Exclusive)
+                    snackBarError(findViewById(R.id.parent), "Stoploss percentage must be in between zero and 100%");
                     return false;
                 }
                 if(tradingCapitalData != null && ((stoploss*entry)/100) > tradingCapitalData.getRiskPerTrade()){
+                    snackBarError(findViewById(R.id.parent), "Stoploss points must be less than Risk Per Trade");
                     return false;
                 }
             }
             if(exitPriceType.matches(PRICE_TYPES[1])){ // Percentage
                 if(exit <= 0 || exit > 100){ // Exit price must be in between Zero and 100 (Exclusive)
+                    snackBarError(findViewById(R.id.parent), "Exit price percentage must be in between zero and 100%");
                     return false;
                 }
             }
 
             if(stoplossType.matches(PRICE_TYPES[2])){ // Points
                 if(stoploss<=0 || stoploss >= entry){// Stoploss must be more than Zero points
+                    snackBarError(findViewById(R.id.parent), "Stoploss must be more than zero and less than Entry price");
                     return false;
                 }
                 if(tradingCapitalData != null && stoploss>tradingCapitalData.getRiskPerTrade()){
+                    snackBarError(findViewById(R.id.parent), "Stoploss points must be less than Risk Per Trade");
                     return false;
                 }
             }
             if(exitPriceType.matches(PRICE_TYPES[2])){ // Points
                 if(exit<=0){
+                    snackBarError(findViewById(R.id.parent), "Exit price points must be more than zero");
                     return false;
                 }
             }
@@ -737,46 +819,57 @@ public class MainActivity extends AppCompatActivity{
             //SELL
             if(stoplossType.matches(PRICE_TYPES[0])){//Price
                 if(entry>=stoploss){
+                    snackBarError(findViewById(R.id.parent), "Stoploss must be more than Entry price");
                     return false;
                 }
                 if(stoploss<=0){
+                    snackBarError(findViewById(R.id.parent), "Stoploss must be more than zero");
                     return false;
                 }
                 if(tradingCapitalData != null && stoploss-entry > tradingCapitalData.getRiskPerTrade()){
+                    snackBarError(findViewById(R.id.parent), "Stoploss points must be less than Risk Per Trade");
                     return false;
                 }
             }
             if(exitPriceType.matches(PRICE_TYPES[0])){//Price
                 if(entry<=exit){
+                    snackBarError(findViewById(R.id.parent), "Exit price must be less than Entry price");
                     return false;
                 }
                 if(exit<=0){
+                    snackBarError(findViewById(R.id.parent), "Entry price must be more than zero");
                     return false;
                 }
             }
             if(stoplossType.matches(PRICE_TYPES[1])){//Percentage
                 if(stoploss <= 0 || stoploss > 100){
+                    snackBarError(findViewById(R.id.parent), "Stoploss percentage must be more than zero and less than 100%");
                     return false;
                 }
                 if(tradingCapitalData != null && ((stoploss*entry)/100) > tradingCapitalData.getRiskPerTrade()){
+                    snackBarError(findViewById(R.id.parent), "Stoploss points must be less than Risk Per Trade");
                     return false;
                 }
             }
             if(exitPriceType.matches(PRICE_TYPES[1])){//Percentage
                 if(exit <= 0 || exit > 100){
+                    snackBarError(findViewById(R.id.parent), "Exit price percentage must be more than zero and less than 100%");
                     return false;
                 }
             }
             if(stoplossType.matches(PRICE_TYPES[2])){//Points
                 if(stoploss<=0 || stoploss >= entry){
+                    snackBarError(findViewById(R.id.parent), "Stoploss points must be more than zero and less than Entry price");
                     return false;
                 }
                 if(tradingCapitalData != null && stoploss>tradingCapitalData.getRiskPerTrade()){
+                    snackBarError(findViewById(R.id.parent), "Stoploss points must be less than Risk Per Trade");
                     return false;
                 }
             }
             if(exitPriceType.matches(PRICE_TYPES[2])){//Points
                 if(exit<=0 || exit>entry){
+                    snackBarError(findViewById(R.id.parent), "Exit price points must be more than zero and less than Entry price");
                     return false;
                 }
             }
@@ -794,12 +887,6 @@ public class MainActivity extends AppCompatActivity{
         super.onResume();
 
         setTradingCapitalDetail();
-
-        //CHECK CONNECTION
-        if(FirebaseUtils.isNetworkAvailable(getApplicationContext())){
-            Log.i("NETWORK", "AVAILABLE");
-            updateAppDialog();
-        }
     }
 
 }

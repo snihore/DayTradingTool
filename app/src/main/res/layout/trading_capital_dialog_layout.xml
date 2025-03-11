@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@android:color/white"
     android:gravity="center_horizontal"
-    android:paddingBottom="20dp">
+    android:paddingBottom="60dp">
 
     <RelativeLayout
         android:id="@+id/trading_capital_dialog_layout_header"

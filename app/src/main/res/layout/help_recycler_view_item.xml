@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginTop="10dp"
+    android:elevation="5dp"
+    android:background="@drawable/round_corner_white_bg"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/help_recycler_view_item_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="About"
+        android:textColor="@color/white"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:fontFamily="monospace"
+        android:background="@drawable/trade_list_item_green_bg"
+        android:layout_marginBottom="10dp"/>
+
+    <TextView
+        android:id="@+id/help_recycler_view_item_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Day Trading Tool App is a risk management calculator that helps the user to calculate the position size in their trades.  This kind of help is useful for traders and investors, especially those who enter the market but do not know the risk management factors."
+        android:textColor="#272727"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:fontFamily="monospace"/>
+
+</LinearLayout>

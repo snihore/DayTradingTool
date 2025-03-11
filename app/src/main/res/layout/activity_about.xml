@@ -8,12 +8,12 @@
     android:background="@color/white">
 
     <RelativeLayout
-        android:id="@+id/about_header"
+        android:id="@+id/help_header"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize">
 
         <ImageView
-            android:id="@+id/about_back_btn"
+            android:id="@+id/help_back_btn"
             android:layout_width="?attr/actionBarSize"
             android:layout_height="?attr/actionBarSize"
             android:background="?android:selectableItemBackground"
@@ -21,92 +21,23 @@
             android:src="@drawable/ic_baseline_arrow_back_ios_new_24" />
 
         <TextView
-            android:id="@+id/about_title"
+            android:id="@+id/help_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:fontFamily="monospace"
-            android:text="About"
+            android:text="Help"
             android:textColor="@color/black"
             android:textSize="15sp"
             android:textStyle="bold" />
     </RelativeLayout>
 
-    <ScrollView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/help_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/about_header">
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:padding="20dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Name"
-                    android:textColor="@color/black"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:fontFamily="monospace"
-                    android:layout_marginBottom="5dp"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Day Trading Tool"
-                    android:textColor="@color/gray"
-                    android:textSize="15sp"
-                    android:fontFamily="monospace"
-                    android:layout_marginBottom="10dp"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Version"
-                    android:textColor="@color/black"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:fontFamily="monospace"
-                    android:layout_marginBottom="5dp"/>
-                <TextView
-                    android:id="@+id/about_version"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:textColor="@color/gray"
-                    android:textSize="12sp"
-                    android:fontFamily="monospace"
-                    android:layout_marginBottom="10dp"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Description"
-                    android:textColor="@color/black"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:fontFamily="monospace"
-                    android:layout_marginBottom="5dp"/>
-                <TextView
-                    android:id="@+id/about_description"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:textColor="@color/gray"
-                    android:textSize="12sp"
-                    android:fontFamily="monospace"
-                    android:layout_marginBottom="10dp"/>
-
-            </LinearLayout>
-
-        </RelativeLayout>
-
-    </ScrollView>
+        android:layout_below="@+id/help_header"
+        android:paddingTop="10dp" />
 
 
 </RelativeLayout>

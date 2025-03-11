@@ -25,9 +25,9 @@
             android:layout_height="?attr/actionBarSize"
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
+            android:background="?android:selectableItemBackground"
             android:padding="15dp"
-            android:src="@drawable/list_icon"
-            android:background="?android:selectableItemBackground"/>
+            android:src="@drawable/list_icon" />
     </RelativeLayout>
 
    <ScrollView

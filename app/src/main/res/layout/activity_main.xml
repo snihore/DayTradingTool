@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
@@ -28,7 +29,7 @@
             android:layout_toRightOf="@+id/main_logo_img_view"
             android:background="@color/background"
             android:fontFamily="monospace"
-            android:text="Day Trading Tool "
+            android:text="TradeSizer "
             android:textColor="@color/black"
             android:textSize="15sp"
             android:textStyle="bold" />
@@ -37,12 +38,31 @@
             android:id="@+id/dashboard_options"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/heading"
             android:background="?android:selectableItemBackground"
             android:padding="5dp"
-            android:src="@drawable/ic_baseline_expand_more_24"
-            android:layout_centerVertical="true"/>
+            android:src="@drawable/ic_baseline_expand_more_24" />
 
+        <RelativeLayout
+            android:id="@+id/fno_calculator"
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_toLeftOf="@+id/trade_list_btn"
+            android:background="?android:selectableItemBackground"
+            android:padding="15dp"
+            android:visibility="gone">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/trade_list_item_green_bg"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textSize="10sp"
+                android:fontFamily="monospace"
+                android:text="FnO"
+                android:textColor="@color/white"/>
+        </RelativeLayout>
 
         <ImageView
             android:id="@+id/trade_list_btn"
@@ -74,7 +94,10 @@
                     android:id="@+id/trading_capital_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
                     android:background="@drawable/round_corner_white_bg"
                     android:paddingLeft="10dp"
                     android:paddingTop="20dp"
@@ -399,7 +422,10 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:layout_alignParentBottom="true"
-        android:layout_margin="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/button_round_black_bg"
         android:fontFamily="monospace"
         android:foreground="?android:attr/selectableItemBackground"
